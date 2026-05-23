@@ -1,0 +1,10 @@
+# Public Search Indexing instructions for FastCV PK
+User-agent: *
+Allow: /
+Allow: /templates
+Allow: /blog
+Disallow: /dashboard
+Disallow: /admin
+Disallow: /api/
+
+Sitemap: https://fastcvpk.online/sitemap.xml
