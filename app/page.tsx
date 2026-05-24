@@ -18,6 +18,7 @@ import {
   Sparkles,
   Users
 } from "lucide-react";
+import FeedbackSection from "@/components/home/FeedbackSection";
 
 /**
  * Main Premium Web Application Landing Page (/).
@@ -1054,6 +1055,9 @@ export default function LandingPage() {
           </div>
         </div>
       </section>
+
+      {/* Bilingual Feedback & Comments Section */}
+      <FeedbackSection />
 
     </div>
   );
