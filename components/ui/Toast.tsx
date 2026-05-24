@@ -13,7 +13,7 @@ export interface ToastMessage {
 }
 
 interface ToastContextProps {
-  toast: (title: string, type?: ToastType, description?: string) => void;
+  toast: (title: string, type?: ToastType, description?: string, duration?: number) => void;
 }
 
 const ToastContext = createContext<ToastContextProps | undefined>(undefined);
@@ -26,16 +26,16 @@ export function ToastProvider({ children }: { children: React.ReactNode }) {
   }, []);
 
   const toast = useCallback(
-    (title: string, type: ToastType = "info", description?: string) => {
+    (title: string, type: ToastType = "info", description?: string, duration = 3500) => {
       const id = Math.random().toString(36).substring(2, 9);
       const newMessage: ToastMessage = { id, title, description, type };
       
       setMessages((prev) => [...prev, newMessage]);
 
-      // Automatically clear after 3.5 seconds
+      // Automatically clear after custom duration
       setTimeout(() => {
         removeToast(id);
-      }, 3500);
+      }, duration);
     },
     [removeToast]
   );

@@ -175,13 +175,13 @@ export default function CVBuilderPage() {
     }
 
     if (type === "global-pro") {
-      return `Highly skilled ${jobTitle || "Professional"} with ${formData.personalInfo.yearsOfExp || "several"} years of experience, specializing in remote cooperation and cross-border project delivery. Proven track record of driving impact, optimizing workflows, and delivering high-value solutions for global clients. Adaptive, self-motivated, and prepared for high-performance remote work in the ${formData.personalInfo.timeZone || "PKT"} timezone.`;
+      return `${jobTitle || "Software Engineer"} with ${formData.personalInfo.yearsOfExp || "4"} years of experience. Built scalable applications and supported remote team operations from ${city}. Expert in ${skills || "React and Node.js"}, open to global remote contracts in ${formData.personalInfo.timeZone || "PKT"} timezone.`;
     }
 
     if (isStudent) {
-      return `Motivated and hardworking student pursuing education in ${jobTitle || "my field"}, based in ${city}. Eager to apply academic knowledge and develop practical skills through internships and entry-level opportunities. Quick learner with strong work ethic and dedication to professional growth.`;
+      return `Computer science student at FAST NUCES Karachi. Focused on React, Node.js and building clean web systems. Based in ${city}, looking for an internship to build real-world experience.`;
     }
-    return `Results-driven ${jobTitle || "professional"} with hands-on experience in ${skills || "multiple domains"}, based in ${city}. Committed to delivering high-quality outcomes and contributing to organizational success. Skilled in problem-solving, teamwork, and adapting to dynamic work environments in the Pakistani job market.`;
+    return `${jobTitle || "Software engineer"} with ${formData.personalInfo.yearsOfExp || "3"} years experience in ${skills || "software development"}. Built 3 production web applications serving 10,000+ users. Based in ${city}, open to hybrid or remote work.`;
   };
 
   // Main CV Generation Handler — works WITH or WITHOUT Gemini AI

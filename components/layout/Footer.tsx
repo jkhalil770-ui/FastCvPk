@@ -4,12 +4,23 @@ import React from "react";
 import Link from "next/link";
 import { useLanguage } from "@/lib/LanguageContext";
 import { getTranslation } from "@/lib/translations";
+import { useToast } from "@/components/ui/Toast";
 
 /**
  * Premium Dark Glassmorphic Footer for SEO and navigation.
  */
 export function Footer() {
   const { language } = useLanguage();
+  const { toast } = useToast();
+
+  const showSocialsToast = () => {
+    toast(
+      "🚀 Coming Soon!",
+      "info",
+      language === "ur" ? "Jald aa raha hai" : "Jald aa raha hai",
+      2000
+    );
+  };
 
   return (
     <footer className="w-full border-t border-white/5 bg-slate-950/40 mt-auto">
@@ -30,12 +41,12 @@ export function Footer() {
             <p className="text-[10px] text-textSecondary/70 font-inter">
               Contact: fastcvpk.online@gmail.com
             </p>
-            <div className="flex gap-3 text-xs text-blue-400 font-semibold font-inter pt-1">
-              <a href="#" className="hover:text-white transition-colors">Facebook</a>
+            <div className="flex items-center gap-3 text-xs text-blue-400 font-semibold font-inter pt-1">
+              <button onClick={showSocialsToast} className="hover:text-white transition-colors outline-none cursor-pointer">Facebook</button>
               <span className="text-white/10">|</span>
-              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <button onClick={showSocialsToast} className="hover:text-white transition-colors outline-none cursor-pointer">Instagram</button>
               <span className="text-white/10">|</span>
-              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+              <button onClick={showSocialsToast} className="hover:text-white transition-colors outline-none cursor-pointer">LinkedIn</button>
             </div>
           </div>
 

@@ -25,6 +25,14 @@ import {
 export default function LandingPage() {
   const { language } = useLanguage();
   const [openFaq, setOpenFaq] = useState<number | null>(null);
+  const [activeCardIdx, setActiveCardIdx] = useState(0);
+
+  React.useEffect(() => {
+    const timer = setInterval(() => {
+      setActiveCardIdx((prev) => (prev + 1) % 3);
+    }, 3000);
+    return () => clearInterval(timer);
+  }, []);
 
   // Stats definition
   const stats = [
@@ -236,74 +244,364 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* Realistic Floating Static CV Preview Card (High Fidelity) */}
-        <div className="relative mt-16 w-full max-w-2xl rounded-2xl border border-white/10 bg-slate-900/40 p-4 sm:p-6 shadow-2xl backdrop-blur-md overflow-hidden flex items-center justify-center select-none group animate-float">
-          {/* Neon background lights */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-purple-500/10 opacity-60 pointer-events-none" />
-          
-          {/* Mini A4 CV Card */}
-          <div className="w-full max-w-lg bg-white text-slate-800 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-200 p-5 sm:p-7 text-left transition-transform duration-500 group-hover:scale-[1.01] relative font-inter">
-            {/* Blue accent indicator */}
-            <div className="absolute left-0 top-0 w-1.5 h-full bg-[#3B82F6] rounded-l-xl" />
+        {/* Premium Animated Pakistani CV Previews (High Fidelity) */}
+        <div className="w-full max-w-5xl mt-16 relative">
+          <style dangerouslySetInnerHTML={{ __html: `
+            @keyframes floatCard1 {
+              0%, 100% { transform: translateY(0px) rotate(-3deg); }
+              50% { transform: translateY(-8px) rotate(-3deg); }
+            }
+            @keyframes floatCard2 {
+              0%, 100% { transform: translateY(0px) rotate(0deg); }
+              50% { transform: translateY(-12px) rotate(0deg); }
+            }
+            @keyframes floatCard3 {
+              0%, 100% { transform: translateY(0px) rotate(3deg); }
+              50% { transform: translateY(-7px) rotate(3deg); }
+            }
+            .animate-float-1 {
+              animation: floatCard1 3s ease-in-out infinite;
+              will-change: transform;
+            }
+            .animate-float-2 {
+              animation: floatCard2 4s ease-in-out infinite;
+              will-change: transform;
+            }
+            .animate-float-3 {
+              animation: floatCard3 5s ease-in-out infinite;
+              will-change: transform;
+            }
+          `}} />
+
+          {/* DESKTOP VIEW: 3 Cards side by side with GPU accelerated gentle floating and custom rotations */}
+          <div className="hidden md:grid grid-cols-3 gap-8 relative z-10 select-none">
             
-            {/* Header info */}
-            <div className="border-b border-slate-200 pb-3 mb-4 flex justify-between items-start pl-2">
+            {/* CARD 1 — Ayesha Malik (ATS CV) */}
+            <div className="animate-float-1 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(59,130,246,0.15)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] border border-blue-500/10 hover:border-blue-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+              {/* Blue accent indicator */}
+              <div className="absolute left-0 top-0 w-1 h-full bg-[#3B82F6] rounded-l-xl" />
+              
               <div>
-                <h3 className="text-lg sm:text-xl font-black tracking-tight text-slate-950 uppercase leading-none">
-                  Muhammad Ahmed
-                </h3>
-                <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#3B82F6] mt-1.5">
-                  Software Engineer
-                </p>
-              </div>
-              <span className="text-[8px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded tracking-wider shadow-sm">
-                Candidate Profile
-              </span>
-            </div>
-
-            {/* Profile Summary */}
-            <div className="mb-4 pl-2">
-              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
-                Executive Profile
-              </h4>
-              <p className="text-[10px] text-slate-500 leading-relaxed">
-                Innovative and results-driven Software Engineer with hands-on expertise building scalable web architectures and robust APIs. Skilled in translating high-level business goals into clean, reliable React and Node code structures.
-              </p>
-            </div>
-
-            {/* Experience */}
-            <div className="mb-4 pl-2">
-              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1.5 border-b border-slate-100 pb-0.5">
-                Professional Experience
-              </h4>
-              <div className="space-y-2">
-                <div>
-                  <div className="flex justify-between items-baseline text-[10px] font-bold text-slate-800">
-                    <span>Software Engineer <span className="font-normal text-slate-400">at</span> Tech Solutions Pvt Ltd</span>
-                    <span className="text-slate-400 text-[8px] font-semibold">2024 — Present</span>
+                <div className="flex justify-between items-start mb-3 pl-1">
+                  <div>
+                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">
+                      Ayesha Malik
+                    </h3>
+                    <p className="text-[7.5px] font-black uppercase tracking-widest text-[#3B82F6] mt-1">
+                      Marketing Manager
+                    </p>
+                    <p className="text-[6.5px] font-semibold text-slate-400 mt-0.5">
+                      Lahore • Unilever Pakistan
+                    </p>
                   </div>
-                  <ul className="list-disc pl-4 text-[9px] text-slate-500 space-y-0.5 leading-relaxed mt-1">
-                    <li>Developed high-throughput API endpoints utilizing Node.js, reducing database query latencies by 35%.</li>
-                    <li>Architected dynamic responsive dashboards in React, elevating overall client retention score.</li>
-                  </ul>
+                  <span className="text-[5.5px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">
+                    ATS Friendly
+                  </span>
+                </div>
+
+                {/* Profile Summary */}
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">
+                    Executive Profile
+                  </h4>
+                  <p className="text-[7.5px] text-slate-500 leading-relaxed">
+                    Innovative Marketing Manager with 4+ years of experience leading unilever digital campaigns. Proven record boosting organic web conversions and social reach.
+                  </p>
+                </div>
+
+                {/* Experience */}
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                    Professional History
+                  </h4>
+                  <div>
+                    <div className="flex justify-between items-baseline text-[7.5px] font-bold text-slate-800">
+                      <span>Marketing Manager <span className="font-normal text-slate-400">at</span> Unilever</span>
+                      <span className="text-slate-400 text-[6px] font-medium">2022 — Present</span>
+                    </div>
+                    <ul className="list-disc pl-3 text-[6.5px] text-slate-500 space-y-0.5 leading-relaxed mt-0.5">
+                      <li>Led cross-functional SEO campaigns, raising web retention by 40%.</li>
+                      <li>Optimized social media ad streams, driving organic conversions.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skills */}
+              <div className="pl-1">
+                <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                  Core Skills
+                </h4>
+                <div className="flex flex-wrap gap-1">
+                  {["Digital Marketing", "SEO", "Social Media", "Canva"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[6.5px] font-bold rounded tracking-wide shadow-sm">
+                      {skill}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
 
-            {/* Skills */}
-            <div className="pl-2">
-              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1.5 border-b border-slate-100 pb-0.5">
-                Key Expertise
-              </h4>
-              <div className="flex flex-wrap gap-1">
-                {["Python", "React", "Node.js", "TypeScript", "AWS", "FastAPI"].map((skill, sIdx) => (
-                  <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-2 py-0.5 text-[8px] font-bold rounded tracking-wide shadow-sm">
-                    {skill}
+            {/* CARD 2 — Ahmed Hassan (Student CV) */}
+            <div className="animate-float-2 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(16,185,129,0.15)] hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] border border-emerald-500/10 hover:border-emerald-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+              {/* Green accent indicator */}
+              <div className="absolute top-0 inset-x-0 h-1 bg-[#10B981] rounded-t-xl" />
+              
+              <div>
+                <div className="flex justify-between items-start mb-3">
+                  <div>
+                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">
+                      Ahmed Hassan
+                    </h3>
+                    <p className="text-[7.5px] font-black uppercase tracking-widest text-[#10B981] mt-1">
+                      CS Student
+                    </p>
+                    <p className="text-[6.5px] font-semibold text-slate-400 mt-0.5">
+                      Karachi • FAST NUCES
+                    </p>
+                  </div>
+                  <span className="text-[5.5px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">
+                    Student CV
                   </span>
-                ))}
+                </div>
+
+                {/* Profile Summary */}
+                <div className="mb-3">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">
+                    Objective
+                  </h4>
+                  <p className="text-[7.5px] text-slate-500 leading-relaxed">
+                    Motivated Computer Science student at FAST NUCES. Eager to apply algorithmic knowledge and design rich full-stack web applications.
+                  </p>
+                </div>
+
+                {/* Education */}
+                <div className="mb-3">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                    Education
+                  </h4>
+                  <div>
+                    <div className="flex justify-between items-baseline text-[7.5px] font-bold text-slate-800">
+                      <span>BS Computer Science <span className="font-normal text-slate-400">at</span> FAST NUCES</span>
+                      <span className="text-slate-400 text-[6px] font-medium">2023 — Present</span>
+                    </div>
+                    <ul className="list-disc pl-3 text-[6.5px] text-slate-500 space-y-0.5 leading-relaxed mt-0.5">
+                      <li>Current CGPA: 3.8 / 4.0.</li>
+                      <li>Completed advanced course structures in Algorithms and Web Engineering.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skills */}
+              <div>
+                <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                  Expertise
+                </h4>
+                <div className="flex flex-wrap gap-1">
+                  {["Python", "React", "Java"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[6.5px] font-bold rounded tracking-wide shadow-sm">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {/* CARD 3 — Usman Tariq (Global Pro Specialist) */}
+            <div className="animate-float-3 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(168,85,247,0.15)] hover:shadow-[0_20px_50px_rgba(168,85,247,0.3)] border border-purple-500/10 hover:border-purple-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+              {/* Purple accent indicator */}
+              <div className="absolute left-0 top-0 w-1 h-full bg-purple-600 rounded-l-xl" />
+              
+              <div>
+                <div className="flex justify-between items-start mb-3 pl-1">
+                  <div className="flex items-center gap-1.5">
+                    {/* Circle Avatar placeholder */}
+                    <div className="w-6 h-6 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-[7.5px] flex items-center justify-center">
+                      UT
+                    </div>
+                    <div>
+                      <h3 className="text-[10px] font-black tracking-tight text-slate-900 leading-none">
+                        Usman Tariq
+                      </h3>
+                      <p className="text-[6.5px] font-black uppercase tracking-widest text-purple-600 mt-0.5">
+                        Senior Software Engineer
+                      </p>
+                      <div className="flex items-center gap-1 mt-0.5">
+                        <span className="text-[5.5px] font-semibold text-slate-400">Islamabad • Systems Ltd</span>
+                        <span className="text-[4.5px] font-bold text-purple-600 bg-purple-50 px-1 py-0.2 rounded">Remote</span>
+                      </div>
+                    </div>
+                  </div>
+                  <span className="text-[5.5px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">
+                    Global Pro 🌍
+                  </span>
+                </div>
+
+                {/* Profile Summary */}
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">
+                    Summary
+                  </h4>
+                  <p className="text-[7.5px] text-slate-500 leading-relaxed">
+                    Senior Software Engineer with 6+ years designing scalable AWS microservices, cloud Docker configurations, and dynamic React frontends.
+                  </p>
+                </div>
+
+                {/* Experience */}
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                    Experience
+                  </h4>
+                  <div>
+                    <div className="flex justify-between items-baseline text-[7.5px] font-bold text-slate-800">
+                      <span>Senior Engineer <span className="font-normal text-slate-400">at</span> Systems Ltd</span>
+                      <span className="text-slate-400 text-[6px] font-medium">2021 — Present</span>
+                    </div>
+                    <ul className="list-disc pl-3 text-[6.5px] text-slate-500 space-y-0.5 leading-relaxed mt-0.5">
+                      <li>Architected remote Node API endpoints for global high-traffic clients.</li>
+                      <li>Deployed clean Kubernetes/Docker stacks inside Amazon cloud networks.</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Skills */}
+              <div className="pl-1">
+                <h4 className="text-[6px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                  Tech Stack
+                </h4>
+                <div className="flex flex-wrap gap-1">
+                  {["React", "Node.js", "AWS", "Docker"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[6.5px] font-bold rounded tracking-wide shadow-sm">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
           </div>
+
+          {/* MOBILE VIEW: Show 1 card at a time with smooth fade auto-cycling every 3 seconds */}
+          <div className="md:hidden flex justify-center items-center h-[340px] relative w-full overflow-hidden select-none">
+            
+            {/* MOBILE CARD 1 */}
+            <div className={`absolute transition-all duration-700 ease-in-out transform ${
+              activeCardIdx === 0 
+                ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
+                : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(59,130,246,0.2)] border border-blue-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+              <div className="absolute left-0 top-0 w-1 h-full bg-[#3B82F6] rounded-l-xl" />
+              <div>
+                <div className="flex justify-between items-start mb-2 pl-1">
+                  <div>
+                    <h3 className="text-xs font-black tracking-tight text-slate-900 leading-none">Ayesha Malik</h3>
+                    <p className="text-[6.5px] font-black uppercase tracking-widest text-[#3B82F6] mt-0.5">Marketing Manager</p>
+                    <p className="text-[5.5px] text-slate-400">Lahore • Unilever Pakistan</p>
+                  </div>
+                  <span className="text-[5px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded">ATS Friendly</span>
+                </div>
+                <div className="mb-2 pl-1">
+                  <p className="text-[7px] text-slate-500 leading-normal">
+                    Innovative Marketing Manager with 4+ years of experience leading Unilever campaigns. Boosted organic web conversions by 40%.
+                  </p>
+                </div>
+              </div>
+              <div className="pl-1">
+                <div className="flex flex-wrap gap-1">
+                  {["Digital Marketing", "SEO", "Social"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* MOBILE CARD 2 */}
+            <div className={`absolute transition-all duration-700 ease-in-out transform ${
+              activeCardIdx === 1 
+                ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
+                : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(16,185,129,0.2)] border border-emerald-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+              <div className="absolute top-0 inset-x-0 h-1 bg-[#10B981] rounded-t-xl" />
+              <div>
+                <div className="flex justify-between items-start mb-2">
+                  <div>
+                    <h3 className="text-xs font-black tracking-tight text-slate-900 leading-none">Ahmed Hassan</h3>
+                    <p className="text-[6.5px] font-black uppercase tracking-widest text-[#10B981] mt-0.5">CS Student</p>
+                    <p className="text-[5.5px] text-slate-400">Karachi • FAST NUCES</p>
+                  </div>
+                  <span className="text-[5px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">Student CV</span>
+                </div>
+                <div className="mb-2">
+                  <p className="text-[7px] text-slate-500 leading-normal">
+                    BS CS student at FAST NUCES Karachi. Strong algorithmic foundation, current CGPA: 3.8/4.0. Eager to code full-stack applications.
+                  </p>
+                </div>
+              </div>
+              <div>
+                <div className="flex flex-wrap gap-1">
+                  {["Python", "React", "Java"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* MOBILE CARD 3 */}
+            <div className={`absolute transition-all duration-700 ease-in-out transform ${
+              activeCardIdx === 2 
+                ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
+                : "opacity-0 scale-95 translate-y-4 pointer-events-none"
+            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(168,85,247,0.2)] border border-purple-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+              <div className="absolute left-0 top-0 w-1 h-full bg-purple-600 rounded-l-xl" />
+              <div>
+                <div className="flex justify-between items-start mb-2 pl-1">
+                  <div className="flex items-center gap-1">
+                    <div className="w-5 h-5 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-[6.5px] flex items-center justify-center">UT</div>
+                    <div>
+                      <h3 className="text-[8.5px] font-black tracking-tight text-slate-900 leading-none">Usman Tariq</h3>
+                      <p className="text-[5.5px] font-black uppercase tracking-widest text-purple-600 mt-0.5">Senior Engineer</p>
+                    </div>
+                  </div>
+                  <span className="text-[5px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-1.5 py-0.5 rounded">Global Pro 🌍</span>
+                </div>
+                <div className="mb-2 pl-1">
+                  <p className="text-[7px] text-slate-500 leading-normal">
+                    Senior Software Engineer with 6+ years architecture history. Specializes in scalable remote React/Node endpoints and Docker clouds.
+                  </p>
+                </div>
+              </div>
+              <div className="pl-1">
+                <div className="flex flex-wrap gap-1">
+                  {["React", "Node.js", "Docker"].map((skill, sIdx) => (
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                      {skill}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          {/* Dots Indicator for Mobile to visualize cycling */}
+          <div className="flex md:hidden justify-center items-center gap-2 mt-2 select-none">
+            {[0, 1, 2].map((idx) => (
+              <button
+                key={idx}
+                onClick={() => setActiveCardIdx(idx)}
+                className={`w-1.5 h-1.5 rounded-full transition-all duration-300 ${
+                  activeCardIdx === idx ? "bg-blue-500 w-3" : "bg-white/20"
+                }`}
+              />
+            ))}
+          </div>
+
         </div>
       </section>
 
