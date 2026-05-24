@@ -24,16 +24,19 @@ export default function PWAInstaller() {
   const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
-    // ── Force Cache Clearing on first load of version 3 ────────
+    // ── Force Cache Clearing on first load of version 5 ────────
     if (typeof window !== "undefined" && "caches" in window) {
-      const forceCleared = localStorage.getItem("fastcv_cache_v3_cleared");
+      const forceCleared = localStorage.getItem("fastcv_cache_v5_cleared");
       if (forceCleared !== "true") {
         caches.keys().then((names) => {
           return Promise.all(names.map((name) => caches.delete(name)));
         }).then(() => {
-          localStorage.setItem("fastcv_cache_v3_cleared", "true");
-          console.log("PWA Caches successfully cleared programmatically!");
-          window.location.reload(); // force reload to fetch fresh content
+          localStorage.setItem("fastcv_cache_v5_cleared", "true");
+          // Remove old version keys too
+          localStorage.removeItem("fastcv_cache_v3_cleared");
+          localStorage.removeItem("fastcv_cache_v4_cleared");
+          console.log("[FastCV] All old caches cleared, loading fresh CSS...");
+          window.location.reload();
         });
       }
     }
