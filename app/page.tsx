@@ -484,34 +484,35 @@ export default function LandingPage() {
           </div>
 
           {/* MOBILE VIEW: Show 1 card at a time with smooth fade auto-cycling every 3 seconds */}
-          <div className="md:hidden flex justify-center items-center h-[340px] relative w-full overflow-hidden select-none">
+          <div className="md:hidden flex justify-center items-center h-[390px] relative w-full overflow-hidden select-none">
             
             {/* MOBILE CARD 1 */}
             <div className={`absolute transition-all duration-700 ease-in-out transform ${
               activeCardIdx === 0 
                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
                 : "opacity-0 scale-95 translate-y-4 pointer-events-none"
-            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(59,130,246,0.2)] border border-blue-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+            } w-[270px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(59,130,246,0.2)] border border-blue-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
               <div className="absolute left-0 top-0 w-1 h-full bg-[#3B82F6] rounded-l-xl" />
               <div>
-                <div className="flex justify-between items-start mb-2 pl-1">
+                <div className="flex justify-between items-start mb-3 pl-1">
                   <div>
-                    <h3 className="text-xs font-black tracking-tight text-slate-900 leading-none">Ayesha Malik</h3>
-                    <p className="text-[6.5px] font-black uppercase tracking-widest text-[#3B82F6] mt-0.5">Marketing Manager</p>
-                    <p className="text-[5.5px] text-slate-400">Lahore • Unilever Pakistan</p>
+                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">Ayesha Malik</h3>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-[#3B82F6] mt-1">Marketing Manager</p>
+                    <p className="text-[7.5px] font-semibold text-slate-400 mt-0.5">Lahore • Unilever Pakistan</p>
                   </div>
-                  <span className="text-[5px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded">ATS Friendly</span>
+                  <span className="text-[6.5px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">ATS Friendly</span>
                 </div>
-                <div className="mb-2 pl-1">
-                  <p className="text-[7px] text-slate-500 leading-normal">
-                    Innovative Marketing Manager with 4+ years of experience leading Unilever campaigns. Boosted organic web conversions by 40%.
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6.5px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">Executive Profile</h4>
+                  <p className="text-[8.5px] text-slate-500 leading-relaxed font-medium">
+                    Innovative Marketing Manager with 4+ years of experience leading Unilever digital campaigns. Boosted organic web conversions by 40%.
                   </p>
                 </div>
               </div>
               <div className="pl-1">
                 <div className="flex flex-wrap gap-1">
                   {["Digital Marketing", "SEO", "Social"].map((skill, sIdx) => (
-                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[7.5px] font-bold rounded shadow-sm">
                       {skill}
                     </span>
                   ))}
@@ -524,27 +525,28 @@ export default function LandingPage() {
               activeCardIdx === 1 
                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
                 : "opacity-0 scale-95 translate-y-4 pointer-events-none"
-            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(16,185,129,0.2)] border border-emerald-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+            } w-[270px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(16,185,129,0.2)] border border-emerald-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
               <div className="absolute top-0 inset-x-0 h-1 bg-[#10B981] rounded-t-xl" />
               <div>
-                <div className="flex justify-between items-start mb-2">
+                <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="text-xs font-black tracking-tight text-slate-900 leading-none">Ahmed Hassan</h3>
-                    <p className="text-[6.5px] font-black uppercase tracking-widest text-[#10B981] mt-0.5">CS Student</p>
-                    <p className="text-[5.5px] text-slate-400">Karachi • FAST NUCES</p>
+                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">Ahmed Hassan</h3>
+                    <p className="text-[8px] font-black uppercase tracking-widest text-[#10B981] mt-1">CS Student</p>
+                    <p className="text-[7.5px] font-semibold text-slate-400 mt-0.5">Karachi • FAST NUCES</p>
                   </div>
-                  <span className="text-[5px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded">Student CV</span>
+                  <span className="text-[6.5px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">Student CV</span>
                 </div>
-                <div className="mb-2">
-                  <p className="text-[7px] text-slate-500 leading-normal">
-                    BS CS student at FAST NUCES Karachi. Strong algorithmic foundation, current CGPA: 3.8/4.0. Eager to code full-stack applications.
+                <div className="mb-3">
+                  <h4 className="text-[6.5px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">Objective</h4>
+                  <p className="text-[8.5px] text-slate-500 leading-relaxed font-medium">
+                    BS CS student at FAST NUCES Karachi. Strong algorithmic foundation, current CGPA: 3.8/4.0. Eager to code full-stack web applications.
                   </p>
                 </div>
               </div>
               <div>
                 <div className="flex flex-wrap gap-1">
                   {["Python", "React", "Java"].map((skill, sIdx) => (
-                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[7.5px] font-bold rounded shadow-sm">
                       {skill}
                     </span>
                   ))}
@@ -557,21 +559,22 @@ export default function LandingPage() {
               activeCardIdx === 2 
                 ? "opacity-100 scale-100 translate-y-0 pointer-events-auto" 
                 : "opacity-0 scale-95 translate-y-4 pointer-events-none"
-            } w-[260px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(168,85,247,0.2)] border border-purple-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
+            } w-[270px] bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(168,85,247,0.2)] border border-purple-500/10 p-5 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between`}>
               <div className="absolute left-0 top-0 w-1 h-full bg-purple-600 rounded-l-xl" />
               <div>
-                <div className="flex justify-between items-start mb-2 pl-1">
-                  <div className="flex items-center gap-1">
-                    <div className="w-5 h-5 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-[6.5px] flex items-center justify-center">UT</div>
+                <div className="flex justify-between items-start mb-3 pl-1">
+                  <div className="flex items-center gap-1.5">
+                    <div className="w-5.5 h-5.5 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-[8px] flex items-center justify-center">UT</div>
                     <div>
-                      <h3 className="text-[8.5px] font-black tracking-tight text-slate-900 leading-none">Usman Tariq</h3>
-                      <p className="text-[5.5px] font-black uppercase tracking-widest text-purple-600 mt-0.5">Senior Engineer</p>
+                      <h3 className="text-[10px] font-black tracking-tight text-slate-900 leading-none">Usman Tariq</h3>
+                      <p className="text-[7.5px] font-black uppercase tracking-widest text-purple-600 mt-0.5">Senior Engineer</p>
                     </div>
                   </div>
-                  <span className="text-[5px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-1.5 py-0.5 rounded">Global Pro 🌍</span>
+                  <span className="text-[6.5px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-1.5 py-0.5 rounded tracking-wide shadow-sm">Global Pro 🌍</span>
                 </div>
-                <div className="mb-2 pl-1">
-                  <p className="text-[7px] text-slate-500 leading-normal">
+                <div className="mb-3 pl-1">
+                  <h4 className="text-[6.5px] font-black uppercase tracking-wider text-slate-400 mb-0.5 border-b border-slate-100 pb-0.5">Summary</h4>
+                  <p className="text-[8.5px] text-slate-500 leading-relaxed font-medium">
                     Senior Software Engineer with 6+ years architecture history. Specializes in scalable remote React/Node endpoints and Docker clouds.
                   </p>
                 </div>
@@ -579,7 +582,7 @@ export default function LandingPage() {
               <div className="pl-1">
                 <div className="flex flex-wrap gap-1">
                   {["React", "Node.js", "Docker"].map((skill, sIdx) => (
-                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[5.5px] font-bold rounded">
+                    <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-1.5 py-0.5 text-[7.5px] font-bold rounded shadow-sm">
                       {skill}
                     </span>
                   ))}
