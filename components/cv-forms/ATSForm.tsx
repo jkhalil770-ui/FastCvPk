@@ -3,9 +3,44 @@
 import React, { useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import Select from "@/components/ui/Select";
 import VoiceInput from "@/components/ui/VoiceInput";
 import { Trash2, Sparkles, Plus } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
+
+const months = [
+  { value: "Jan", label: "Jan" },
+  { value: "Feb", label: "Feb" },
+  { value: "Mar", label: "Mar" },
+  { value: "Apr", label: "Apr" },
+  { value: "May", label: "May" },
+  { value: "Jun", label: "Jun" },
+  { value: "Jul", label: "Jul" },
+  { value: "Aug", label: "Aug" },
+  { value: "Sep", label: "Sep" },
+  { value: "Oct", label: "Oct" },
+  { value: "Nov", label: "Nov" },
+  { value: "Dec", label: "Dec" }
+];
+
+const expYears = Array.from({ length: 2026 - 2000 + 1 }, (_, i) => {
+  const y = String(2000 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const eduYears = Array.from({ length: 2026 - 1990 + 1 }, (_, i) => {
+  const y = String(1990 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const getMonthAndYear = (dateStr: string) => {
+  if (!dateStr) return { month: "", year: "" };
+  const parts = dateStr.trim().split(" ");
+  return {
+    month: parts[0] || "",
+    year: parts[1] || ""
+  };
+};
 
 interface ATSFormProps {
   formData: any;
@@ -273,18 +308,58 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  label="From Date (e.g. Jan 2022)"
-                  value={exp.fromDate}
-                  onChange={(e) => handleExperienceChange(idx, "fromDate", e.target.value)}
-                />
-                {!exp.currentlyWorking && (
-                  <Input
-                    label="To Date (e.g. Present)"
-                    value={exp.toDate}
-                    onChange={(e) => handleExperienceChange(idx, "toDate", e.target.value)}
-                  />
-                )}
+                {/* From Date Dropdowns */}
+                <div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select
+                      label="From Month"
+                      placeholder="Month"
+                      value={getMonthAndYear(exp.fromDate).month}
+                      onChange={(e) => handleExperienceChange(idx, "fromDate", `${e.target.value} ${getMonthAndYear(exp.fromDate).year}`.trim())}
+                      options={months}
+                    />
+                    <Select
+                      label="From Year"
+                      placeholder="Year"
+                      value={getMonthAndYear(exp.fromDate).year}
+                      onChange={(e) => handleExperienceChange(idx, "fromDate", `${getMonthAndYear(exp.fromDate).month} ${e.target.value}`.trim())}
+                      options={expYears}
+                    />
+                  </div>
+                </div>
+
+                {/* To Date Dropdowns or Present */}
+                <div>
+                  {exp.currentlyWorking ? (
+                    <div className="w-full">
+                      <div className="relative">
+                        <div className="peer w-full rounded-lg bg-surface/50 border border-white/5 px-4 py-3 text-textSecondary text-sm outline-none font-inter text-left h-[46px] flex items-center select-none">
+                          Present
+                        </div>
+                        <label className="absolute text-xs duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-surface px-2 left-2 text-textSecondary">
+                          To Date
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                      <Select
+                        label="To Month"
+                        placeholder="Month"
+                        value={getMonthAndYear(exp.toDate).month}
+                        onChange={(e) => handleExperienceChange(idx, "toDate", `${e.target.value} ${getMonthAndYear(exp.toDate).year}`.trim())}
+                        options={months}
+                      />
+                      <Select
+                        label="To Year"
+                        placeholder="Year"
+                        value={getMonthAndYear(exp.toDate).year}
+                        onChange={(e) => handleExperienceChange(idx, "toDate", `${getMonthAndYear(exp.toDate).month} ${e.target.value}`.trim())}
+                        options={expYears}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -292,7 +367,15 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
                   type="checkbox"
                   id={`current-${exp.id}`}
                   checked={exp.currentlyWorking}
-                  onChange={(e) => handleExperienceChange(idx, "currentlyWorking", e.target.checked)}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    handleExperienceChange(idx, "currentlyWorking", checked);
+                    if (checked) {
+                      handleExperienceChange(idx, "toDate", "Present");
+                    } else {
+                      handleExperienceChange(idx, "toDate", "");
+                    }
+                  }}
                   className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
                 />
                 <label htmlFor={`current-${exp.id}`} className="text-xs text-textSecondary select-none">
@@ -375,10 +458,12 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
+                <Select
                   label="Passing Year"
+                  placeholder="Select Year"
                   value={edu.year}
                   onChange={(e) => handleEducationChange(idx, "year", e.target.value)}
+                  options={eduYears}
                 />
                 <Input
                   label="Grade / CGPA (e.g. 3.4 CGPA or 85%)"

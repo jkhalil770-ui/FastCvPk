@@ -3,9 +3,53 @@
 import React, { useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import Select from "@/components/ui/Select";
 import VoiceInput from "@/components/ui/VoiceInput";
 import { useToast } from "@/components/ui/Toast";
 import { Sparkles } from "lucide-react";
+
+const days = Array.from({ length: 31 }, (_, i) => {
+  const d = String(i + 1);
+  return { value: d, label: d };
+});
+
+const dobMonths = [
+  { value: "January", label: "January" },
+  { value: "February", label: "February" },
+  { value: "March", label: "March" },
+  { value: "April", label: "April" },
+  { value: "May", label: "May" },
+  { value: "June", label: "June" },
+  { value: "July", label: "July" },
+  { value: "August", label: "August" },
+  { value: "September", label: "September" },
+  { value: "October", label: "October" },
+  { value: "November", label: "November" },
+  { value: "December", label: "December" }
+];
+
+const dobYears = Array.from({ length: 2010 - 1960 + 1 }, (_, i) => {
+  const y = String(1960 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const eduYears = Array.from({ length: 2026 - 1990 + 1 }, (_, i) => {
+  const y = String(1990 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const parseDob = (dobStr: string) => {
+  if (!dobStr) return { day: "", month: "", year: "" };
+  const parts = dobStr.trim().split(/\s+/);
+  if (parts.length === 3) {
+    return {
+      day: parts[0] || "",
+      month: parts[1] || "",
+      year: parts[2] || ""
+    };
+  }
+  return { day: "", month: "", year: "" };
+};
 
 interface BiodataFormProps {
   formData: any;
@@ -139,13 +183,43 @@ export default function BiodataForm({ formData, setFormData, step }: BiodataForm
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <Input
-            label="تاریخ پیدائش (مثلاً 15 اگست 1998)"
-            value={formData.personalInfo.dob || ""}
-            onChange={(e) => updatePersonalInfo("dob", e.target.value)}
-            isUrdu={true}
-            required
-          />
+          <div className="w-full">
+            <div className="grid grid-cols-3 gap-2">
+              <Select
+                label="دن (Day)"
+                placeholder="Day"
+                value={parseDob(formData.personalInfo.dob).day}
+                onChange={(e) => {
+                  const current = parseDob(formData.personalInfo.dob);
+                  updatePersonalInfo("dob", `${e.target.value} ${current.month || "January"} ${current.year || "1990"}`);
+                }}
+                options={days}
+                required
+              />
+              <Select
+                label="مہینہ (Month)"
+                placeholder="Month"
+                value={parseDob(formData.personalInfo.dob).month}
+                onChange={(e) => {
+                  const current = parseDob(formData.personalInfo.dob);
+                  updatePersonalInfo("dob", `${current.day || "1"} ${e.target.value} ${current.year || "1990"}`);
+                }}
+                options={dobMonths}
+                required
+              />
+              <Select
+                label="سال (Year)"
+                placeholder="Year"
+                value={parseDob(formData.personalInfo.dob).year}
+                onChange={(e) => {
+                  const current = parseDob(formData.personalInfo.dob);
+                  updatePersonalInfo("dob", `${current.day || "1"} ${current.month || "January"} ${e.target.value}`);
+                }}
+                options={dobYears}
+                required
+              />
+            </div>
+          </div>
           <Input
             label="شناختی کارڈ نمبر (CNIC)"
             value={formData.personalInfo.cnic || ""}
@@ -228,10 +302,12 @@ export default function BiodataForm({ formData, setFormData, step }: BiodataForm
               onChange={(e) => handleEducationChange("matric", "board", e.target.value)}
               isUrdu={true}
             />
-            <Input
+            <Select
               label="سال"
+              placeholder="Select Year"
               value={edu.matric?.year || ""}
               onChange={(e) => handleEducationChange("matric", "year", e.target.value)}
+              options={eduYears}
               isUrdu={true}
             />
             <Input
@@ -253,10 +329,12 @@ export default function BiodataForm({ formData, setFormData, step }: BiodataForm
               onChange={(e) => handleEducationChange("inter", "board", e.target.value)}
               isUrdu={true}
             />
-            <Input
+            <Select
               label="سال"
+              placeholder="Select Year"
               value={edu.inter?.year || ""}
               onChange={(e) => handleEducationChange("inter", "year", e.target.value)}
+              options={eduYears}
               isUrdu={true}
             />
             <Input
@@ -278,10 +356,12 @@ export default function BiodataForm({ formData, setFormData, step }: BiodataForm
               onChange={(e) => handleEducationChange("graduation", "university", e.target.value)}
               isUrdu={true}
             />
-            <Input
+            <Select
               label="سال"
+              placeholder="Select Year"
               value={edu.graduation?.year || ""}
               onChange={(e) => handleEducationChange("graduation", "year", e.target.value)}
+              options={eduYears}
               isUrdu={true}
             />
             <Input
@@ -303,10 +383,12 @@ export default function BiodataForm({ formData, setFormData, step }: BiodataForm
               onChange={(e) => handleEducationChange("masters", "university", e.target.value)}
               isUrdu={true}
             />
-            <Input
+            <Select
               label="سال"
+              placeholder="Select Year"
               value={edu.masters?.year || ""}
               onChange={(e) => handleEducationChange("masters", "year", e.target.value)}
+              options={eduYears}
               isUrdu={true}
             />
             <Input

@@ -3,9 +3,44 @@
 import React, { useState, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import Select from "@/components/ui/Select";
 import VoiceInput from "@/components/ui/VoiceInput";
 import { Trash2, Sparkles, Plus, X } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
+
+const months = [
+  { value: "Jan", label: "Jan" },
+  { value: "Feb", label: "Feb" },
+  { value: "Mar", label: "Mar" },
+  { value: "Apr", label: "Apr" },
+  { value: "May", label: "May" },
+  { value: "Jun", label: "Jun" },
+  { value: "Jul", label: "Jul" },
+  { value: "Aug", label: "Aug" },
+  { value: "Sep", label: "Sep" },
+  { value: "Oct", label: "Oct" },
+  { value: "Nov", label: "Nov" },
+  { value: "Dec", label: "Dec" }
+];
+
+const expYears = Array.from({ length: 2026 - 2000 + 1 }, (_, i) => {
+  const y = String(2000 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const eduYears = Array.from({ length: 2026 - 1990 + 1 }, (_, i) => {
+  const y = String(1990 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const getMonthAndYear = (dateStr: string) => {
+  if (!dateStr) return { month: "", year: "" };
+  const parts = dateStr.trim().split(" ");
+  return {
+    month: parts[0] || "",
+    year: parts[1] || ""
+  };
+};
 
 interface GlobalProFormProps {
   formData: any;
@@ -521,18 +556,58 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  label="From Date (e.g. Jan 2022)"
-                  value={exp.fromDate}
-                  onChange={(e) => handleExperienceChange(idx, "fromDate", e.target.value)}
-                />
-                {!exp.currentlyWorking && (
-                  <Input
-                    label="To Date (e.g. Present)"
-                    value={exp.toDate}
-                    onChange={(e) => handleExperienceChange(idx, "toDate", e.target.value)}
-                  />
-                )}
+                {/* From Date Dropdowns */}
+                <div>
+                  <div className="grid grid-cols-2 gap-2">
+                    <Select
+                      label="From Month"
+                      placeholder="Month"
+                      value={getMonthAndYear(exp.fromDate).month}
+                      onChange={(e) => handleExperienceChange(idx, "fromDate", `${e.target.value} ${getMonthAndYear(exp.fromDate).year}`.trim())}
+                      options={months}
+                    />
+                    <Select
+                      label="From Year"
+                      placeholder="Year"
+                      value={getMonthAndYear(exp.fromDate).year}
+                      onChange={(e) => handleExperienceChange(idx, "fromDate", `${getMonthAndYear(exp.fromDate).month} ${e.target.value}`.trim())}
+                      options={expYears}
+                    />
+                  </div>
+                </div>
+
+                {/* To Date Dropdowns or Present */}
+                <div>
+                  {exp.currentlyWorking ? (
+                    <div className="w-full">
+                      <div className="relative">
+                        <div className="peer w-full rounded-lg bg-surface/50 border border-white/5 px-4 py-3 text-textSecondary text-sm outline-none font-inter text-left h-[46px] flex items-center select-none">
+                          Present
+                        </div>
+                        <label className="absolute text-xs duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-surface px-2 left-2 text-textSecondary">
+                          To Date
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="grid grid-cols-2 gap-2">
+                      <Select
+                        label="To Month"
+                        placeholder="Month"
+                        value={getMonthAndYear(exp.toDate).month}
+                        onChange={(e) => handleExperienceChange(idx, "toDate", `${e.target.value} ${getMonthAndYear(exp.toDate).year}`.trim())}
+                        options={months}
+                      />
+                      <Select
+                        label="To Year"
+                        placeholder="Year"
+                        value={getMonthAndYear(exp.toDate).year}
+                        onChange={(e) => handleExperienceChange(idx, "toDate", `${getMonthAndYear(exp.toDate).month} ${e.target.value}`.trim())}
+                        options={expYears}
+                      />
+                    </div>
+                  )}
+                </div>
               </div>
 
               <div className="flex items-center gap-2">
@@ -540,7 +615,15 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
                   type="checkbox"
                   id={`current-${exp.id}`}
                   checked={exp.currentlyWorking}
-                  onChange={(e) => handleExperienceChange(idx, "currentlyWorking", e.target.checked)}
+                  onChange={(e) => {
+                    const checked = e.target.checked;
+                    handleExperienceChange(idx, "currentlyWorking", checked);
+                    if (checked) {
+                      handleExperienceChange(idx, "toDate", "Present");
+                    } else {
+                      handleExperienceChange(idx, "toDate", "");
+                    }
+                  }}
                   className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
                 />
                 <label htmlFor={`current-${exp.id}`} className="text-xs text-textSecondary select-none font-semibold">
@@ -723,11 +806,12 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
               </div>
 
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <Input
-                  label="City, Pakistan | Year"
+                <Select
+                  label="Passing Year"
+                  placeholder="Select Year"
                   value={edu.year}
                   onChange={(e) => handleEducationChange(idx, "year", e.target.value)}
-                  placeholder="e.g. Islamabad | 2023"
+                  options={eduYears}
                   required
                 />
                 <Input
@@ -761,17 +845,117 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
 
           <Input
             label="Languages Spoken (Urdu & English pre-filled, add more)"
-            value={formData.skills.languagesRaw || "Urdu, English"}
+                    value={formData.skills.languagesRaw || "Urdu, English"}
             onChange={(e) => handleTagChange("languages", e.target.value)}
             placeholder="Urdu, English, Arabic"
           />
 
-          <Input
-            label="Certifications & Platform (Comma separated)"
-            value={formData.skills.certificationsRaw || ""}
-            onChange={(e) => handleTagChange("certifications", e.target.value)}
-            placeholder="AWS Cloud Practitioner (Coursera, 2023), Scrum Master (Scrum.org, 2024)"
-          />
+          {/* Certifications Dynamic List */}
+          <div className="glass-panel p-4 rounded-xl border-white/5 space-y-4 mb-4">
+            <div className="flex items-center justify-between">
+              <h4 className="text-xs font-bold text-blue-400 font-inter">Certifications & Licenses</h4>
+              <Button
+                variant="secondary"
+                type="button"
+                onClick={() => {
+                  const list = [...(formData.skills.certifications || [])];
+                  list.push("New Certificate (Platform, 2024)");
+                  setFormData({
+                    ...formData,
+                    skills: {
+                      ...formData.skills,
+                      certifications: list,
+                      certificationsRaw: list.join(", ")
+                    }
+                  });
+                }}
+                className="px-2 py-1.5 touch-btn text-[10px] gap-1 bg-blue-950/20 border-blue-500/20 text-blue-300"
+              >
+                <Plus size={10} /> Add Cert
+              </Button>
+            </div>
+
+            {(formData.skills.certifications || []).length === 0 && (
+              <p className="text-xs text-textSecondary italic">No certifications added. Click "Add Cert" to add one.</p>
+            )}
+
+            {(formData.skills.certifications || []).map((cert: string, idx: number) => {
+              const match = cert.match(/^(.*?)\s*\((.*?)\s*,\s*(.*?)\)$/);
+              let name = cert;
+              let platform = "";
+              let year = "";
+              if (match) {
+                name = match[1];
+                platform = match[2];
+                year = match[3];
+              }
+
+              const updateCert = (field: "name" | "platform" | "year", val: string) => {
+                const list = [...formData.skills.certifications];
+                let n = name, p = platform, y = year;
+                if (field === "name") n = val;
+                if (field === "platform") p = val;
+                if (field === "year") y = val;
+
+                // Format as "Name (Platform, Year)"
+                const formatted = p ? `${n} (${p}, ${y})` : y ? `${n} (${y})` : n;
+                list[idx] = formatted;
+
+                setFormData({
+                  ...formData,
+                  skills: {
+                    ...formData.skills,
+                    certifications: list,
+                    certificationsRaw: list.join(", ")
+                  }
+                });
+              };
+
+              const removeCert = () => {
+                const list = formData.skills.certifications.filter((_: any, i: number) => i !== idx);
+                setFormData({
+                  ...formData,
+                  skills: {
+                    ...formData.skills,
+                    certifications: list,
+                    certificationsRaw: list.join(", ")
+                  }
+                });
+              };
+
+              return (
+                <div key={idx} className="flex gap-2 items-start border-b border-white/5 pb-3 last:border-0 last:pb-0 mb-3 last:mb-0">
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-2 flex-1">
+                    <Input
+                      label="Certificate Name"
+                      value={name}
+                      onChange={(e) => updateCert("name", e.target.value)}
+                      placeholder="e.g. AWS Cloud Practitioner"
+                      className="mb-0"
+                    />
+                    <Input
+                      label="Platform / Issuer"
+                      value={platform}
+                      onChange={(e) => updateCert("platform", e.target.value)}
+                      placeholder="e.g. Coursera / AWS"
+                      className="mb-0"
+                    />
+                    <Select
+                      label="Year"
+                      placeholder="Select Year"
+                      value={year}
+                      onChange={(e) => updateCert("year", e.target.value)}
+                      options={expYears}
+                      className="mb-0"
+                    />
+                  </div>
+                  <button type="button" onClick={removeCert} className="text-red-400 hover:text-red-300 mt-3.5">
+                    <Trash2 size={16} />
+                  </button>
+                </div>
+              );
+            })}
+          </div>
 
           <Input
             label="Achievements & Awards (optional, comma-separated)"

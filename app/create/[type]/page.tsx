@@ -134,6 +134,34 @@ export default function CVBuilderPage() {
     return () => unsubscribe();
   }, []);
 
+  // Date and duration comparison helpers for step validation
+  const parseMonthYearToDateValue = (monthYearStr: string) => {
+    if (!monthYearStr) return 0;
+    if (monthYearStr === "Present") return Infinity;
+    
+    const parts = monthYearStr.trim().split(" ");
+    const monthStr = parts[0] || "";
+    const yearStr = parts[1] || "";
+    
+    const year = parseInt(yearStr, 10);
+    if (isNaN(year)) return 0;
+    
+    const monthsMap: { [key: string]: number } = {
+      Jan: 1, Feb: 2, Mar: 3, Apr: 4, May: 5, Jun: 6,
+      Jul: 7, Aug: 8, Sep: 9, Oct: 10, Nov: 11, Dec: 12
+    };
+    
+    const month = monthsMap[monthStr] || 1;
+    return year * 100 + month;
+  };
+
+  const parseYearToValue = (yearStr: string) => {
+    if (!yearStr) return 0;
+    if (yearStr === "Present") return Infinity;
+    const year = parseInt(yearStr.trim(), 10);
+    return isNaN(year) ? 0 : year;
+  };
+
   // Validation before step forwarding
   const handleNextStep = () => {
     if (step === 1) {
@@ -154,6 +182,82 @@ export default function CVBuilderPage() {
         return;
       }
     }
+
+    if (step === 2) {
+      // 1. Work Experience dates validation for ATS, Global Pro, and Freelancer
+      if (type === "ats" || type === "global-pro" || type === "freelancer") {
+        const experience = formData.experience || [];
+        for (let i = 0; i < experience.length; i++) {
+          const exp = experience[i];
+          if (exp.company || exp.jobTitle) {
+            if (!exp.fromDate || !exp.toDate) {
+              toast(
+                language === "ur" ? "تاریخ درج کریں!" : "Dates Required",
+                "warning",
+                language === "ur" ? "براہ کرم ملازمت شروع کرنے اور ختم ہونے کی تاریخ منتخب کریں۔" : "Please select both Start Date and End Date for your experience."
+              );
+              return;
+            }
+            
+            const fromVal = parseMonthYearToDateValue(exp.fromDate);
+            const toVal = parseMonthYearToDateValue(exp.toDate);
+            
+            if (fromVal > toVal) {
+              toast(
+                language === "ur" ? "شروع کی تاریخ ختم ہونے کی تاریخ سے پہلے ہونی چاہیے!" : "Start date must be before end date!",
+                "warning",
+                language === "ur" ? "ملازمت شروع ہونے کا سال اور مہینہ ختم ہونے کے وقت سے پہلے ہونا چاہئے۔" : "The job start date cannot be after the end date."
+              );
+              return;
+            }
+          }
+        }
+      }
+
+      // 2. Student CV Internship duration validation
+      if (type === "student") {
+        const internships = formData.internships || [];
+        for (let i = 0; i < internships.length; i++) {
+          const intern = internships[i];
+          if (intern.company || intern.role) {
+            if (!intern.duration) {
+              toast(
+                language === "ur" ? "مدت منتخب کریں!" : "Duration Required",
+                "warning",
+                language === "ur" ? "براہ کرم انٹرنشپ شروع اور ختم ہونے کا سال منتخب کریں۔" : "Please select start and end years for your internship."
+              );
+              return;
+            }
+
+            const parts = intern.duration.split(" - ");
+            const fromYearStr = parts[0] || "";
+            const toYearStr = parts[1] || "";
+
+            if (!fromYearStr || (!toYearStr && intern.duration !== "Present" && !intern.duration.includes("Present"))) {
+              toast(
+                language === "ur" ? "سال منتخب کریں!" : "Select Years",
+                "warning",
+                language === "ur" ? "براہ کرم انٹرنشپ شروع اور ختم ہونے کا سال منتخب کریں۔" : "Please select start and end years."
+              );
+              return;
+            }
+
+            const fromVal = parseYearToValue(fromYearStr);
+            const toVal = parseYearToValue(toYearStr || (intern.duration.includes("Present") ? "Present" : ""));
+
+            if (fromVal > toVal) {
+              toast(
+                language === "ur" ? "شروع کی تاریخ ختم ہونے کی تاریخ سے پہلے ہونی چاہیے!" : "Start date must be before end date!",
+                "warning",
+                language === "ur" ? "انٹرنشپ شروع ہونے کا سال ختم ہونے کے سال سے پہلے ہونا چاہئے۔" : "The internship start year cannot be after the end year."
+              );
+              return;
+            }
+          }
+        }
+      }
+    }
+
     setStep((prev) => Math.min(prev + 1, 4));
   };
 

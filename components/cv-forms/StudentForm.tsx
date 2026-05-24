@@ -3,9 +3,27 @@
 import React, { useState } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
+import Select from "@/components/ui/Select";
 import VoiceInput from "@/components/ui/VoiceInput";
 import { Trash2, Sparkles, Plus } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
+
+const durationYears = Array.from({ length: 2026 - 2000 + 1 }, (_, i) => {
+  const y = String(2000 + i);
+  return { value: y, label: y };
+}).reverse();
+
+const getDurationYears = (duration: string) => {
+  if (!duration) return { fromYear: "", toYear: "", currentlyWorking: false };
+  const parts = duration.split(" - ");
+  const fromYear = parts[0] || "";
+  const toYear = parts[1] || "";
+  return {
+    fromYear,
+    toYear: toYear === "Present" ? "" : toYear,
+    currentlyWorking: toYear === "Present"
+  };
+};
 
 interface StudentFormProps {
   formData: any;
@@ -94,6 +112,44 @@ export default function StudentForm({ formData, setFormData, step }: StudentForm
     const list = [...formData.internships];
     list[index] = { ...list[index], [field]: val };
     setFormData({ ...formData, internships: list });
+  };
+
+  const handleDurationChange = (idx: number, part: "from" | "to" | "current", val: any) => {
+    const intern = formData.internships[idx];
+    const { fromYear, toYear, currentlyWorking } = getDurationYears(intern.duration);
+
+    let newFrom = fromYear;
+    let newTo = toYear;
+    let newCurrent = currentlyWorking;
+
+    if (part === "from") {
+      newFrom = val;
+    } else if (part === "to") {
+      newTo = val;
+      newCurrent = false;
+    } else if (part === "current") {
+      newCurrent = val;
+      if (newCurrent) {
+        newTo = "Present";
+      } else {
+        newTo = "";
+      }
+    }
+
+    let newDuration = "";
+    if (newCurrent) {
+      newDuration = newFrom ? `${newFrom} - Present` : "Present";
+    } else {
+      if (newFrom && newTo) {
+        newDuration = `${newFrom} - ${newTo}`;
+      } else if (newFrom) {
+        newDuration = newFrom;
+      } else if (newTo) {
+        newDuration = newTo;
+      }
+    }
+
+    handleInternshipChange(idx, "duration", newDuration);
   };
 
   const addInternship = () => {
@@ -332,6 +388,54 @@ export default function StudentForm({ formData, setFormData, step }: StudentForm
                   onChange={(e) => handleInternshipChange(idx, "role", e.target.value)}
                   isUrdu={isUrdu}
                 />
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {/* From Year Dropdown */}
+                <Select
+                  label={isUrdu ? "کب سے (From Year)" : "From Year"}
+                  placeholder={isUrdu ? "سال منتخب کریں" : "Select Year"}
+                  value={getDurationYears(intern.duration).fromYear}
+                  onChange={(e) => handleDurationChange(idx, "from", e.target.value)}
+                  options={durationYears}
+                />
+
+                {/* To Year Dropdown or Present */}
+                <div>
+                  {getDurationYears(intern.duration).currentlyWorking ? (
+                    <div className="w-full">
+                      <div className="relative">
+                        <div className="peer w-full rounded-lg bg-surface/50 border border-white/5 px-4 py-3 text-textSecondary text-sm outline-none font-inter text-left h-[46px] flex items-center select-none">
+                          {isUrdu ? "حالیہ (Present)" : "Present"}
+                        </div>
+                        <label className="absolute text-xs duration-300 transform -translate-y-4 scale-75 top-2 z-10 origin-[0] bg-surface px-2 left-2 text-textSecondary">
+                          {isUrdu ? "کب تک (To Year)" : "To Year"}
+                        </label>
+                      </div>
+                    </div>
+                  ) : (
+                    <Select
+                      label={isUrdu ? "کب تک (To Year)" : "To Year"}
+                      placeholder={isUrdu ? "سال منتخب کریں" : "Select Year"}
+                      value={getDurationYears(intern.duration).toYear}
+                      onChange={(e) => handleDurationChange(idx, "to", e.target.value)}
+                      options={durationYears}
+                    />
+                  )}
+                </div>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id={`current-${intern.id}`}
+                  checked={getDurationYears(intern.duration).currentlyWorking}
+                  onChange={(e) => handleDurationChange(idx, "current", e.target.checked)}
+                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
+                />
+                <label htmlFor={`current-${intern.id}`} className={`text-xs text-textSecondary select-none ${isUrdu ? "font-urdu" : ""}`}>
+                  {isUrdu ? "ابھی بھی یہاں کام کر رہے ہیں" : "Currently working in this role"}
+                </label>
               </div>
 
               <div>
