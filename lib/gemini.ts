@@ -42,8 +42,8 @@ export async function queryGemini(prompt: string, attempt = 1, cvType?: string):
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
 
-  // Use gemini-2.0-flash by default on attempt 1, fall back to stable gemini-1.5-flash on attempt 2
-  const modelToUse = attempt === 1 ? "gemini-2.0-flash" : "gemini-1.5-flash";
+  // Use gemini-flash-latest by default on attempt 1 (highest quota availability), fall back to gemini-2.0-flash on attempt 2
+  const modelToUse = attempt === 1 ? "gemini-flash-latest" : "models/gemini-2.0-flash";
 
   try {
     const model = genAI.getGenerativeModel({
@@ -88,9 +88,9 @@ Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote
   } catch (error: any) {
     console.error(`Gemini query error using ${modelToUse} on attempt ${attempt}:`, error);
 
-    // If attempt 1 fails (even due to 429 rate limits), retry once using the stable gemini-1.5-flash model
+    // If attempt 1 fails (even due to 429 rate limits), retry once using the backup model
     if (attempt === 1) {
-      console.log("Attempt 1 failed. Retrying dynamically with stable gemini-1.5-flash fallback...");
+      console.log("Attempt 1 failed. Retrying dynamically with backup model...");
       return queryGemini(prompt, 2, cvType);
     }
 
