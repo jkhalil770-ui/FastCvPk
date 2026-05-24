@@ -8,7 +8,7 @@ import { queryGemini, buildResponsibilitiesPrompt, buildSummaryPrompt, buildSmar
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { action, lang = "en" } = body;
+    const { action, lang = "en", cvType } = body;
 
     if (!action) {
       return NextResponse.json({ error: "Missing required parameter 'action'" }, { status: 400 });
@@ -46,7 +46,7 @@ export async function POST(req: Request) {
     }
 
     // Call Gemini API through Server-Side SDK
-    const response = await queryGemini(aiPrompt);
+    const response = await queryGemini(aiPrompt, 1, cvType);
     return NextResponse.json(response);
   } catch (error: any) {
     console.error("API generate-cv route error:", error);

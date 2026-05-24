@@ -20,6 +20,7 @@ export const translations: TranslationDict = {
   logout: { en: "Logout", ur: "لاگ آؤٹ" },
   freeBadge: { en: "100% Free", ur: "100٪ مفت" },
   watermarkBadge: { en: "Free with Watermark", ur: "واٹر مارک کے ساتھ مفت" },
+  premiumBadge: { en: "Premium", ur: "پریمیم" },
   createCVBtn: { en: "Create CV — Free", ur: "سی وی بنائیں — مفت" },
   viewTemplatesBtn: { en: "View Templates", ur: "ٹیمپلیٹس دیکھیں" },
   backToHome: { en: "Back to Home", ur: "ہوم پر واپس جائیں" },
@@ -61,6 +62,10 @@ export const translations: TranslationDict = {
   freelancerCvTag: { en: "Online Work", ur: "آن لائن کام" },
   freelancerCvDesc: { en: "Optimized for Fiverr, Upwork, LinkedIn, and remote global clients.", ur: "فائیور، اپ ورک، اور ریموٹ کام کے لیے موزوں۔" },
   freelancerDesc: { en: "Optimized for Fiverr, Upwork, LinkedIn, and remote global clients.", ur: "فائیور، اپ ورک، اور ریموٹ کام کے لیے موزوں۔" },
+  
+  globalProName: { en: "Global Pro CV", ur: "گلوبل پرو سی وی" },
+  globalProTag: { en: "International / Remote", ur: "انٹرنیشنل / ریموٹ کام" },
+  globalProDesc: { en: "Optimized for foreign companies, remote work, and LinkedIn profiles.", ur: "غیر ملکی کمپنیوں، ریموٹ کام، اور لنکڈ ان پروفائلز کے لیے موزوں۔" },
 
   useThisTemplate: { en: "Use This Template", ur: "اس ٹیمپلیٹ سے سی وی بنائیں" },
 

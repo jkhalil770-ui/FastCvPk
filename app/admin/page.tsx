@@ -24,6 +24,7 @@ import ATSTemplate from "@/components/cv-templates/ATSTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
+import GlobalProTemplate from "@/components/cv-templates/GlobalProTemplate";
 
 import { 
   ShieldCheck, 
@@ -276,6 +277,7 @@ export default function AdminDashboard() {
         <div className="fixed top-[-9999px] left-[-9999px] z-[-50] bg-white">
           <div id="admin-print-node">
             {printCvType === "ats" && <ATSTemplate data={printCvData} hasWatermark={false} />}
+            {printCvType === "global-pro" && <GlobalProTemplate data={printCvData} hasWatermark={false} />}
             {printCvType === "biodata" && <BiodataTemplate data={printCvData} hasWatermark={false} />}
             {printCvType === "student" && <StudentTemplate data={printCvData} hasWatermark={false} />}
             {printCvType === "freelancer" && <FreelancerTemplate data={printCvData} hasWatermark={false} />}

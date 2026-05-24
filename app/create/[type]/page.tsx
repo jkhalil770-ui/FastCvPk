@@ -16,12 +16,14 @@ import ATSForm from "@/components/cv-forms/ATSForm";
 import BiodataForm from "@/components/cv-forms/BiodataForm";
 import StudentForm from "@/components/cv-forms/StudentForm";
 import FreelancerForm from "@/components/cv-forms/FreelancerForm";
+import GlobalProForm from "@/components/cv-forms/GlobalProForm";
 
 // Import templates
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
+import GlobalProTemplate from "@/components/cv-templates/GlobalProTemplate";
 
 import { ArrowLeft, ArrowRight, Sparkles, Eye, Edit3, HelpCircle } from "lucide-react";
 
@@ -143,6 +145,14 @@ export default function CVBuilderPage() {
         );
         return;
       }
+      if (type === "global-pro" && !formData.personalInfo.linkedin) {
+        toast(
+          language === "ur" ? "لنکڈ ان یو آر ایل لازمی ہے!" : "LinkedIn Required",
+          "warning",
+          language === "ur" ? "گلوبل پرو سی وی کے لیے لنکڈ ان پروفائل لازمی ہے۔" : "LinkedIn Profile URL is required for Global Pro CV."
+        );
+        return;
+      }
     }
     setStep((prev) => Math.min(prev + 1, 4));
   };
@@ -162,6 +172,10 @@ export default function CVBuilderPage() {
         return `میں ایک محنتی اور پرجوش طالب علم ہوں جو ${jobTitle || "اپنے شعبے"} میں اعلیٰ تعلیم حاصل کر رہا ہوں۔ میں ${city} سے ہوں اور اپنے کیریئر کے آغاز کے لیے کسی اچھے ادارے میں اپنی صلاحیتیں استعمال کرنا چاہتا ہوں۔`;
       }
       return `میں ایک تجربہ کار ${jobTitle || "پیشہ ور"} ہوں جو ${city} میں کام کر رہا ہوں۔ میری مہارتیں ${skills || "مختلف شعبوں"} میں ہیں اور میں اپنی ٹیم کو بہترین نتائج دینے کے لیے ہمیشہ تیار رہتا ہوں۔`;
+    }
+
+    if (type === "global-pro") {
+      return `Highly skilled ${jobTitle || "Professional"} with ${formData.personalInfo.yearsOfExp || "several"} years of experience, specializing in remote cooperation and cross-border project delivery. Proven track record of driving impact, optimizing workflows, and delivering high-value solutions for global clients. Adaptive, self-motivated, and prepared for high-performance remote work in the ${formData.personalInfo.timeZone || "PKT"} timezone.`;
     }
 
     if (isStudent) {
@@ -199,10 +213,11 @@ export default function CVBuilderPage() {
         body: JSON.stringify({
           action: "summary",
           title,
-          details: "Experienced professional in Pakistani job market.",
+          details: type === "global-pro" ? "Optimized for international and remote job markets." : "Experienced professional in Pakistani job market.",
           skills: skillsArray,
           isStudent,
           lang: cvLang,
+          cvType: type,
         }),
       });
       clearTimeout(timeoutId);
@@ -313,6 +328,8 @@ export default function CVBuilderPage() {
           return <StudentForm formData={formData} setFormData={setFormData} step={step} />;
         case "freelancer":
           return <FreelancerForm formData={formData} setFormData={setFormData} step={step} />;
+        case "global-pro":
+          return <GlobalProForm formData={formData} setFormData={setFormData} step={step} />;
         default:
           return <div className="text-white">Template Form Not Found.</div>;
       }
@@ -352,6 +369,8 @@ export default function CVBuilderPage() {
           return <StudentTemplate data={templateData} hasWatermark={false} />;
         case "freelancer":
           return <FreelancerTemplate data={templateData} hasWatermark={defaultWatermark} />;
+        case "global-pro":
+          return <GlobalProTemplate data={templateData} hasWatermark={defaultWatermark} />;
         default:
           return <div className="text-slate-800">Visual template load error.</div>;
       }

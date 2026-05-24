@@ -19,6 +19,7 @@ import ATSTemplate from "@/components/cv-templates/ATSTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
+import GlobalProTemplate from "@/components/cv-templates/GlobalProTemplate";
 
 import { 
   Download, 
@@ -232,6 +233,8 @@ export default function CVDownloadPage() {
     switch (cv.cvType) {
       case "ats":
         return <ATSTemplate data={templateData} hasWatermark={cv.hasWatermark} />;
+      case "global-pro":
+        return <GlobalProTemplate data={templateData} hasWatermark={cv.hasWatermark} />;
       case "biodata":
         return <BiodataTemplate data={templateData} hasWatermark={false} />;
       case "student":

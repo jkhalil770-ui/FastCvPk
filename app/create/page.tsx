@@ -64,6 +64,19 @@ export default function CVSelectionPage() {
       langRulesUr: "صرف انگریزی (فریلانسرز کے لیے)",
       color: "from-cyan-600/30 to-cyan-500/10",
       border: "border-cyan-500/20"
+    },
+    {
+      id: "global-pro",
+      nameKey: "globalProName",
+      tagKey: "globalProTag",
+      badgeKey: "premiumBadge",
+      descKey: "globalProDesc",
+      icon: Sparkles,
+      badgeVariant: "premium" as const,
+      langRules: "🌍 Global Pro — Remote & International Jobs",
+      langRulesUr: "🌍 گلوبل پرو — ریموٹ اور انٹرنیشنل نوکریاں",
+      color: "from-blue-600/40 via-purple-600/20 to-blue-500/10",
+      border: "border-blue-400/40"
     }
   ];
 
@@ -125,6 +138,8 @@ export default function CVSelectionPage() {
                     <span className={`inline-flex px-2 py-0.5 rounded text-[10px] font-bold uppercase tracking-wide border ${
                       card.badgeVariant === "success" 
                         ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/20"
+                        : card.badgeVariant === "premium"
+                        ? "bg-gradient-to-r from-amber-500/20 to-yellow-500/20 text-yellow-400 border-yellow-500/30 font-extrabold animate-pulse"
                         : "bg-amber-500/10 text-amber-400 border-amber-500/20"
                     }`}>
                       {getTranslation(card.badgeKey, language)}

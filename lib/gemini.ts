@@ -37,7 +37,7 @@ Return ONLY valid JSON, no markdown, no extra text.
  * Contact Gemini API with system rules and parse JSON output.
  * Implements a single timeout/network retry.
  */
-export async function queryGemini(prompt: string, attempt = 1): Promise<AISuggestionResponse> {
+export async function queryGemini(prompt: string, attempt = 1, cvType?: string): Promise<AISuggestionResponse> {
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
@@ -50,7 +50,20 @@ export async function queryGemini(prompt: string, attempt = 1): Promise<AISugges
       },
     });
 
-    const fullPrompt = `${SYSTEM_PROMPT}\n\nTask prompt:\n${prompt}`;
+    let systemPromptToUse = SYSTEM_PROMPT;
+    if (cvType === "global-pro") {
+      systemPromptToUse = SYSTEM_PROMPT + `
+[IMPORTANT: Global Pro Template Instructions]
+Generate CV content optimized for international remote job market.
+Use strong action verbs.
+Quantify all achievements with numbers and percentages (e.g. "Increased sales by 40%", "Managed team of 8 people", "Reduced costs by $10,000").
+Professional international English.
+Highlight remote work capabilities.
+Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote.co, Upwork, Toptal.
+`;
+    }
+
+    const fullPrompt = `${systemPromptToUse}\n\nTask prompt:\n${prompt}`;
     
     const result = await model.generateContent(fullPrompt);
     const response = await result.response;
@@ -83,7 +96,7 @@ export async function queryGemini(prompt: string, attempt = 1): Promise<AISugges
     // For other errors, retry once
     if (attempt === 1) {
       console.log("Retrying Gemini query once...");
-      return queryGemini(prompt, 2);
+      return queryGemini(prompt, 2, cvType);
     }
 
     throw error;
