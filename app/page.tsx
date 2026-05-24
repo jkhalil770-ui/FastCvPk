@@ -541,112 +541,172 @@ export default function LandingPage() {
 
           </div>
 
-          {/* MOBILE VIEW: Premium Native Horizontal Snap-Scrolling Touch Carousel */}
-          <div className="md:hidden w-full px-2 mt-8 select-none">
-            <div className="flex gap-6 overflow-x-auto snap-x snap-mandatory scrollbar-none py-6 px-4 w-full justify-start items-center">
-              
+          {/* MOBILE VIEW: Auto-Play Smooth Animated Carousel */}
+          <div className="md:hidden w-full mt-8 select-none">
+            <style dangerouslySetInnerHTML={{ __html: `
+              @keyframes progressBar {
+                from { width: 0%; }
+                to { width: 100%; }
+              }
+              .cv-progress-bar {
+                animation: progressBar 3s linear forwards;
+              }
+              @keyframes cardSlideIn {
+                from { opacity: 0; transform: translateX(40px) scale(0.96); }
+                to { opacity: 1; transform: translateX(0px) scale(1); }
+              }
+              @keyframes cardSlideOut {
+                from { opacity: 1; transform: translateX(0px) scale(1); }
+                to { opacity: 0; transform: translateX(-40px) scale(0.96); }
+              }
+              .card-enter {
+                animation: cardSlideIn 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+              }
+            `}} />
+
+            {/* Card Viewport */}
+            <div className="relative w-full flex justify-center items-center px-6 py-4" style={{ minHeight: '420px' }}>
+
               {/* CARD 1 — Ayesha Malik (ATS CV) */}
-              <div className="snap-center shrink-0 w-[270px] bg-white text-slate-800 rounded-2xl shadow-[0_15px_40px_rgba(59,130,246,0.15)] border border-blue-500/10 p-6 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between">
-                <div className="absolute left-0 top-0 w-1.5 h-full bg-[#3B82F6] rounded-l-2xl" />
-                <div>
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-base font-black tracking-tight text-slate-900 leading-none">Ayesha Malik</h3>
-                      <p className="text-xs font-black uppercase tracking-widest text-[#3B82F6] mt-1">Marketing Manager</p>
-                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Lahore • Unilever Pakistan</p>
+              {activeCardIdx === 0 && (
+                <div key="card-0" className="card-enter w-full max-w-[310px] bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(59,130,246,0.25)] border border-blue-500/15 p-6 text-left relative font-inter flex flex-col justify-between" style={{ minHeight: '380px' }}>
+                  <div className="absolute left-0 top-0 w-1.5 h-full bg-[#3B82F6] rounded-l-2xl" />
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-lg font-black tracking-tight text-slate-900 leading-none">Ayesha Malik</h3>
+                        <p className="text-[11px] font-black uppercase tracking-widest text-[#3B82F6] mt-1">Marketing Manager</p>
+                        <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Lahore • Unilever Pakistan</p>
+                      </div>
+                      <span className="text-[9px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-2 py-1 rounded tracking-wide shadow-sm flex-shrink-0">ATS Friendly</span>
                     </div>
-                    <span className="text-[9px] font-black uppercase text-blue-600 bg-blue-50 border border-blue-100 px-2 py-0.5 rounded tracking-wide shadow-sm flex-shrink-0">ATS Friendly</span>
+                    <div className="mb-4">
+                      <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Executive Profile</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                        Innovative Marketing Manager with 4+ years of experience leading Unilever digital campaigns. Boosted organic web conversions by 40%.
+                      </p>
+                    </div>
                   </div>
-                  <div className="mb-3">
-                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Executive Profile</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                      Innovative Marketing Manager with 4+ years of experience leading Unilever digital campaigns. Boosted organic web conversions by 40%.
-                    </p>
+                  <div>
+                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Core Skills</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["Digital Marketing", "SEO", "Social Media"].map((skill, sIdx) => (
+                        <span key={sIdx} className="bg-blue-50 border border-blue-100 text-blue-700 px-2.5 py-1 text-[10px] font-bold rounded-full shadow-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Skills</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {["Digital Marketing", "SEO", "Social"].map((skill, sIdx) => (
-                      <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-2 py-0.5 text-[10px] font-bold rounded shadow-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              )}
 
               {/* CARD 2 — Ahmed Hassan (Student CV) */}
-              <div className="snap-center shrink-0 w-[270px] bg-white text-slate-800 rounded-2xl shadow-[0_15px_40px_rgba(16,185,129,0.15)] border border-emerald-500/10 p-6 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between">
-                <div className="absolute top-0 inset-x-0 h-1.5 bg-[#10B981] rounded-t-2xl" />
-                <div>
-                  <div className="flex justify-between items-start mb-3">
-                    <div>
-                      <h3 className="text-base font-black tracking-tight text-slate-900 leading-none">Ahmed Hassan</h3>
-                      <p className="text-xs font-black uppercase tracking-widest text-[#10B981] mt-1">CS Student</p>
-                      <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Karachi • FAST NUCES</p>
+              {activeCardIdx === 1 && (
+                <div key="card-1" className="card-enter w-full max-w-[310px] bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(16,185,129,0.25)] border border-emerald-500/15 p-6 text-left relative font-inter flex flex-col justify-between" style={{ minHeight: '380px' }}>
+                  <div className="absolute top-0 inset-x-0 h-1.5 bg-[#10B981] rounded-t-2xl" />
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <div>
+                        <h3 className="text-lg font-black tracking-tight text-slate-900 leading-none">Ahmed Hassan</h3>
+                        <p className="text-[11px] font-black uppercase tracking-widest text-[#10B981] mt-1">CS Student</p>
+                        <p className="text-[10px] font-semibold text-slate-400 mt-0.5">Karachi • FAST NUCES</p>
+                      </div>
+                      <span className="text-[9px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-1 rounded tracking-wide shadow-sm flex-shrink-0">Student CV</span>
                     </div>
-                    <span className="text-[9px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded tracking-wide shadow-sm flex-shrink-0">Student CV</span>
+                    <div className="mb-4">
+                      <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Objective</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                        BS CS student at FAST NUCES Karachi. Strong algorithmic foundation, current CGPA: 3.8/4.0. Eager to code full-stack web applications.
+                      </p>
+                    </div>
                   </div>
-                  <div className="mb-3">
-                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Objective</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                      BS CS student at FAST NUCES Karachi. Strong algorithmic foundation, current CGPA: 3.8/4.0. Eager to code full-stack web applications.
-                    </p>
+                  <div>
+                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Expertise</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["Python", "React", "Java"].map((skill, sIdx) => (
+                        <span key={sIdx} className="bg-emerald-50 border border-emerald-100 text-emerald-700 px-2.5 py-1 text-[10px] font-bold rounded-full shadow-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Skills</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {["Python", "React", "Java"].map((skill, sIdx) => (
-                      <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-2 py-0.5 text-[10px] font-bold rounded shadow-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
+              )}
 
               {/* CARD 3 — Usman Tariq (Global Pro) */}
-              <div className="snap-center shrink-0 w-[270px] bg-white text-slate-800 rounded-2xl shadow-[0_15px_40px_rgba(168,85,247,0.15)] border border-purple-500/10 p-6 text-left relative font-inter aspect-[1/1.35] flex flex-col justify-between">
-                <div className="absolute left-0 top-0 w-1.5 h-full bg-purple-600 rounded-l-2xl" />
-                <div>
-                  <div className="flex justify-between items-start mb-3">
-                    <div className="flex items-center gap-1.5">
-                      <div className="w-8 h-8 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-xs flex items-center justify-center flex-shrink-0">UT</div>
-                      <div>
-                        <h3 className="text-base font-black tracking-tight text-slate-900 leading-none">Usman Tariq</h3>
-                        <p className="text-[10px] font-black uppercase tracking-widest text-purple-600 mt-0.5">Senior Engineer</p>
+              {activeCardIdx === 2 && (
+                <div key="card-2" className="card-enter w-full max-w-[310px] bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(168,85,247,0.25)] border border-purple-500/15 p-6 text-left relative font-inter flex flex-col justify-between" style={{ minHeight: '380px' }}>
+                  <div className="absolute left-0 top-0 w-1.5 h-full bg-purple-600 rounded-l-2xl" />
+                  <div>
+                    <div className="flex justify-between items-start mb-4">
+                      <div className="flex items-center gap-2">
+                        <div className="w-9 h-9 rounded-full bg-purple-100 border border-purple-200 text-purple-600 font-black text-xs flex items-center justify-center flex-shrink-0">UT</div>
+                        <div>
+                          <h3 className="text-lg font-black tracking-tight text-slate-900 leading-none">Usman Tariq</h3>
+                          <p className="text-[10px] font-black uppercase tracking-widest text-purple-600 mt-0.5">Senior Engineer</p>
+                        </div>
                       </div>
+                      <span className="text-[9px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-2 py-1 rounded tracking-wide shadow-sm flex-shrink-0">Global Pro 🌍</span>
                     </div>
-                    <span className="text-[9px] font-black uppercase text-purple-600 bg-purple-50 border border-purple-100 px-2 py-0.5 rounded tracking-wide shadow-sm flex-shrink-0">Global Pro 🌍</span>
+                    <div className="mb-4">
+                      <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Summary</h4>
+                      <p className="text-sm text-slate-500 leading-relaxed font-medium">
+                        Senior Software Engineer with 6+ years architecture history. Specializes in scalable remote React/Node endpoints and Docker clouds.
+                      </p>
+                    </div>
                   </div>
-                  <div className="mb-3">
-                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Summary</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed font-medium">
-                      Senior Software Engineer with 6+ years architecture history. Specializes in scalable remote React/Node endpoints and Docker clouds.
-                    </p>
+                  <div>
+                    <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1.5 border-b border-slate-100 pb-1">Tech Stack</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {["React", "Node.js", "Docker"].map((skill, sIdx) => (
+                        <span key={sIdx} className="bg-purple-50 border border-purple-100 text-purple-700 px-2.5 py-1 text-[10px] font-bold rounded-full shadow-sm">
+                          {skill}
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 </div>
-                <div>
-                  <h4 className="text-[9px] font-black uppercase tracking-wider text-slate-400 mb-1 border-b border-slate-100 pb-0.5">Skills</h4>
-                  <div className="flex flex-wrap gap-1">
-                    {["React", "Node.js", "Docker"].map((skill, sIdx) => (
-                      <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-2 py-0.5 text-[10px] font-bold rounded shadow-sm">
-                        {skill}
-                      </span>
-                    ))}
-                  </div>
-                </div>
+              )}
+            </div>
+
+            {/* Progress Bar + Dot Indicators */}
+            <div className="flex flex-col items-center gap-3 mt-2 pb-2">
+              {/* Animated Progress Bar */}
+              <div className="w-48 h-0.5 bg-white/10 rounded-full overflow-hidden">
+                <div
+                  key={`progress-${activeCardIdx}`}
+                  className="cv-progress-bar h-full rounded-full"
+                  style={{
+                    background: activeCardIdx === 0
+                      ? '#3B82F6'
+                      : activeCardIdx === 1
+                      ? '#10B981'
+                      : '#A855F7'
+                  }}
+                />
               </div>
 
-            </div>
-            
-            {/* Visual swipe helper */}
-            <div className="text-center text-[10px] text-textSecondary/50 font-inter mt-1 tracking-wider uppercase flex items-center justify-center gap-1.5 animate-pulse">
-              <span>← Swipe to view CV styles →</span>
+              {/* Dot Indicators */}
+              <div className="flex gap-2">
+                {[0, 1, 2].map((i) => (
+                  <button
+                    key={i}
+                    onClick={() => setActiveCardIdx(i)}
+                    className="transition-all duration-300"
+                    style={{
+                      width: activeCardIdx === i ? '20px' : '7px',
+                      height: '7px',
+                      borderRadius: '999px',
+                      background: activeCardIdx === i
+                        ? i === 0 ? '#3B82F6' : i === 1 ? '#10B981' : '#A855F7'
+                        : 'rgba(255,255,255,0.2)',
+                    }}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+
 
         </div>
       </section>
