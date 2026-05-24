@@ -24,6 +24,20 @@ export default function PWAInstaller() {
   const [showInstructions, setShowInstructions] = useState(false);
 
   useEffect(() => {
+    // ── Force Cache Clearing on first load of version 3 ────────
+    if (typeof window !== "undefined" && "caches" in window) {
+      const forceCleared = localStorage.getItem("fastcv_cache_v3_cleared");
+      if (forceCleared !== "true") {
+        caches.keys().then((names) => {
+          return Promise.all(names.map((name) => caches.delete(name)));
+        }).then(() => {
+          localStorage.setItem("fastcv_cache_v3_cleared", "true");
+          console.log("PWA Caches successfully cleared programmatically!");
+          window.location.reload(); // force reload to fetch fresh content
+        });
+      }
+    }
+
     // ── Detect Device and Screen Size ───────────────────────────
     if (typeof window !== "undefined") {
       const checkMobile = () => {

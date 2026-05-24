@@ -147,3 +147,12 @@ h1, h2, h3, h4, h5, h6 {
   min-height: 44px;
   min-width: 44px;
 }
+
+/* Hide scrollbars but keep functionality */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
