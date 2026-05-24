@@ -58,7 +58,7 @@ export default function AdminDashboard() {
   const [printCvData, setPrintCvData] = useState<any>(null);
   const [printCvType, setPrintCvType] = useState<string>("");
 
-  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || "fastcvpk.online@gmail.com";
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || process.env.ADMIN_EMAIL || "";
 
   // Auth check
   useEffect(() => {
@@ -66,7 +66,10 @@ export default function AdminDashboard() {
       setUser(usr);
       setLoadingAuth(false);
       
-      const isApprovedAdmin = usr && (usr.email === adminEmail || usr.email === "fastcvpk.online@gmail.com" || usr.email === "jkhalil770@gmail.com");
+      const isApprovedAdmin = usr && usr.email && adminEmail && (
+        usr.email === adminEmail || 
+        adminEmail.split(",").map((e: string) => e.trim().toLowerCase()).includes(usr.email.toLowerCase())
+      );
       setIsAdmin(!!isApprovedAdmin);
       
       if (isApprovedAdmin) {
@@ -271,6 +274,8 @@ export default function AdminDashboard() {
 
   return (
     <div className="flex-grow w-full bg-[#0F172A] relative py-12 px-4 sm:px-6 lg:px-8">
+      <title>Admin Dashboard — FastCV PK</title>
+      <meta name="robots" content="noindex, nofollow" />
       
       {/* Hidden print element used specifically to render clean templates for admin emails */}
       {printCvData && (

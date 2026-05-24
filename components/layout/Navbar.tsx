@@ -25,7 +25,7 @@ export function Navbar() {
 
   useEffect(() => {
     // Monitor environment Admin Email settings
-    setAdminEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "fastcvpk.online@gmail.com");
+    setAdminEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "");
 
     const unsubscribe = onAuthStateChanged(auth, (usr) => {
       setUser(usr);
@@ -64,7 +64,10 @@ export function Navbar() {
     }
   };
 
-  const isAdmin = user && (user.email === adminEmail || user.email === "fastcvpk.online@gmail.com" || user.email === "jkhalil770@gmail.com");
+  const isAdmin = user && user.email && adminEmail && (
+    user.email === adminEmail || 
+    adminEmail.split(",").map((e: string) => e.trim().toLowerCase()).includes(user.email.toLowerCase())
+  );
 
   // Navigation Links array
   const navLinks = [

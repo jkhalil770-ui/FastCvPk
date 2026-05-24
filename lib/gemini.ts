@@ -97,7 +97,7 @@ Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote
     // For rate limit errors on the fallback attempt, throw rate limit error
     const isRateLimit = error?.status === 429 || error?.message?.includes("429") || error?.message?.includes("Too Many Requests");
     if (isRateLimit) {
-      const rateLimitErr = new Error("AI system busy — thodi der baad dobara try karein (rate limit)");
+      const rateLimitErr = new Error("AI busy hai, 1 minute mein dobara try karein ⏱️ / AI is busy, please try again in 1 minute ⏱️");
       (rateLimitErr as any).status = 429;
       throw rateLimitErr;
     }

@@ -203,6 +203,8 @@ export default function UserDashboard() {
 
   return (
     <div className="flex-grow w-full bg-[#0F172A] relative py-12 px-4 sm:px-6 lg:px-8">
+      <title>{language === "ur" ? "ڈیش بورڈ — FastCV PK" : "Candidate Dashboard — FastCV PK"}</title>
+      <meta name="description" content="Access your saved ATS-friendly resumes and custom matrimonial Biodata on FastCV PK." />
       <div className="mx-auto max-w-7xl relative z-10 space-y-8">
         
         {/* Header strip */}
@@ -239,8 +241,25 @@ export default function UserDashboard() {
 
         {/* CV Grid list */}
         {fetchingCvs ? (
-          <div className="h-64 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {[1, 2].map((i) => (
+              <div key={i} className="glass-panel p-6 rounded-xl border-white/5 space-y-5 animate-pulse">
+                <div className="flex items-center justify-between">
+                  <div className="w-16 h-5 rounded bg-white/5" />
+                  <div className="w-20 h-4 rounded bg-white/5" />
+                </div>
+                <div className="h-5 rounded bg-white/5 w-2/3" />
+                <div className="h-3.5 rounded bg-white/5 w-1/2" />
+                <div className="pt-4 border-t border-white/5 flex items-center justify-between">
+                  <div className="flex gap-2">
+                    <div className="w-8 h-8 rounded bg-white/5" />
+                    <div className="w-8 h-8 rounded bg-white/5" />
+                    <div className="w-8 h-8 rounded bg-white/5" />
+                  </div>
+                  <div className="w-24 h-8 rounded bg-white/5" />
+                </div>
+              </div>
+            ))}
           </div>
         ) : cvList.length === 0 ? (
           <div className="glass-panel p-12 rounded-2xl border-white/5 text-center flex flex-col items-center justify-center">

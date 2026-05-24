@@ -147,6 +147,7 @@ export default function BlogPostReaderPage() {
             <img 
               src={post.image} 
               alt={post.title} 
+              loading="lazy"
               className="absolute inset-0 w-full h-full object-cover"
             />
             <div className="absolute inset-0 bg-slate-900/10 pointer-events-none mix-blend-overlay" />

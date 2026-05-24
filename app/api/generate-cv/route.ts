@@ -58,7 +58,7 @@ export async function POST(req: Request) {
     let statusCode = 500;
 
     if (isRateLimit) {
-      errorMessage = "Gemini AI busy hai — 1 minute baad dobara try karein. (Free tier rate limit reached)";
+      errorMessage = "AI busy hai, 1 minute mein dobara try karein ⏱️ / AI is busy, please try again in 1 minute ⏱️";
       statusCode = 429;
     } else if (isPermission) {
       errorMessage = "Gemini API key configuration error. Contact support.";

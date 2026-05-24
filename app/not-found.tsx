@@ -19,29 +19,40 @@ export default function NotFoundPage() {
       {/* Background blur */}
       <div className="absolute top-[25%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
 
-      <Card className="w-full max-w-md p-8 border-white/10 text-center relative z-10">
-        <div className="mx-auto w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-6 animate-pulse">
+      <Card className="w-full max-w-md p-8 border-white/10 text-center relative z-10 select-none">
+        <div className="mx-auto w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-4 animate-pulse">
           <ShieldAlert size={22} />
         </div>
         
-        <h1 className="text-5xl font-black text-white tracking-widest font-mono">404</h1>
+        <span className="text-[10px] font-black text-blue-400 uppercase tracking-widest font-inter block mb-1">FastCV PK</span>
+        <h1 className="text-4xl sm:text-5xl font-black text-white tracking-widest font-mono bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent">404</h1>
 
-        <h2 className={`text-lg font-bold text-white mt-4 ${language === "ur" ? "font-urdu" : "font-inter"}`}>
-          {language === "ur" ? "صفحہ نہیں ملا!" : "Page Not Found"}
-        </h2>
+        <div className="space-y-1 mt-4">
+          <h2 className="text-lg font-black text-white font-urdu leading-normal">
+            یہ صفحہ نہیں ملا! 🔍
+          </h2>
+          <h3 className="text-xs font-bold text-slate-300 font-inter uppercase tracking-wide">
+            This page does not exist
+          </h3>
+        </div>
         
-        <p className={`text-xs text-textSecondary leading-relaxed mt-2 mb-6 ${language === "ur" ? "font-urdu" : "font-inter"}`}>
-          {language === "ur" 
-            ? "معذرت، جو صفحہ آپ تلاش کر رہے ہیں وہ وجود نہیں رکھتا یا اسے منتقل کر دیا گیا ہے۔" 
-            : "Apologies, the terminal page you are requesting does not exist or has been moved."}
+        <p className="text-[11px] text-textSecondary leading-relaxed mt-4 mb-6">
+          معذرت، جو لنک آپ نے اوپن کیا ہے وہ اب ویب سائٹ پر موجود نہیں ہے۔ آپ نیچے دیئے گئے بٹنز کے ذریعے ہوم پیج پر جا سکتے ہیں یا ابھی اپنی نئی سی وی بنا سکتے ہیں۔
         </p>
 
-        <Link href="/" className="inline-block w-full">
-          <Button className="w-full gap-2 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold">
-            <ArrowLeft size={15} />
-            {getTranslation("backToHome", language)}
-          </Button>
-        </Link>
+        <div className="flex flex-col sm:flex-row gap-3">
+          <Link href="/" className="flex-1">
+            <Button variant="secondary" className="w-full gap-1.5 py-3 text-xs text-blue-400 font-bold border-white/10 bg-white/5 uppercase tracking-wider font-inter">
+              <ArrowLeft size={13} />
+              Ghar Wapas Jao
+            </Button>
+          </Link>
+          <Link href="/create" className="flex-1">
+            <Button className="w-full gap-1.5 py-3 text-xs bg-blue-600 hover:bg-blue-500 text-white font-black uppercase tracking-wider font-inter shadow-md shadow-blue-500/20">
+              CV Banao ⚡
+            </Button>
+          </Link>
+        </div>
       </Card>
     </div>
   );

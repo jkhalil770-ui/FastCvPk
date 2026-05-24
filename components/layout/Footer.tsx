@@ -25,8 +25,18 @@ export function Footer() {
               {getTranslation("tagline", language)}
             </p>
             <p className="text-[10px] text-textSecondary/50 font-inter">
-              © FastCV PK 2026 - All Rights Reserved.
+              © 2026 FastCV PK - All Rights Reserved.
             </p>
+            <p className="text-[10px] text-textSecondary/70 font-inter">
+              Contact: fastcvpk.online@gmail.com
+            </p>
+            <div className="flex gap-3 text-xs text-blue-400 font-semibold font-inter pt-1">
+              <a href="#" className="hover:text-white transition-colors">Facebook</a>
+              <span className="text-white/10">|</span>
+              <a href="#" className="hover:text-white transition-colors">Instagram</a>
+              <span className="text-white/10">|</span>
+              <a href="#" className="hover:text-white transition-colors">LinkedIn</a>
+            </div>
           </div>
 
           {/* Quick Links Column */}
@@ -95,8 +105,8 @@ export function Footer() {
         </div>
         
         {/* Bottom border separator */}
-        <div className="border-t border-white/5 mt-8 pt-8 text-center text-[10px] text-textSecondary/30 font-inter">
-          fastcvpk.online — Made with ❤️ in Pakistan for global employment.
+        <div className="border-t border-white/5 mt-8 pt-8 text-center text-[10px] text-textSecondary/40 font-inter">
+          © 2026 FastCV PK — Made with ❤️ in Pakistan
         </div>
       </div>
     </footer>

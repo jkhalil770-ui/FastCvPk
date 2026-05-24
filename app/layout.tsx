@@ -46,6 +46,11 @@ export const metadata: Metadata = {
     description: "Create professional ATS-friendly CVs and beautiful Urdu Nastaliq Biodatas for free.",
     images: ["/logo.png"],
   },
+  keywords: ["cv banana free", "biodata banana", "resume maker pakistan", "free cv maker urdu", "ats cv pakistan"],
+  other: {
+    "geo.region": "PK",
+    "geo.placename": "Pakistan",
+  }
 };
 
 /**
@@ -58,6 +63,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="dark">
+      <head>
+        <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
+        <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
+        <link rel="preload" href="/logo.png" as="image" />
+      </head>
       <body className="antialiased min-h-screen flex flex-col bg-background">
         <ToastProvider>
           <LanguageProvider>

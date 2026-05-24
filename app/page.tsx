@@ -236,18 +236,73 @@ export default function LandingPage() {
           </Link>
         </div>
 
-        {/* Animated CV Mockup Graphic Container */}
-        <div className="relative mt-16 w-full max-w-4xl rounded-2xl border border-white/10 bg-slate-900/50 p-2 sm:p-3 shadow-2xl backdrop-blur-md overflow-hidden aspect-[21/9] flex items-center justify-center select-none group animate-float">
-          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/20 via-transparent to-purple-500/10 opacity-60 pointer-events-none" />
+        {/* Realistic Floating Static CV Preview Card (High Fidelity) */}
+        <div className="relative mt-16 w-full max-w-2xl rounded-2xl border border-white/10 bg-slate-900/40 p-4 sm:p-6 shadow-2xl backdrop-blur-md overflow-hidden flex items-center justify-center select-none group animate-float">
+          {/* Neon background lights */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-blue-500/10 via-transparent to-purple-500/10 opacity-60 pointer-events-none" />
           
-          <div className="w-full h-full rounded-xl overflow-hidden relative border border-white/5">
-            <img 
-              src="/images/hero-mockup.png" 
-              alt="FastCV PK Modern CV AI Generator Mockup" 
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
-            />
-            {/* Dark overlay to make it blend well with the premium dark theme */}
-            <div className="absolute inset-0 bg-slate-950/20 pointer-events-none mix-blend-overlay" />
+          {/* Mini A4 CV Card */}
+          <div className="w-full max-w-lg bg-white text-slate-800 rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] border border-slate-200 p-5 sm:p-7 text-left transition-transform duration-500 group-hover:scale-[1.01] relative font-inter">
+            {/* Blue accent indicator */}
+            <div className="absolute left-0 top-0 w-1.5 h-full bg-[#3B82F6] rounded-l-xl" />
+            
+            {/* Header info */}
+            <div className="border-b border-slate-200 pb-3 mb-4 flex justify-between items-start pl-2">
+              <div>
+                <h3 className="text-lg sm:text-xl font-black tracking-tight text-slate-950 uppercase leading-none">
+                  Muhammad Ahmed
+                </h3>
+                <p className="text-[10px] font-extrabold uppercase tracking-widest text-[#3B82F6] mt-1.5">
+                  Software Engineer
+                </p>
+              </div>
+              <span className="text-[8px] font-black uppercase text-emerald-600 bg-emerald-50 border border-emerald-100 px-2 py-0.5 rounded tracking-wider shadow-sm">
+                Candidate Profile
+              </span>
+            </div>
+
+            {/* Profile Summary */}
+            <div className="mb-4 pl-2">
+              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1 border-b border-slate-100 pb-0.5">
+                Executive Profile
+              </h4>
+              <p className="text-[10px] text-slate-500 leading-relaxed">
+                Innovative and results-driven Software Engineer with hands-on expertise building scalable web architectures and robust APIs. Skilled in translating high-level business goals into clean, reliable React and Node code structures.
+              </p>
+            </div>
+
+            {/* Experience */}
+            <div className="mb-4 pl-2">
+              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1.5 border-b border-slate-100 pb-0.5">
+                Professional Experience
+              </h4>
+              <div className="space-y-2">
+                <div>
+                  <div className="flex justify-between items-baseline text-[10px] font-bold text-slate-800">
+                    <span>Software Engineer <span className="font-normal text-slate-400">at</span> Tech Solutions Pvt Ltd</span>
+                    <span className="text-slate-400 text-[8px] font-semibold">2024 — Present</span>
+                  </div>
+                  <ul className="list-disc pl-4 text-[9px] text-slate-500 space-y-0.5 leading-relaxed mt-1">
+                    <li>Developed high-throughput API endpoints utilizing Node.js, reducing database query latencies by 35%.</li>
+                    <li>Architected dynamic responsive dashboards in React, elevating overall client retention score.</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            {/* Skills */}
+            <div className="pl-2">
+              <h4 className="text-[8px] font-black uppercase tracking-widest text-slate-400 mb-1.5 border-b border-slate-100 pb-0.5">
+                Key Expertise
+              </h4>
+              <div className="flex flex-wrap gap-1">
+                {["Python", "React", "Node.js", "TypeScript", "AWS", "FastAPI"].map((skill, sIdx) => (
+                  <span key={sIdx} className="bg-slate-50 border border-slate-200 text-slate-700 px-2 py-0.5 text-[8px] font-bold rounded tracking-wide shadow-sm">
+                    {skill}
+                  </span>
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
