@@ -60,6 +60,16 @@ export function Footer() {
                   {getTranslation("blog", language)}
                 </Link>
               </li>
+              <li>
+                <Link href="/privacy" className="hover:text-white transition-colors">
+                  {language === "ur" ? "پرائیویسی پالیسی" : "Privacy Policy"}
+                </Link>
+              </li>
+              <li>
+                <Link href="/terms" className="hover:text-white transition-colors">
+                  {language === "ur" ? "شرائط و ضوابط" : "Terms & Conditions"}
+                </Link>
+              </li>
             </ul>
           </div>
 
