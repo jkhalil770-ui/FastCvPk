@@ -159,6 +159,7 @@ export default function LandingPage() {
       name: language === "ur" ? "محمد علی" : "Muhammad Ali",
       role: language === "ur" ? "سافٹ ویئر انجینئر، سسٹمز لمیٹڈ" : "Software Engineer, Systems Limited",
       avatar: "MA",
+      photo: "/avatars/ma.png",
       gradient: "from-blue-600 to-blue-400",
       rating: 5,
       text: language === "ur" 
@@ -169,6 +170,7 @@ export default function LandingPage() {
       name: language === "ur" ? "عائشہ رحمان" : "Ayesha Rehman",
       role: language === "ur" ? "ٹیلنٹ ایکوزیشن، یونی لیور پاکستان" : "Talent Acquisition, Unilever Pakistan",
       avatar: "AR",
+      photo: "/avatars/ar.png",
       gradient: "from-purple-600 to-purple-400",
       rating: 5,
       text: language === "ur"
@@ -179,6 +181,7 @@ export default function LandingPage() {
       name: language === "ur" ? "زینب فاطمہ" : "Zainab Fatima",
       role: language === "ur" ? "طالب علم، فاسٹ یونیورسٹی" : "CS Graduate, FAST NUCES",
       avatar: "ZF",
+      photo: "/avatars/zf.png",
       gradient: "from-emerald-600 to-emerald-400",
       rating: 5,
       text: language === "ur"
@@ -189,6 +192,7 @@ export default function LandingPage() {
       name: language === "ur" ? "کاشف منہاس" : "Kashif Minhas",
       role: language === "ur" ? "فری لانسر، راولپنڈی" : "Freelance Web Developer, Rawalpindi",
       avatar: "KM",
+      photo: "/avatars/km.png",
       gradient: "from-cyan-600 to-cyan-400",
       rating: 5,
       text: language === "ur"
@@ -199,6 +203,7 @@ export default function LandingPage() {
       name: language === "ur" ? "حمزہ بٹ" : "Hamza Butt",
       role: language === "ur" ? "بائیو ڈیٹا صارف، فیصل آباد" : "Matrimonial Biodata User, Faisalabad",
       avatar: "HB",
+      photo: "/avatars/hb.png",
       gradient: "from-amber-600 to-amber-400",
       rating: 5,
       text: language === "ur"
@@ -326,21 +331,21 @@ export default function LandingPage() {
             }
           `}} />
 
-          {/* DESKTOP VIEW: 3 Cards side by side with GPU accelerated gentle floating and custom rotations */}
-          <div className="hidden md:grid grid-cols-3 gap-8 relative z-10 select-none">
+          {/* DESKTOP VIEW: 3 Large High-Quality CV Cards */}
+          <div className="hidden md:grid grid-cols-3 gap-6 relative z-10 select-none">
             
             {/* CARD 1 — Ayesha Malik (ATS CV) */}
-            <div className="animate-float-1 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(59,130,246,0.15)] hover:shadow-[0_20px_50px_rgba(59,130,246,0.3)] border border-blue-500/10 hover:border-blue-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+            <div className="animate-float-1 w-full bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(59,130,246,0.2)] hover:shadow-[0_30px_80px_rgba(59,130,246,0.35)] border border-blue-500/15 hover:border-blue-500/40 p-6 text-left transition-all duration-300 relative font-inter aspect-[1/1.42] flex flex-col justify-between">
               {/* Blue accent indicator */}
               <div className="absolute left-0 top-0 w-1 h-full bg-[#3B82F6] rounded-l-xl" />
               
               <div>
                 <div className="flex justify-between items-start mb-3 pl-1">
                   <div>
-                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">
+                    <h3 className="text-base font-black tracking-tight text-slate-900 leading-none">
                       Ayesha Malik
                     </h3>
-                    <p className="text-[7.5px] font-black uppercase tracking-widest text-[#3B82F6] mt-1">
+                    <p className="text-[9px] font-black uppercase tracking-widest text-[#3B82F6] mt-1">
                       Marketing Manager
                     </p>
                     <p className="text-[6.5px] font-semibold text-slate-400 mt-0.5">
@@ -396,14 +401,14 @@ export default function LandingPage() {
             </div>
 
             {/* CARD 2 — Ahmed Hassan (Student CV) */}
-            <div className="animate-float-2 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(16,185,129,0.15)] hover:shadow-[0_20px_50px_rgba(16,185,129,0.3)] border border-emerald-500/10 hover:border-emerald-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+            <div className="animate-float-2 w-full bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(16,185,129,0.2)] hover:shadow-[0_30px_80px_rgba(16,185,129,0.35)] border border-emerald-500/15 hover:border-emerald-500/40 p-6 text-left transition-all duration-300 relative font-inter aspect-[1/1.42] flex flex-col justify-between">
               {/* Green accent indicator */}
               <div className="absolute top-0 inset-x-0 h-1 bg-[#10B981] rounded-t-xl" />
               
               <div>
                 <div className="flex justify-between items-start mb-3">
                   <div>
-                    <h3 className="text-sm font-black tracking-tight text-slate-900 leading-none">
+                    <h3 className="text-base font-black tracking-tight text-slate-900 leading-none">
                       Ahmed Hassan
                     </h3>
                     <p className="text-[7.5px] font-black uppercase tracking-widest text-[#10B981] mt-1">
@@ -462,7 +467,7 @@ export default function LandingPage() {
             </div>
 
             {/* CARD 3 — Usman Tariq (Global Pro Specialist) */}
-            <div className="animate-float-3 w-full bg-white text-slate-800 rounded-xl shadow-[0_15px_40px_rgba(168,85,247,0.15)] hover:shadow-[0_20px_50px_rgba(168,85,247,0.3)] border border-purple-500/10 hover:border-purple-500/30 p-5 text-left transition-all duration-300 relative font-inter aspect-[1/1.35] flex flex-col justify-between">
+            <div className="animate-float-3 w-full bg-white text-slate-800 rounded-2xl shadow-[0_20px_60px_rgba(168,85,247,0.2)] hover:shadow-[0_30px_80px_rgba(168,85,247,0.35)] border border-purple-500/15 hover:border-purple-500/40 p-6 text-left transition-all duration-300 relative font-inter aspect-[1/1.42] flex flex-col justify-between">
               {/* Purple accent indicator */}
               <div className="absolute left-0 top-0 w-1 h-full bg-purple-600 rounded-l-xl" />
               
@@ -906,10 +911,29 @@ export default function LandingPage() {
                 </p>
               </div>
 
-              {/* User Bio Footer */}
+              {/* User Bio Footer — Real Pakistani Photo */}
               <div className="flex items-center gap-3 mt-6 pt-4 border-t border-white/5" dir={language === "ur" ? "rtl" : "ltr"}>
-                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.gradient} text-white font-extrabold text-sm flex items-center justify-center shadow-lg shadow-blue-500/5 select-none flex-shrink-0`}>
-                  {t.avatar}
+                <div className="relative flex-shrink-0">
+                  <img
+                    src={t.photo}
+                    alt={t.name}
+                    className="w-12 h-12 rounded-full object-cover object-top ring-2 ring-blue-500/30 shadow-lg shadow-blue-500/10"
+                    onError={(e) => {
+                      // fallback to gradient initials if image fails
+                      const target = e.currentTarget as HTMLImageElement;
+                      target.style.display = 'none';
+                      const fallback = target.nextSibling as HTMLElement;
+                      if (fallback) fallback.style.display = 'flex';
+                    }}
+                  />
+                  <div
+                    className={`w-12 h-12 rounded-full bg-gradient-to-br ${t.gradient} text-white font-extrabold text-sm items-center justify-center shadow-lg hidden`}
+                    aria-hidden="true"
+                  >
+                    {t.avatar}
+                  </div>
+                  {/* Verified green dot */}
+                  <span className="absolute bottom-0 right-0 w-3 h-3 bg-emerald-500 border-2 border-slate-900 rounded-full" />
                 </div>
                 <div className="text-left min-w-0">
                   <h4 className={`text-xs sm:text-sm font-bold text-white leading-snug truncate ${language === "ur" ? "text-right font-urdu" : "text-left"}`}>
