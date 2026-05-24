@@ -4,11 +4,13 @@ import { ToastProvider } from "@/components/ui/Toast";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import LanguageToggle from "@/components/layout/LanguageToggle";
+import PWAInstaller from "@/components/pwa/PWAInstaller";
 import "./globals.css";
 
 export const metadata: Metadata = {
   title: "FastCV PK — Pakistan's #1 Free CV & Biodata Maker 2026",
   description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free. Clean layouts, high-definition PDF download.",
+  manifest: "/manifest.json",
   metadataBase: new URL("https://fastcvpk.online"),
   alternates: {
     canonical: "/",
@@ -69,6 +71,9 @@ export default function RootLayout({
             
             {/* Navigation Footer */}
             <Footer />
+
+            {/* PWA Mobile App Installer Banner */}
+            <PWAInstaller />
           </LanguageProvider>
         </ToastProvider>
       </body>
