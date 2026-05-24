@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import Input from "@/components/ui/Input";
 import Button from "@/components/ui/Button";
 import VoiceInput from "@/components/ui/VoiceInput";
-import { Trash2, Sparkles, Plus } from "lucide-react";
+import { Trash2, Sparkles, Plus, X } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
 
 interface GlobalProFormProps {
@@ -287,6 +287,58 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
           <h3 className="text-base font-bold text-white">Global Pro: Profile & Remote Settings</h3>
           <span className="text-[10px] bg-blue-500/10 border border-blue-500/20 text-blue-400 font-black uppercase px-2 py-0.5 rounded tracking-widest animate-pulse">
             Premium
+          </span>
+        </div>
+
+        {/* Circular Photo Upload Field (Optional) */}
+        <div className="flex flex-col items-center justify-center p-5 rounded-xl border border-dashed border-blue-500/20 bg-blue-950/10 space-y-3">
+          <div className="relative w-[120px] h-[120px]">
+            {formData.personalInfo.photo ? (
+              <div className="relative w-full h-full">
+                <img
+                  src={formData.personalInfo.photo}
+                  alt="Profile Preview"
+                  className="w-full h-full rounded-full object-cover border-2 border-[#3B82F6]"
+                />
+                <button
+                  type="button"
+                  onClick={() => updatePersonalInfo("photo", "")}
+                  className="absolute -top-1 -right-1 bg-red-500 hover:bg-red-600 text-white rounded-full p-1.5 shadow-lg transition-transform active:scale-90 hover:scale-105"
+                  title="Remove Photo"
+                >
+                  <X size={14} />
+                </button>
+              </div>
+            ) : (
+              <label className="flex flex-col items-center justify-center w-full h-full rounded-full border-2 border-dashed border-[#3B82F6] hover:border-blue-400 bg-surface/40 hover:bg-surface/70 transition-all cursor-pointer text-center p-2">
+                <span className="text-xl">📷</span>
+                <span className="text-[10px] font-black text-blue-400 leading-tight mt-1 whitespace-pre-line">
+                  {"Photo Upload\n(Optional)"}
+                </span>
+                <input
+                  type="file"
+                  accept="image/jpeg, image/png"
+                  onChange={(e) => {
+                    const file = e.target.files?.[0];
+                    if (!file) return;
+                    if (file.size > 2 * 1024 * 1024) {
+                      toast("File size too large!", "warning", "Maximum photo upload size is 2MB.");
+                      return;
+                    }
+                    const reader = new FileReader();
+                    reader.onloadend = () => {
+                      updatePersonalInfo("photo", reader.result as string);
+                      toast("Photo successfully uploaded!", "success", "Your profile photo is now added to the CV.");
+                    };
+                    reader.readAsDataURL(file);
+                  }}
+                  className="hidden"
+                />
+              </label>
+            )}
+          </div>
+          <span className="text-[10px] font-semibold text-textSecondary text-center leading-normal">
+            International jobs mein photo optional hoti hai
           </span>
         </div>
 

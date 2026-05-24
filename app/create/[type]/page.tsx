@@ -459,42 +459,101 @@ export default function CVBuilderPage() {
   const isUrduCV = type === "biodata" || (type === "student" && formData.personalInfo.languageChoice === "ur");
 
   return (
-    <div className="flex-1 w-full bg-[#0F172A] relative flex flex-col justify-start">
+    <div className="flex-1 w-full bg-[#0F172A] relative flex flex-col justify-start overflow-x-hidden">
       
       {/* Top Wizard Steps Bar */}
       <div className="w-full border-b border-white/5 bg-slate-950/40 py-4 px-4 sm:px-8">
-        <div className="mx-auto max-w-7xl flex flex-wrap items-center justify-between gap-4">
-          <Link href="/create" className="inline-flex items-center gap-1 text-xs text-textSecondary hover:text-white transition-colors">
+        <div className="mx-auto max-w-7xl flex flex-col sm:flex-row items-center justify-between gap-4">
+          <Link href="/create" className="inline-flex items-center gap-1 text-xs text-textSecondary hover:text-white transition-colors self-start sm:self-auto">
             <ArrowLeft size={13} />
             {language === "ur" ? "پیچھے جائیں" : "Selection"}
           </Link>
           
-          {/* Steps */}
-          <div className="flex items-center gap-4 text-xs font-semibold select-none">
-            <span className={`px-2.5 py-1 rounded-full ${step === 1 ? "bg-blue-600 text-white" : "bg-white/5 text-textSecondary"}`}>
-              1. {getTranslation("personalInfo", language)}
-            </span>
-            <span className="text-white/20">—</span>
-            <span className={`px-2.5 py-1 rounded-full ${step === 2 ? "bg-blue-600 text-white" : "bg-white/5 text-textSecondary"}`}>
-              2. {getTranslation("experienceEducation", language)}
-            </span>
-            <span className="text-white/20">—</span>
-            <span className={`px-2.5 py-1 rounded-full ${step === 3 ? "bg-blue-600 text-white" : "bg-white/5 text-textSecondary"}`}>
-              3. {getTranslation("skillsDetails", language)}
-            </span>
-            <span className="text-white/20">—</span>
-            <span className={`px-2.5 py-1 rounded-full ${step === 4 ? "bg-blue-600 text-white animate-pulse" : "bg-white/5 text-textSecondary"}`}>
-              4. {getTranslation("previewDownload", language)}
-            </span>
+          {/* Responsive Progress Steps Container */}
+          <div className="flex flex-col items-center w-full sm:w-auto">
+            {/* Mobile View (below md Breakpoint) */}
+            <div className="md:hidden flex flex-col items-center w-full select-none">
+              <div className="flex items-center justify-center gap-1 min-[360px]:gap-2">
+                {[1, 2, 3, 4].map((sIdx) => {
+                  const isActive = step === sIdx;
+                  const isCompleted = step > sIdx;
+                  return (
+                    <React.Fragment key={sIdx}>
+                      {sIdx > 1 && (
+                        <div className="flex gap-0.5 items-center px-1">
+                          <span className={`w-1 h-1 rounded-full ${step >= sIdx ? "bg-blue-500" : "bg-white/20"}`} />
+                          <span className={`w-1 h-1 rounded-full ${step >= sIdx ? "bg-blue-500" : "bg-white/20"}`} />
+                          <span className={`w-1 h-1 rounded-full ${step >= sIdx ? "bg-blue-500" : "bg-white/20"}`} />
+                        </div>
+                      )}
+                      <div
+                        className={`w-7 h-7 rounded-full flex items-center justify-center text-[11px] font-black transition-all duration-300 ${
+                          isActive
+                            ? "bg-blue-600 text-white shadow-lg shadow-blue-500/30 scale-110"
+                            : isCompleted
+                            ? "bg-emerald-500 text-white shadow-md shadow-emerald-500/20"
+                            : "bg-white/5 text-textSecondary border border-white/5"
+                        }`}
+                      >
+                        {isCompleted ? "✓" : sIdx}
+                      </div>
+                    </React.Fragment>
+                  );
+                })}
+              </div>
+              <div className="mt-2 text-[10px] font-black uppercase text-blue-400 tracking-widest animate-pulse">
+                {step === 1 && getTranslation("personalInfo", language)}
+                {step === 2 && getTranslation("experienceEducation", language)}
+                {step === 3 && getTranslation("skillsDetails", language)}
+                {step === 4 && getTranslation("previewDownload", language)}
+              </div>
+            </div>
+
+            {/* Desktop View (md and above) */}
+            <div className="hidden md:flex items-center gap-3 text-xs font-bold select-none">
+              {[1, 2, 3, 4].map((sIdx) => {
+                const isActive = step === sIdx;
+                const isCompleted = step > sIdx;
+                let stepLabel = "";
+                if (sIdx === 1) stepLabel = getTranslation("personalInfo", language);
+                if (sIdx === 2) stepLabel = getTranslation("experienceEducation", language);
+                if (sIdx === 3) stepLabel = getTranslation("skillsDetails", language);
+                if (sIdx === 4) stepLabel = getTranslation("previewDownload", language);
+
+                return (
+                  <React.Fragment key={sIdx}>
+                    {sIdx > 1 && (
+                      <span className={`w-6 h-[2px] rounded transition-colors duration-300 ${step >= sIdx ? "bg-blue-500/50" : "bg-white/10"}`} />
+                    )}
+                    <span
+                      className={`px-3 py-1.5 rounded-full flex items-center gap-1.5 transition-all duration-500 border ${
+                        isActive
+                          ? "bg-blue-600 border-blue-500 text-white shadow-lg shadow-blue-500/20 scale-105"
+                          : isCompleted
+                          ? "bg-emerald-500/10 border-emerald-500/30 text-emerald-400"
+                          : "bg-white/5 border-transparent text-textSecondary"
+                      }`}
+                    >
+                      <span className={`w-4 h-4 rounded-full flex items-center justify-center text-[9px] font-black ${
+                        isActive ? "bg-white text-blue-600" : isCompleted ? "bg-emerald-400 text-emerald-950" : "bg-white/10"
+                      }`}>
+                        {isCompleted ? "✓" : sIdx}
+                      </span>
+                      {stepLabel}
+                    </span>
+                  </React.Fragment>
+                );
+              })}
+            </div>
           </div>
         </div>
       </div>
 
       {/* Primary Builder Area (split column) */}
-      <div className="flex-1 w-full max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-8 relative">
+      <div className="flex-1 w-full max-w-7xl mx-auto px-4 py-4 sm:py-8 sm:px-6 lg:px-8 flex flex-col md:flex-row gap-4 md:gap-8 relative overflow-x-hidden">
         
         {/* Mobile Tab switchers */}
-        <div className="md:hidden flex items-center justify-center bg-slate-900 border border-white/5 p-1 rounded-xl mb-4 w-full select-none">
+        <div className="md:hidden flex items-center justify-center bg-slate-900 border border-white/5 p-1 rounded-xl mb-2 w-full select-none">
           <button
             onClick={() => setActiveTab("form")}
             className={`flex-1 flex justify-center items-center gap-1.5 py-2.5 rounded-lg text-xs font-bold transition-all ${
@@ -514,15 +573,15 @@ export default function CVBuilderPage() {
             {getTranslation("switchTabPreview", language)}
           </button>
         </div>
-
+ 
         {/* LEFT COLUMN: Input Form Panel */}
         <div className={`w-full md:w-1/2 flex flex-col gap-6 ${activeTab === "form" ? "block" : "hidden md:flex"}`}>
-          <div className="glass-panel p-6 rounded-2xl border-white/10 flex-1 flex flex-col justify-between">
-            <div>
+          <div className="glass-panel p-4 sm:p-6 rounded-2xl border-white/10 flex-1 flex flex-col justify-between w-full max-w-full">
+            <div className="w-full max-w-full overflow-x-hidden">
               {/* Form loader */}
               {renderForm()}
             </div>
-
+ 
             {/* Form footer controls */}
             <div className="mt-8 pt-6 border-t border-white/5 flex items-center justify-between">
               {step > 1 ? (
@@ -533,7 +592,7 @@ export default function CVBuilderPage() {
               ) : (
                 <div />
               )}
-
+ 
               {step < 4 ? (
                 <Button onClick={handleNextStep} className="gap-1 px-5 py-2 touch-btn">
                   {getTranslation("nextStep", language)}
@@ -552,11 +611,11 @@ export default function CVBuilderPage() {
             </div>
           </div>
         </div>
-
+ 
         {/* RIGHT COLUMN: Live Print preview */}
         <div className={`w-full md:w-1/2 flex flex-col items-center ${activeTab === "preview" ? "block" : "hidden md:flex"}`}>
           <div className="sticky top-24 w-full flex flex-col items-center">
-            <div className="w-full flex items-center justify-between mb-3 text-xs text-textSecondary">
+            <div className="w-full flex items-center justify-between mb-3 text-xs text-textSecondary px-1">
               <span className="font-semibold">{getTranslation("livePreview", language)}</span>
               {defaultWatermark && (
                 <span className="text-[10px] text-amber-400 bg-amber-500/10 border border-amber-500/20 px-2 py-0.5 rounded font-bold uppercase tracking-wide">
@@ -564,16 +623,16 @@ export default function CVBuilderPage() {
                 </span>
               )}
             </div>
-
+ 
             {/* Transform scaling wrapper to center and shrink standard A4 preview container */}
-            <div className="w-full border border-white/5 bg-slate-900/50 rounded-2xl p-4 overflow-hidden flex items-start justify-center shadow-inner max-h-[75vh]">
-              <div className="origin-top scale-[0.5] sm:scale-[0.55] lg:scale-[0.6] flex-shrink-0">
+            <div className="w-full border border-white/5 bg-slate-900/50 rounded-2xl p-2 sm:p-4 overflow-hidden flex items-start justify-center shadow-inner max-h-[75vh]">
+              <div className="origin-top scale-[0.38] min-[360px]:scale-[0.42] min-[400px]:scale-[0.46] min-[480px]:scale-[0.52] sm:scale-[0.55] lg:scale-[0.6] flex-shrink-0">
                 {renderTemplate()}
               </div>
             </div>
           </div>
         </div>
-
+ 
       </div>
 
       {/* AI Generating Loading Overlay Modal */}

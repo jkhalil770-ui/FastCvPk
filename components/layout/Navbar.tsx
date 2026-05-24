@@ -78,18 +78,20 @@ export function Navbar() {
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Brand Logo on the left */}
-          <div className="flex items-center gap-3">
-            <Link href="/" className="flex items-center gap-2.5 group">
+          <div className="flex items-center gap-1 sm:gap-3 flex-shrink min-w-0">
+            <Link href="/" className="flex items-center gap-1 sm:gap-2.5 group flex-shrink min-w-0">
               <img 
                 src="/logo.png" 
                 alt="FastCV PK Logo" 
-                className="h-10 w-auto object-contain rounded-md shadow-[0_0_15px_rgba(59,130,246,0.3)] group-hover:scale-105 transition-all duration-300" 
+                className="h-8 sm:h-10 w-auto object-contain rounded-md shadow-[0_0_15px_rgba(59,130,246,0.3)] group-hover:scale-105 transition-all duration-300 flex-shrink-0" 
               />
-              <span className="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-xl font-extrabold text-transparent tracking-wider">
+              <span className="bg-gradient-to-r from-blue-500 to-blue-400 bg-clip-text text-sm sm:text-xl font-extrabold text-transparent tracking-wider truncate max-w-[80px] min-[360px]:max-w-[120px] sm:max-w-none">
                 {getTranslation("brandName", language)}
               </span>
             </Link>
-            <LanguageToggle />
+            <div className="flex-shrink-0 scale-90 sm:scale-100 origin-left">
+              <LanguageToggle />
+            </div>
           </div>
 
           {/* Desktop Navigation Links */}

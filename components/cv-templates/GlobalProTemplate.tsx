@@ -76,9 +76,17 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
           
           {/* Profile Photo Placeholder */}
           <div className="flex flex-col items-center text-center p-3 bg-slate-50 border border-slate-200/60 rounded-xl shadow-sm">
-            <div className="w-20 h-20 rounded-full bg-slate-200 border-2 border-slate-300 flex items-center justify-center text-slate-400 text-[10px] font-black uppercase tracking-wider shadow-inner">
-              Photo
-            </div>
+            {p.photo ? (
+              <img 
+                src={p.photo} 
+                alt={p.fullName || "Profile"} 
+                className="w-20 h-20 rounded-full object-cover border-2 border-[#3B82F6] shadow-sm"
+              />
+            ) : (
+              <div className="w-20 h-20 rounded-full bg-slate-200 border-2 border-slate-300 flex items-center justify-center text-slate-400 text-[10px] font-black uppercase tracking-wider shadow-inner">
+                Photo
+              </div>
+            )}
             <span className="text-[8px] font-semibold text-slate-400 mt-2 block leading-tight">
               Photo optional for international jobs
             </span>
