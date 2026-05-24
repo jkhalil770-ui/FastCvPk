@@ -154,6 +154,59 @@ export default function LandingPage() {
     }
   ];
 
+  const testimonials = [
+    {
+      name: language === "ur" ? "محمد علی" : "Muhammad Ali",
+      role: language === "ur" ? "سافٹ ویئر انجینئر، سسٹمز لمیٹڈ" : "Software Engineer, Systems Limited",
+      avatar: "MA",
+      gradient: "from-blue-600 to-blue-400",
+      rating: 5,
+      text: language === "ur" 
+        ? "فاسٹ سی وی پی کے نے میرا کام بہت آسان کر دیا۔ صرف ۲ منٹ میں اے ٹی ایس سی وی بن گئی اور جیمنی اے آئی نے تجربے کو بہت پیشہ ورانہ انداز میں لکھا۔ مجھے ایک ہفتے میں انٹرویو کالز آ گئیں۔"
+        : "FastCV PK is a lifesaver! I generated my ATS-friendly CV in 2 minutes, and the Gemini AI expanded my bullets perfectly. Got 3 interview calls within a week. Highly recommended!"
+    },
+    {
+      name: language === "ur" ? "عائشہ رحمان" : "Ayesha Rehman",
+      role: language === "ur" ? "ٹیلنٹ ایکوزیشن، یونی لیور پاکستان" : "Talent Acquisition, Unilever Pakistan",
+      avatar: "AR",
+      gradient: "from-purple-600 to-purple-400",
+      rating: 5,
+      text: language === "ur"
+        ? "ایک ایچ آر پروفیشنل کے طور پر، میں روزانہ سینکڑوں سی وی دیکھتی ہوں۔ اس ویب سائٹ کا اے ٹی ایس فارمیٹ بالکل پرفیکٹ اور کلین ہے۔ میں تمام امیدواروں کو یہی استعمال کرنے کا مشورہ دیتی ہوں۔"
+        : "As an HR professional, I scan hundreds of CVs. The ATS format from this site is 100% compliant and clean. I always recommend my candidates to build their resumes here."
+    },
+    {
+      name: language === "ur" ? "زینب فاطمہ" : "Zainab Fatima",
+      role: language === "ur" ? "طالب علم، فاسٹ یونیورسٹی" : "CS Graduate, FAST NUCES",
+      avatar: "ZF",
+      gradient: "from-emerald-600 to-emerald-400",
+      rating: 5,
+      text: language === "ur"
+        ? "تازہ گریجویٹ ہونے کی وجہ سے مجھے سی وی بنانے کا طریقہ نہیں معلوم تھا۔ اسٹوڈنٹ سی وی فارمیٹ نے میرے پروجیکٹس اور جی پی اے کو بہت خوبصورتی سے دکھایا۔ بغیر واٹر مارک ڈاؤن لوڈ لاجواب ہے!"
+        : "Being a fresh graduate, I had no idea how to structure my resume. The Student CV template helped me highlight my university projects and GPA beautifully. The free download with no watermark is amazing!"
+    },
+    {
+      name: language === "ur" ? "کاشف منہاس" : "Kashif Minhas",
+      role: language === "ur" ? "فری لانسر، راولپنڈی" : "Freelance Web Developer, Rawalpindi",
+      avatar: "KM",
+      gradient: "from-cyan-600 to-cyan-400",
+      rating: 5,
+      text: language === "ur"
+        ? "فری لانسر سی وی ٹیمپلیٹ میں بین الاقوامی کلائنٹس کے لیے ٹائم زون اور متوقع تنخواہ کے آپشنز بہترین ہیں۔ واٹر مارک ہٹانے کے لیے صرف ۱۹۹ روپے بالکل مفت کے برابر ہیں۔"
+        : "The Freelancer CV template with remote timezone and Expected Salary dropdown is exactly what I needed for my international clients. Rs. 199 to remove the watermark is practically free!"
+    },
+    {
+      name: language === "ur" ? "حمزہ بٹ" : "Hamza Butt",
+      role: language === "ur" ? "بائیو ڈیٹا صارف، فیصل آباد" : "Matrimonial Biodata User, Faisalabad",
+      avatar: "HB",
+      gradient: "from-amber-600 to-amber-400",
+      rating: 5,
+      text: language === "ur"
+        ? "اردو بائیو ڈیٹا بنانا بہت آسان تھا۔ خوبصورت نستعلیق اردو فونٹ پرنٹ میں بہت پیارا لگتا ہے۔ شادی اور رشتہ کے پروفائلز کے لیے پاکستان کا سب سے بہترین آن لائن حل ہے۔"
+        : "Urdu matrimonial Biodata was so easy to make. The Noto Nastaliq Urdu font looks beautiful on print. A perfect local solution for Pakistani families to build clean Rishta Biodatas."
+    }
+  ];
+
   // JSON-LD Structural SEO Markups
   const schemaMarkup = {
     "@context": "https://schema.org",
@@ -813,6 +866,62 @@ export default function LandingPage() {
               </Link>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* ================= REVIEWS / TESTIMONIALS SECTION ================= */}
+      <section className="w-full max-w-7xl px-4 py-24 sm:px-6 lg:px-8 flex flex-col items-center border-t border-white/5 relative">
+        <div className="absolute top-0 left-1/4 w-[40vw] h-[40vw] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
+        
+        <h2 className={`text-2xl sm:text-3xl font-extrabold text-white text-center tracking-tight ${language === "ur" ? "font-urdu leading-relaxed" : "font-inter"}`}>
+          {language === "ur" ? "ہمارے مطمئن صارفین کی آراء" : "What Our Users Say About Us"}
+        </h2>
+        <p className={`mt-2 text-xs sm:text-sm text-textSecondary text-center max-w-xl leading-relaxed ${language === "ur" ? "font-urdu" : "font-inter"}`}>
+          {language === "ur" 
+            ? "ہزاروں پاکستانی نوجوان، طالب علم، اور پیشہ ور افراد اپنی سی وی اور بائیو ڈیٹا بنانے کے لیے فاسٹ سی وی پی کے پر اعتماد کرتے ہیں۔"
+            : "Thousands of Pakistani job seekers, fresh graduates, and remote freelancers have successfully built their careers using our platform."
+          }
+        </p>
+
+        {/* Testimonials Grid (5 cards) */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-12 w-full">
+          {testimonials.map((t, idx) => (
+            <div
+              key={idx}
+              className={`glass-panel rounded-2xl p-6 flex flex-col justify-between hover:scale-[1.01] hover:border-blue-500/20 hover:shadow-[0_10px_30px_rgba(59,130,246,0.05)] transition-all duration-300 ${
+                idx === 4 ? "md:col-span-2 lg:col-span-1" : ""
+              }`}
+            >
+              <div className="space-y-4">
+                {/* Five Stars Rating */}
+                <div className="flex gap-1 text-amber-400 select-none">
+                  {Array.from({ length: t.rating }).map((_, sIdx) => (
+                    <span key={sIdx} className="text-sm">★</span>
+                  ))}
+                </div>
+                
+                {/* Review Text */}
+                <p className={`text-xs sm:text-sm text-textSecondary leading-relaxed text-left ${language === "ur" ? "font-urdu text-right" : "font-inter"}`}>
+                  "{t.text}"
+                </p>
+              </div>
+
+              {/* User Bio Footer */}
+              <div className="flex items-center gap-3 mt-6 pt-4 border-t border-white/5" dir={language === "ur" ? "rtl" : "ltr"}>
+                <div className={`w-10 h-10 rounded-full bg-gradient-to-br ${t.gradient} text-white font-extrabold text-sm flex items-center justify-center shadow-lg shadow-blue-500/5 select-none flex-shrink-0`}>
+                  {t.avatar}
+                </div>
+                <div className="text-left min-w-0">
+                  <h4 className={`text-xs sm:text-sm font-bold text-white leading-snug truncate ${language === "ur" ? "text-right font-urdu" : "text-left"}`}>
+                    {t.name}
+                  </h4>
+                  <p className={`text-[10px] text-textSecondary truncate ${language === "ur" ? "text-right font-urdu" : "text-left"}`}>
+                    {t.role}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
         </div>
       </section>
 
