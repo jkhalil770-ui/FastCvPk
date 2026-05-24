@@ -319,6 +319,77 @@ export default function CVBuilderPage() {
   // Switch layouts according to path type with localized error boundary catch
   const renderForm = () => {
     try {
+      if (step === 4) {
+        const isUrdu = language === "ur";
+        return (
+          <div className="space-y-8 text-center py-6 px-4 animate-in fade-in zoom-in-95 duration-700 relative overflow-hidden rounded-2xl select-none">
+            {/* Neon background light */}
+            <div className="absolute inset-0 bg-gradient-to-br from-blue-600/5 via-purple-600/5 to-transparent pointer-events-none" />
+            
+            {/* Animated Glowing Branding Mark */}
+            <div className="relative mx-auto w-20 h-20 flex items-center justify-center mb-2">
+              <div className="absolute inset-0 rounded-full border border-blue-500/20 border-t-blue-500 animate-spin" style={{ animationDuration: "4s" }} />
+              <div className="absolute inset-2 rounded-full bg-gradient-to-tr from-blue-600 to-indigo-600 flex items-center justify-center shadow-lg shadow-blue-500/20 group">
+                <Sparkles className="text-white w-8 h-8 animate-pulse" />
+              </div>
+              {/* Pulsating Ring */}
+              <span className="absolute inset-0 rounded-full bg-blue-500/10 animate-ping" style={{ animationDuration: "2.5s" }} />
+            </div>
+
+            {/* Premium Headline */}
+            <div className="space-y-2 relative z-10">
+              <h3 className="text-xl sm:text-2xl font-black text-white tracking-tight bg-gradient-to-r from-blue-400 via-indigo-200 to-blue-400 bg-clip-text text-transparent uppercase font-inter">
+                {isUrdu ? "فائنل ریویو اور ڈاؤن لوڈ" : "Final Review & Polish"}
+              </h3>
+              <p className="text-xs text-textSecondary max-w-sm mx-auto leading-relaxed">
+                {isUrdu 
+                  ? "آپ کی درج کردہ معلومات لائیو پری ویو میں دکھائی دے رہی ہیں۔ اب فائنل اے آئی پولش کرنے کا وقت ہے۔"
+                  : "Your details have been mapped. Review the document layout on the right and proceed to final AI optimization."
+                }
+              </p>
+            </div>
+
+            {/* Premium Features List */}
+            <div className="grid grid-cols-1 gap-3 max-w-sm mx-auto text-left relative z-10">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all duration-300">
+                <span className="text-blue-400 text-sm">🪄</span>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">{isUrdu ? "گوگل جیمنی اے آئی" : "Google Gemini 2.0 AI"}</h4>
+                  <p className="text-[10px] text-textSecondary leading-normal">{isUrdu ? "آپ کی سی وی کو جدید الفاظ اور پیشہ ورانہ مہارتوں سے سجائے گا۔" : "Polishes responsibilities with active verbs & metrics."}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all duration-300">
+                <span className="text-blue-400 text-sm">🛡️</span>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">{isUrdu ? "اے ٹی ایس مطابقت" : "ATS-Compliant Structure"}</h4>
+                  <p className="text-[10px] text-textSecondary leading-normal">{isUrdu ? "بین الاقوامی کمپنیوں اور اسکینرز کے لیے مکمل موزوں فارمیٹ۔" : "Optimized layout ensuring highest parsing score."}</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-white/5 border border-white/10 hover:border-blue-500/20 transition-all duration-300">
+                <span className="text-blue-400 text-sm">⚡</span>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase tracking-wider">{isUrdu ? "پرنٹ کے لیے تیار پی ڈی ایف" : "Print-Ready 300 DPI PDF"}</h4>
+                  <p className="text-[10px] text-textSecondary leading-normal">{isUrdu ? "ہائی ریزولوشن اے 4 فارمیٹ میں فوری اور مفت ڈاؤن لوڈ۔" : "HD standard vector layout for crisp paper printouts."}</p>
+                </div>
+              </div>
+            </div>
+
+            {/* Thank You Note (Styled Premium) */}
+            <div className="border-t border-white/5 pt-4 text-center space-y-1 max-w-xs mx-auto relative z-10">
+              <span className="text-[8px] font-black uppercase text-blue-400 tracking-widest font-inter">Thank you for using</span>
+              <h5 className="text-sm font-black text-white uppercase tracking-wider bg-gradient-to-r from-blue-400 to-indigo-300 bg-clip-text text-transparent font-inter">
+                FastCV.PK
+              </h5>
+              <p className="text-[9px] text-white/30 italic">
+                "Crafting careers, one professional document at a time."
+              </p>
+            </div>
+          </div>
+        );
+      }
+
       switch (type) {
         case "ats":
           return <ATSForm formData={formData} setFormData={setFormData} step={step} />;
