@@ -1,6 +1,6 @@
 {
   "name": "FastCV PK",
-  "short_name": "FastCV PK",
+  "short_name": "FastCV",
   "description": "Pakistan's #1 Free CV & Biodata Maker. AI-powered, ATS friendly, and instantly downloadable in PDF format.",
   "start_url": "/",
   "display": "standalone",
