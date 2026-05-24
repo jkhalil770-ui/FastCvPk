@@ -40,6 +40,9 @@ export async function exportCVToPDF(
     clone.style.margin = "0";
     clone.style.padding = "15mm";
     clone.style.boxSizing = "border-box";
+    clone.style.webkitFontSmoothing = "antialiased";
+    clone.style.mozOsxFontSmoothing = "grayscale";
+    clone.style.textRendering = "optimizeLegibility";
     
     // Append to document body for standard browser style calculations
     document.body.appendChild(clone);
@@ -49,11 +52,12 @@ export async function exportCVToPDF(
 
     // Capture the unscaled cloned element
     const canvas = await html2canvas(clone, {
-      scale: 3, // Enforces high resolution 300 DPI capture
+      scale: 4, // Enforces ultra-high-definition capture (400% scale)
       useCORS: true, // Prevents cross-origin issues with external Google Fonts
       allowTaint: true,
       backgroundColor: "#ffffff",
       logging: false,
+      imageTimeout: 0, // Ensure all remote assets and webfonts wait to load
     });
 
     // Remove the clone immediately to keep the DOM clean
@@ -61,11 +65,12 @@ export async function exportCVToPDF(
     clone = null;
 
     // Calculate A4 dimension mapping
-    const imgData = canvas.toDataURL("image/jpeg", 0.95);
+    const imgData = canvas.toDataURL("image/png");
     const pdf = new jsPDF({
       orientation: "portrait",
       unit: "mm",
       format: "a4",
+      compress: true, // Compress PDF internals
     });
 
     const pdfWidth = pdf.internal.pageSize.getWidth(); // 210
@@ -76,13 +81,13 @@ export async function exportCVToPDF(
     let heightLeft = imgHeight;
     let position = 0;
 
-    pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, imgHeight);
+    pdf.addImage(imgData, "PNG", 0, position, pdfWidth, imgHeight, undefined, "FAST");
     heightLeft -= pdfHeight;
 
     while (heightLeft >= 0) {
       position = heightLeft - imgHeight;
       pdf.addPage();
-      pdf.addImage(imgData, "JPEG", 0, position, pdfWidth, imgHeight);
+      pdf.addImage(imgData, "PNG", 0, position, pdfWidth, imgHeight, undefined, "FAST");
       heightLeft -= pdfHeight;
     }
 
