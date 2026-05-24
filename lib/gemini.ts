@@ -42,9 +42,12 @@ export async function queryGemini(prompt: string, attempt = 1, cvType?: string):
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
 
+  // Use gemini-2.0-flash by default on attempt 1, fall back to stable gemini-1.5-flash on attempt 2
+  const modelToUse = attempt === 1 ? "gemini-2.0-flash" : "gemini-1.5-flash";
+
   try {
     const model = genAI.getGenerativeModel({
-      model: "gemini-2.0-flash",
+      model: modelToUse,
       generationConfig: {
         responseMimeType: "application/json",
       },
@@ -83,20 +86,20 @@ Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote
 
     return JSON.parse(cleanJson) as AISuggestionResponse;
   } catch (error: any) {
-    console.error(`Gemini query error on attempt ${attempt}:`, error);
+    console.error(`Gemini query error using ${modelToUse} on attempt ${attempt}:`, error);
 
-    // Do NOT retry on rate limit (429) — it wastes quota and makes things worse
+    // If attempt 1 fails (even due to 429 rate limits), retry once using the stable gemini-1.5-flash model
+    if (attempt === 1) {
+      console.log("Attempt 1 failed. Retrying dynamically with stable gemini-1.5-flash fallback...");
+      return queryGemini(prompt, 2, cvType);
+    }
+
+    // For rate limit errors on the fallback attempt, throw rate limit error
     const isRateLimit = error?.status === 429 || error?.message?.includes("429") || error?.message?.includes("Too Many Requests");
     if (isRateLimit) {
       const rateLimitErr = new Error("AI system busy — thodi der baad dobara try karein (rate limit)");
       (rateLimitErr as any).status = 429;
       throw rateLimitErr;
-    }
-
-    // For other errors, retry once
-    if (attempt === 1) {
-      console.log("Retrying Gemini query once...");
-      return queryGemini(prompt, 2, cvType);
     }
 
     throw error;
