@@ -107,22 +107,35 @@ export async function exportCVToPDF(
 export async function downloadCVAsPDF(
   elementId: string,
   filename = "MyCV.pdf"
-): Promise<boolean> {
-  const blob = await exportCVToPDF(elementId, { filename });
-  if (!blob) return false;
+): Promise<"success" | "ios_fallback" | "error"> {
+  const blobData = await exportCVToPDF(elementId, { filename });
+  if (!blobData) return "error";
 
   try {
+    const blob = new Blob([blobData], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
     link.href = url;
     link.download = filename.endsWith(".pdf") ? filename : `${filename}.pdf`;
+    
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
-    URL.revokeObjectURL(url);
-    return true;
+    
+    setTimeout(() => {
+      URL.revokeObjectURL(url);
+    }, 1000);
+
+    const isIOS = typeof navigator !== 'undefined' && (/iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1));
+    const downloadSupported = typeof HTMLAnchorElement !== 'undefined' && 'download' in HTMLAnchorElement.prototype;
+
+    if (isIOS || !downloadSupported) {
+      return "ios_fallback";
+    }
+
+    return "success";
   } catch (err) {
     console.error("File download trigger failed:", err);
-    return false;
+    return "error";
   }
 }

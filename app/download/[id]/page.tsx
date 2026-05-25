@@ -122,10 +122,15 @@ export default function CVDownloadPage() {
 
     try {
       const filename = cv.formData?.fullName ? `${cv.formData.fullName.replace(/\s+/g, "_")}_CV` : "MyCV";
-      const success = await downloadCVAsPDF("cv-print-area", filename);
-      if (success) {
+      const status = await downloadCVAsPDF("cv-print-area", filename);
+      if (status === "success") {
         toast(
           language === "ur" ? "پی ڈی ایف ڈاؤن لوڈ ہو گیا!" : "Downloaded successfully!",
+          "success"
+        );
+      } else if (status === "ios_fallback") {
+        toast(
+          language === "ur" ? "پی ڈی ایف تیار! دبائیں اور محفوظ کریں" : "PDF ready! Tap and hold → Save to Files",
           "success"
         );
       } else {
