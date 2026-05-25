@@ -158,7 +158,8 @@ export default function TemplatesGalleryPage() {
                 <Link 
                   key={tpl.id}
                   href={`/create/${tpl.id}`}
-                  className="glass-panel rounded-2xl border-white/5 hover:border-blue-500/30 hover:shadow-[0_15px_40px_rgba(59,130,246,0.15)] transition-all duration-300 flex flex-col justify-between group hover:scale-[1.02] cursor-pointer overflow-hidden bg-slate-900/20 backdrop-blur-md"
+                  className="template-card glass-panel rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-slate-900/20 backdrop-blur-md"
+                  style={{ transformOrigin: 'center' }}
                 >
                   {/* Visual Premium Miniature A4 Preview Thumbnail */}
                   <div className="w-full h-[200px] bg-slate-950/60 border-b border-white/5 overflow-hidden relative flex items-center justify-center transition-all duration-300 shadow-inner select-none">
@@ -166,7 +167,9 @@ export default function TemplatesGalleryPage() {
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
                     
                     {/* Realistic mini-A4 sheet */}
-                    <div className="w-[360px] h-[510px] bg-white rounded shadow-lg p-5 flex flex-col text-[10px] text-slate-800 leading-tight transition-transform duration-300 group-hover:scale-[0.38] origin-center scale-[0.35]">
+                    <div className={`w-[360px] h-[510px] bg-white rounded shadow-lg p-5 flex flex-col text-[10px] text-slate-800 leading-tight transition-transform duration-500 origin-center scale-[0.35] ${
+                      tpl.id === "global-pro" ? "!scale-[0.48] group-hover:!scale-[0.52] !origin-top mt-2" : "group-hover:scale-[0.38]"
+                    }`}>
                       {tpl.id === "ats" && (
                         <div className="w-full h-full flex flex-col font-sans relative text-left">
                           {/* Name & Title */}
@@ -366,54 +369,74 @@ export default function TemplatesGalleryPage() {
                           {/* Full-Height Left Accent Bar */}
                           <div className="absolute top-[-20px] bottom-[-20px] left-[-20px] w-[5px] bg-[#0B2545]" />
 
-                          {/* Left column (32%) */}
-                          <div className="w-[32%] pr-2 flex flex-col pt-0.5 pl-1.5 border-r border-slate-100 mr-2">
-                            {/* Photo circle */}
-                            <div className="w-10 h-10 rounded-full border border-[#0B2545] bg-slate-50 flex items-center justify-center font-bold text-[10px] text-slate-700 mb-2 mx-auto">
-                              JA
+                          {/* Left column (30%) */}
+                          <div className="w-[30%] pr-2.5 flex flex-col pt-1 pl-1 border-r border-slate-100 mr-2.5 items-stretch text-[5.5px]">
+                            {/* Confident business avatar */}
+                            <div className="w-[60px] h-[60px] rounded-full border-2 border-[#0B2545] bg-[#EFF6FF] flex items-center justify-center overflow-hidden mb-3.5 mx-auto relative shadow-inner">
+                              <img src="/avatars/ar.png" className="w-full h-full object-cover" alt="Junaid Ahmad" />
                             </div>
-                            {/* Quick Contact with mini colors */}
-                            <div className="space-y-1 text-[5px] text-slate-500">
-                              <div className="flex items-center gap-0.5">
-                                <span className="w-1 h-1 rounded-full bg-green-500" />
-                                <span>+92 300 9876543</span>
+                            
+                            {/* Contact icons row with brand colors */}
+                            <div className="space-y-2 text-slate-500 font-semibold mb-4 px-0.5">
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded bg-emerald-500 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📧</span>
+                                <span className="truncate">junaid@email.com</span>
                               </div>
-                              <div className="flex items-center gap-0.5">
-                                <span className="w-1 h-1 rounded-full bg-red-400" />
-                                <span>junaid@email.com</span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded bg-green-600 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📱</span>
+                                <span className="truncate">+92 300 9876543</span>
                               </div>
-                              <div className="flex items-center gap-0.5">
-                                <span className="w-1 h-1 rounded-full bg-blue-500" />
-                                <span>in/junaid-ahmad</span>
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded bg-rose-500 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📍</span>
+                                <span className="truncate">Lahore, PK</span>
+                              </div>
+                              <div className="flex items-center gap-1.5">
+                                <span className="w-2.5 h-2.5 rounded bg-blue-600 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">💼</span>
+                                <span className="truncate">in/junaid-devops</span>
+                              </div>
+                            </div>
+
+                            {/* Skills Tags */}
+                            <div className="flex flex-col gap-1.5">
+                              <span className="font-extrabold text-[#0B2545] uppercase tracking-wider text-[5.5px]">Expertise</span>
+                              <div className="flex flex-wrap gap-1">
+                                {['React', 'Node.js', 'AWS'].map(skill => (
+                                  <span key={skill} className="px-1 py-0.5 bg-[#EFF6FF] text-[#0B2545] border border-[#DBEAFE] font-bold rounded-sm text-[5px]">{skill}</span>
+                                ))}
                               </div>
                             </div>
                           </div>
 
-                          {/* Right column (68%) */}
-                          <div className="w-[68%] flex flex-col pt-0.5">
-                            <div className="border-b border-slate-100 pb-1 mb-1.5">
-                              <span className="text-[15px] font-black text-slate-900 uppercase block leading-tight">Junaid Ahmad</span>
-                              <span className="text-[7.5px] font-bold text-[#0B2545] uppercase block mt-0.2 tracking-wider">Remote DevOps Specialist</span>
-                              <span className="inline-flex px-1.5 py-0.2 rounded bg-emerald-50 text-emerald-700 border border-emerald-100 font-extrabold text-[5.5px] mt-1 uppercase tracking-wide">
-                                🌍 US Remote / $45/hr
+                          {/* Right column (70%) */}
+                          <div className="w-[70%] flex flex-col pt-1 pl-1">
+                            <div className="border-b border-slate-100 pb-1.5 mb-2">
+                              <span className="text-[20px] font-black text-slate-900 uppercase block leading-none">JUNAID AHMAD</span>
+                              <span className="text-[9px] font-bold text-[#0B2545] uppercase block mt-1 tracking-wider">Remote DevOps Specialist</span>
+                              <span className="inline-flex px-2 py-0.5 rounded bg-emerald-500 text-white font-extrabold text-[6px] mt-1.5 uppercase tracking-wider">
+                                🌍 US REMOTE | $5000/mo
                               </span>
                             </div>
 
                             {/* Experience */}
-                            <div className="mb-2">
-                              <span className="block text-[8px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1 uppercase">Professional Experience</span>
-                              <div className="space-y-1">
+                            <div className="mb-3">
+                              <span className="block text-[9px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Professional Experience</span>
+                              <div className="space-y-2">
                                 <div>
-                                  <div className="flex justify-between items-baseline">
-                                    <span className="text-[6.8px] font-bold text-slate-800">Lead DevOps — AlphaTech</span>
-                                    <span className="text-[5.5px] text-slate-400 font-bold">2022 - Pres</span>
+                                  <div className="flex justify-between items-baseline mb-0.5">
+                                    <span className="text-[8px] font-black text-slate-800">Lead DevOps — AlphaTech</span>
+                                    <span className="text-[6.5px] text-slate-400 font-extrabold">2022 — Present</span>
                                   </div>
-                                  <span className="block text-[5.8px] text-slate-600 leading-relaxed mt-0.2">
-                                    • Spearheaded AWS architectures, optimizing cloud spend by 30%.<br />
-                                    • Integrated high-security GitHub Actions CI/CD gates.
+                                  <span className="block text-[6.8px] text-slate-600 leading-normal">
+                                    • Spearheaded API architecture, reducing network routing latency by 35%.<br />
+                                    • Integrated high-security GitHub Actions CI/CD gates, securing codebase.
                                   </span>
                                 </div>
                               </div>
+                            </div>
+
+                            {/* Bottom Projects Section */}
+                            <div>
+                              <span className="block text-[9px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1 uppercase">Key Technical Projects</span>
                             </div>
                           </div>
                         </div>
@@ -430,19 +453,19 @@ export default function TemplatesGalleryPage() {
                           <Icon size={18} />
                         </div>
                         
-                        {/* Styled Badges for Polish 3 */}
+                        {/* Styled Badges with glows on hover */}
                         {tpl.badgeType === "free" && (
-                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-emerald-500/10 text-emerald-400 border-emerald-500/20">
+                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-emerald-500/10 text-emerald-400 border-emerald-500/20 group-hover:shadow-[0_0_12px_rgba(52,211,153,0.4)] group-hover:border-emerald-400 transition-all duration-300">
                             Free
                           </span>
                         )}
                         {tpl.badgeType === "premium" && (
-                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-[#D97706]/10 text-[#D97706] border-[#D97706]/20">
+                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-[#D97706]/10 text-[#D97706] border-[#D97706]/20 group-hover:shadow-[0_0_12px_rgba(217,119,6,0.4)] group-hover:border-[#D97706] transition-all duration-300">
                             Premium
                           </span>
                         )}
                         {tpl.badgeType === "global" && (
-                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-purple-500/10 text-purple-400 border-purple-500/20">
+                          <span className="inline-flex px-2.5 py-0.5 rounded text-[10px] font-black uppercase tracking-wide border bg-purple-500/10 text-purple-400 border-purple-500/20 group-hover:shadow-[0_0_12px_rgba(168,85,247,0.4)] group-hover:border-purple-400 transition-all duration-300">
                             🌍 Global Pro
                           </span>
                         )}
@@ -468,9 +491,9 @@ export default function TemplatesGalleryPage() {
                         {tpl.langRule}
                       </span>
                       
-                      <Button className="px-5 py-2.5 text-xs font-extrabold rounded-xl bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 touch-btn transition-all group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] shadow-md shadow-blue-500/10">
+                      <Button className="px-5 py-2.5 text-xs font-extrabold rounded-xl bg-blue-600 hover:bg-blue-500 text-white flex items-center gap-1.5 touch-btn transition-all duration-200 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] shadow-md shadow-blue-500/10 group-hover:bg-blue-500">
                         {language === "ur" ? "سی وی بنائیں" : "Use Template"}
-                        <ArrowRight size={13} />
+                        <ArrowRight size={13} className="transition-transform duration-200 group-hover:translate-x-1" />
                       </Button>
                     </div>
                   </div>
