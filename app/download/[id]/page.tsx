@@ -12,9 +12,22 @@ import { useToast } from "@/components/ui/Toast";
 import Button from "@/components/ui/Button";
 import Modal from "@/components/ui/Modal";
 import Input from "@/components/ui/Input";
-import { downloadCVAsPDF } from "@/lib/pdf-generator";
+import dynamic from "next/dynamic";
 
-// Import templates
+// Import PDF templates for @react-pdf/renderer
+import ATSPdf from "@/lib/pdf-templates/ATSPdf";
+import BiodataPdf from "@/lib/pdf-templates/BiodataPdf";
+import StudentPdf from "@/lib/pdf-templates/StudentPdf";
+import FreelancerPdf from "@/lib/pdf-templates/FreelancerPdf";
+import GlobalProPdf from "@/lib/pdf-templates/GlobalProPdf";
+
+// Dynamically import PDFDownloadLink to prevent Next.js SSR build errors
+const PDFDownloadLink = dynamic(
+  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
+  { ssr: false }
+);
+
+// Import HTML preview templates
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
@@ -100,7 +113,44 @@ export default function CVDownloadPage() {
     fetchCV();
   }, [id, toast]);
 
-  const handleDownload = async () => {
+  const [isClient, setIsClient] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+  }, []);
+
+  const getPdfDocument = () => {
+    if (!cv) return null;
+    const templateData = {
+      personalInfo: cv.formData || {},
+      experience: cv.generatedContent?.experience || [],
+      education: cv.generatedContent?.education || [],
+      biodataEducation: cv.generatedContent?.biodataEducation || {},
+      projects: cv.generatedContent?.projects || [],
+      internships: cv.generatedContent?.internships || [],
+      skills: cv.generatedContent?.skills || {},
+      biodataReferences: cv.generatedContent?.biodataReferences || [],
+      generatedSummary: cv.generatedContent?.summary || "",
+      generatedObjective: cv.generatedContent?.summary || ""
+    };
+
+    switch (cv.cvType) {
+      case "ats":
+        return <ATSPdf data={templateData} hasWatermark={cv.hasWatermark} />;
+      case "global-pro":
+        return <GlobalProPdf data={templateData} hasWatermark={cv.hasWatermark} />;
+      case "biodata":
+        return <BiodataPdf data={templateData} hasWatermark={false} />;
+      case "student":
+        return <StudentPdf data={templateData} hasWatermark={false} />;
+      case "freelancer":
+        return <FreelancerPdf data={templateData} hasWatermark={cv.hasWatermark} />;
+      default:
+        return <ATSPdf data={templateData} hasWatermark={cv.hasWatermark} />;
+    }
+  };
+
+  const handleDownload = () => {
     if (!auth.currentUser) {
       toast(
         language === "ur" ? "لاگ ان لازمی ہے!" : "Login Required!",
@@ -111,36 +161,6 @@ export default function CVDownloadPage() {
       );
       window.scrollTo({ top: 0, behavior: "smooth" });
       return;
-    }
-
-    setPdfPrinting(true);
-    toast(
-      language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...",
-      "info",
-      language === "ur" ? "براہ کرم پرنٹ ہونے تک انتظار کریں۔" : "Capturing elements at 300 DPI high-definition scale."
-    );
-
-    try {
-      const filename = cv.formData?.fullName ? `${cv.formData.fullName.replace(/\s+/g, "_")}_CV` : "MyCV";
-      const status = await downloadCVAsPDF("cv-print-area", filename);
-      if (status === "success") {
-        toast(
-          language === "ur" ? "پی ڈی ایف ڈاؤن لوڈ ہو گیا!" : "Downloaded successfully!",
-          "success"
-        );
-      } else if (status === "ios_fallback") {
-        toast(
-          language === "ur" ? "پی ڈی ایف تیار! دبائیں اور محفوظ کریں" : "PDF ready! Tap and hold → Save to Files",
-          "success"
-        );
-      } else {
-        throw new Error("Canvas render failure");
-      }
-    } catch (error) {
-      console.error(error);
-      toast("PDF export failed", "error", "Please try again or use desktop Chrome browser.");
-    } finally {
-      setPdfPrinting(false);
     }
   };
 
@@ -296,48 +316,93 @@ export default function CVDownloadPage() {
                   : "Your professional ATS/Freelancer CV is generated. You can download the watermark version for free, or remove it for only Rs. 199."}
               </p>
 
-              {isTypeA ? (
-                <Button
-                  onClick={handleDownload}
-                  isLoading={pdfPrinting}
-                  className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
-                >
-                  <Download size={16} />
-                  {getTranslation("downloadFreePDF", language)}
-                </Button>
-              ) : (
-                <div className="space-y-3">
-                  <Button
-                    onClick={handleDownload}
-                    isLoading={pdfPrinting}
-                    variant="secondary"
-                    className="w-full gap-2 text-textSecondary hover:text-white"
-                  >
-                    <Download size={16} />
-                    {getTranslation("downloadFreeWithWatermark", language)}
-                  </Button>
-                  
-                  {cv.hasWatermark && (
-                    <>
-                      <div className="border-t border-white/5 my-4 pt-4 flex items-center justify-between text-xs text-textSecondary">
-                        <span>Remove Watermark:</span>
-                        <strong className="text-white">Rs. 199 (One-Time)</strong>
-                      </div>
-
-                      <Button
-                        onClick={() => {
-                          setPayStep(1);
-                          setPayModalOpen(true);
-                        }}
-                        className="w-full gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+              {(() => {
+                const filename = cv.formData?.fullName ? `${cv.formData.fullName.replace(/\s+/g, "_")}_CV.pdf` : "MyCV.pdf";
+                
+                return isTypeA ? (
+                  isClient && auth.currentUser ? (
+                    <PDFDownloadLink
+                      document={getPdfDocument()}
+                      fileName={filename}
+                      style={{ textDecoration: 'none', width: '100%', display: 'block' }}
+                    >
+                      {({ loading }) => (
+                        <Button
+                          isLoading={loading}
+                          className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                        >
+                          <Download size={16} />
+                          {loading 
+                            ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
+                            : getTranslation("downloadFreePDF", language)
+                          }
+                        </Button>
+                      )}
+                    </PDFDownloadLink>
+                  ) : (
+                    <Button
+                      onClick={handleDownload}
+                      className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                    >
+                      <Download size={16} />
+                      {getTranslation("downloadFreePDF", language)}
+                    </Button>
+                  )
+                ) : (
+                  <div className="space-y-3">
+                    {isClient && auth.currentUser ? (
+                      <PDFDownloadLink
+                        document={getPdfDocument()}
+                        fileName={filename}
+                        style={{ textDecoration: 'none', width: '100%', display: 'block' }}
                       >
-                        <CreditCard size={16} />
-                        {getTranslation("removeWatermarkPrem", language)}
+                        {({ loading }) => (
+                          <Button
+                            isLoading={loading}
+                            variant="secondary"
+                            className="w-full gap-2 text-textSecondary hover:text-white"
+                          >
+                            <Download size={16} />
+                            {loading 
+                              ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
+                              : getTranslation("downloadFreeWithWatermark", language)
+                            }
+                          </Button>
+                        )}
+                      </PDFDownloadLink>
+                    ) : (
+                      <Button
+                        onClick={handleDownload}
+                        variant="secondary"
+                        className="w-full gap-2 text-textSecondary hover:text-white"
+                      >
+                        <Download size={16} />
+                        {getTranslation("downloadFreeWithWatermark", language)}
                       </Button>
-                    </>
-                  )}
-                </div>
-              )}
+                    )}
+                    
+                    {cv.hasWatermark && (
+                      <>
+                        <div className="border-t border-white/5 my-4 pt-4 flex items-center justify-between text-xs text-textSecondary">
+                          <span>Remove Watermark:</span>
+                          <strong className="text-white">Rs. 199 (One-Time)</strong>
+                        </div>
+
+                        <Button
+                          onClick={() => {
+                            setPayStep(1);
+                            setPayModalOpen(true);
+                          }}
+                          className="w-full gap-2 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold shadow-[0_0_20px_rgba(59,130,246,0.3)]"
+                        >
+                          <CreditCard size={16} />
+                          {getTranslation("removeWatermarkPrem", language)}
+                        </Button>
+                      </>
+                    )}
+                  </div>
+                );
+              })()}
             </div>
 
             {/* Sharing Social Tray */}

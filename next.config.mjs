@@ -28,6 +28,7 @@ const securityHeaders = [
 ];
 
 const nextConfig = {
+  transpilePackages: ["@react-pdf/renderer"],
   eslint: {
     // Disables ESLint compilation checks during production builds.
     ignoreDuringBuilds: true,

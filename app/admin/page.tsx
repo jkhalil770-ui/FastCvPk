@@ -17,7 +17,12 @@ import { getTranslation } from "@/lib/translations";
 import { useToast } from "@/components/ui/Toast";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
-import { exportCVToPDF } from "@/lib/pdf-generator";
+// Import PDF templates for @react-pdf/renderer
+import ATSPdf from "@/lib/pdf-templates/ATSPdf";
+import BiodataPdf from "@/lib/pdf-templates/BiodataPdf";
+import StudentPdf from "@/lib/pdf-templates/StudentPdf";
+import FreelancerPdf from "@/lib/pdf-templates/FreelancerPdf";
+import GlobalProPdf from "@/lib/pdf-templates/GlobalProPdf";
 
 // Import templates for hidden clean rendering
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
@@ -184,18 +189,32 @@ export default function AdminDashboard() {
         generatedObjective: cvData.generatedContent?.summary || ""
       };
       
-      setPrintCvData(templateData);
+      // 3. Import react-pdf and render clean PDF vector natively in-memory
+      toast("Rendering clean PDF...", "info", "Compiling vector PDF layout natively.");
+      const { pdf } = await import("@react-pdf/renderer");
 
-      // Give browser a short window to paint the hidden node
-      await new Promise((resolve) => setTimeout(resolve, 800));
+      let pdfElement;
+      switch (cvData.cvType) {
+        case "ats":
+          pdfElement = <ATSPdf data={templateData} hasWatermark={false} />;
+          break;
+        case "global-pro":
+          pdfElement = <GlobalProPdf data={templateData} hasWatermark={false} />;
+          break;
+        case "biodata":
+          pdfElement = <BiodataPdf data={templateData} hasWatermark={false} />;
+          break;
+        case "student":
+          pdfElement = <StudentPdf data={templateData} hasWatermark={false} />;
+          break;
+        case "freelancer":
+          pdfElement = <FreelancerPdf data={templateData} hasWatermark={false} />;
+          break;
+        default:
+          pdfElement = <ATSPdf data={templateData} hasWatermark={false} />;
+      }
 
-      toast("Rendering clean PDF...", "info", "Capturing high-density canvas without watermarks.");
-
-      // 3. Call PDF capture helper (watermark is false!)
-      const blob = await exportCVToPDF("admin-print-node", {
-        filename: "CleanCV",
-        hasWatermark: false
-      });
+      const blob = await pdf(pdfElement).toBlob();
 
       if (!blob) {
         throw new Error("Failed to compile clean A4 layout.");
@@ -310,18 +329,7 @@ export default function AdminDashboard() {
       <title>Admin Dashboard — FastCV PK</title>
       <meta name="robots" content="noindex, nofollow" />
       
-      {/* Hidden print element used specifically to render clean templates for admin emails */}
-      {printCvData && (
-        <div className="fixed top-[-9999px] left-[-9999px] z-[-50] bg-white">
-          <div id="admin-print-node">
-            {printCvType === "ats" && <ATSTemplate data={printCvData} hasWatermark={false} />}
-            {printCvType === "global-pro" && <GlobalProTemplate data={printCvData} hasWatermark={false} />}
-            {printCvType === "biodata" && <BiodataTemplate data={printCvData} hasWatermark={false} />}
-            {printCvType === "student" && <StudentTemplate data={printCvData} hasWatermark={false} />}
-            {printCvType === "freelancer" && <FreelancerTemplate data={printCvData} hasWatermark={false} />}
-          </div>
-        </div>
-      )}
+
 
       <div className="mx-auto max-w-7xl relative z-10 space-y-8">
         
