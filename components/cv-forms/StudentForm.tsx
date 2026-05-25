@@ -425,18 +425,18 @@ export default function StudentForm({ formData, setFormData, step }: StudentForm
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
                 <input
                   type="checkbox"
                   id={`current-${intern.id}`}
                   checked={getDurationYears(intern.duration).currentlyWorking}
                   onChange={(e) => handleDurationChange(idx, "current", e.target.checked)}
-                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
+                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                 />
-                <label htmlFor={`current-${intern.id}`} className={`text-xs text-textSecondary select-none ${isUrdu ? "font-urdu" : ""}`}>
+                <span className={`text-xs text-textSecondary select-none ${isUrdu ? "font-urdu" : ""}`}>
                   {isUrdu ? "ابھی بھی یہاں کام کر رہے ہیں" : "Currently working in this role"}
-                </label>
-              </div>
+                </span>
+              </label>
 
               <div>
                 <label className={`block text-xs text-textSecondary mb-1.5 ${isUrdu ? "font-urdu text-right" : ""}`}>

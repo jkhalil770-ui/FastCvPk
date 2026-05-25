@@ -610,7 +610,7 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
                 <input
                   type="checkbox"
                   id={`current-${exp.id}`}
@@ -624,12 +624,12 @@ export default function GlobalProForm({ formData, setFormData, step }: GlobalPro
                       handleExperienceChange(idx, "toDate", "");
                     }
                   }}
-                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
+                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                 />
-                <label htmlFor={`current-${exp.id}`} className="text-xs text-textSecondary select-none font-semibold">
+                <span className="text-xs text-textSecondary select-none font-semibold">
                   Currently working in this role
-                </label>
-              </div>
+                </span>
+              </label>
 
               <div>
                 <label className="block text-xs text-textSecondary mb-1.5 font-semibold">

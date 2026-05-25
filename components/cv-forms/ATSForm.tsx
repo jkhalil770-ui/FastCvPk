@@ -362,7 +362,7 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
                 </div>
               </div>
 
-              <div className="flex items-center gap-2">
+              <label className="flex items-center gap-2 cursor-pointer touch-manipulation">
                 <input
                   type="checkbox"
                   id={`current-${exp.id}`}
@@ -376,12 +376,12 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
                       handleExperienceChange(idx, "toDate", "");
                     }
                   }}
-                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0"
+                  className="rounded border-white/10 bg-surface text-blue-600 focus:ring-0 focus:ring-offset-0 cursor-pointer"
                 />
-                <label htmlFor={`current-${exp.id}`} className="text-xs text-textSecondary select-none">
+                <span className="text-xs text-textSecondary select-none">
                   Currently working in this role
-                </label>
-              </div>
+                </span>
+              </label>
 
                 <div>
                   <label className="block text-xs text-textSecondary mb-1.5">Responsibilities Notes (Brief words, then let AI polish)</label>
