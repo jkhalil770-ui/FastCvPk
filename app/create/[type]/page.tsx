@@ -134,6 +134,12 @@ export default function CVBuilderPage() {
     return () => unsubscribe();
   }, []);
 
+  // Scroll to top when builder is first opened/selected
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+  }, []);
+
   // Date and duration comparison helpers for step validation
   const parseMonthYearToDateValue = (monthYearStr: string) => {
     if (!monthYearStr) return 0;
@@ -259,10 +265,26 @@ export default function CVBuilderPage() {
     }
 
     setStep((prev) => Math.min(prev + 1, 4));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   const handlePrevStep = () => {
     setStep((prev) => Math.max(prev - 1, 1));
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
+    document.documentElement.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    });
   };
 
   // ─── Fallback professional summaries when Gemini is unavailable ───────────

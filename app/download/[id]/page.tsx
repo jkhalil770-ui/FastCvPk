@@ -117,6 +117,8 @@ export default function CVDownloadPage() {
 
   useEffect(() => {
     setIsClient(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
   const getPdfDocument = () => {
