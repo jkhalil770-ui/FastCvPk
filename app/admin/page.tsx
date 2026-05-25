@@ -235,13 +235,17 @@ export default function AdminDashboard() {
       // 6. Call the safe email endpoint
       const response = await fetch("/api/send-cv-email", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: {
+          "Content-Type": "application/json",
+          "x-admin-token": process.env.NEXT_PUBLIC_ADMIN_API_SECRET || ""
+        },
         body: JSON.stringify({
           email: payRecord.email,
           name: payRecord.name,
           pdfBase64
         }),
       });
+
 
       const res = await response.json();
       if (res.error) throw new Error(res.error);

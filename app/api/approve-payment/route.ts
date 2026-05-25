@@ -4,15 +4,30 @@ import { sendCleanCVEmail } from "@/lib/email";
 /**
  * API route to approve pending transaction claims.
  * Dispatches clean watermark-free PDF via Resend email.
+ * Protected: requires a valid admin secret token in Authorization header.
  * NOTE: Firestore updates (hasWatermark: false) are done client-side in admin panel.
  */
 export async function POST(req: Request) {
   try {
+    // Verify admin secret token — must match server-side env var
+    const adminSecret = process.env.ADMIN_API_SECRET;
+    const authHeader = req.headers.get("x-admin-token");
+
+    if (!adminSecret || authHeader !== adminSecret) {
+      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+    }
+
     const body = await req.json();
     const { paymentId, pdfBase64, email, name } = body;
 
     if (!paymentId || !pdfBase64 || !email || !name) {
       return NextResponse.json({ error: "Missing paymentId, pdfBase64, email, or name" }, { status: 400 });
+    }
+
+    // Basic email format validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      return NextResponse.json({ error: "Invalid email format" }, { status: 400 });
     }
 
     // Dispatch Clean PDF via Resend Email
