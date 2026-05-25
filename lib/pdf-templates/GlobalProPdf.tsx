@@ -1,5 +1,5 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, Image } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Image, Svg, Path, Circle, Rect } from '@react-pdf/renderer';
 
 // Register fonts
 Font.register({
@@ -15,6 +15,48 @@ Font.register({
   src: '/fonts/NotoNastaliqUrdu-Regular.ttf'
 });
 
+// Premium SVG Icons
+const PhoneIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+  </Svg>
+);
+
+const EmailIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+    <Path d="m22 6-10 7L2 6" />
+  </Svg>
+);
+
+const LocationIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
+    <Circle cx="12" cy="10" r="3" />
+  </Svg>
+);
+
+const LinkedInIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
+    <Rect x="2" y="9" width="4" height="12" />
+    <Circle cx="4" cy="4" r="2" />
+  </Svg>
+);
+
+const GitHubIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+  </Svg>
+);
+
+const GlobeIcon = ({ color = '#1E3A8A', size = 9 }) => (
+  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
+    <Circle cx="12" cy="12" r="10" />
+    <Path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+  </Svg>
+);
+
 const styles = StyleSheet.create({
   page: {
     padding: 35,
@@ -28,7 +70,7 @@ const styles = StyleSheet.create({
     top: 0,
     width: 6,
     height: '100%',
-    backgroundColor: '#3B82F6',
+    backgroundColor: '#0B2545', // Premium deep corporate navy blue
   },
   headerContainer: {
     borderBottomWidth: 1,
@@ -55,7 +97,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Inter-Bold',
     textTransform: 'uppercase',
-    color: '#3B82F6',
+    color: '#0B2545', // Premium deep corporate navy blue
     letterSpacing: 1,
     marginBottom: 6,
   },
@@ -123,7 +165,7 @@ const styles = StyleSheet.create({
     height: 75,
     borderRadius: 37.5,
     borderWidth: 2,
-    borderColor: '#3B82F6',
+    borderColor: '#0B2545',
   },
   photoPlaceholder: {
     width: 75,
@@ -131,7 +173,7 @@ const styles = StyleSheet.create({
     borderRadius: 37.5,
     backgroundColor: '#F1F5F9',
     borderWidth: 2,
-    borderColor: '#3B82F6',
+    borderColor: '#0B2545',
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -155,24 +197,21 @@ const styles = StyleSheet.create({
     marginBottom: 6,
     letterSpacing: 0.5,
   },
-  sidebarTextRow: {
-    fontSize: 9,
-    color: '#475569',
-    marginBottom: 4,
-    lineHeight: 1.2,
-  },
-  sidebarLabel: {
-    fontFamily: 'Inter-Bold',
-    color: '#1E293B',
+  contactRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 6,
+    marginBottom: 5,
   },
   socialItem: {
     fontSize: 8.5,
     color: '#475569',
-    marginBottom: 4,
+    flex: 1,
+    lineHeight: 1.2,
   },
   socialItemBold: {
     fontFamily: 'Inter-Bold',
-    color: '#3B82F6',
+    color: '#0B2545',
   },
   badgesWrap: {
     flexDirection: 'row',
@@ -210,7 +249,7 @@ const styles = StyleSheet.create({
   },
   languageValue: {
     fontFamily: 'Inter-Bold',
-    color: '#3B82F6',
+    color: '#0B2545',
   },
   languageValueSecondary: {
     fontFamily: 'Inter-Bold',
@@ -369,6 +408,15 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
   const projects = data.projects || [];
   const skills = data.skills || {};
 
+  const iconColors = {
+    phone: '#16A34A',      // Apple-style green
+    email: '#EA4335',      // Google/Gmail red
+    location: '#E11D48',   // Premium crimson map pin red
+    linkedin: '#0A66C2',   // Official LinkedIn blue
+    portfolio: '#0EA5E9',  // Beautiful cyan/teal globe
+    github: '#181717'      // Official GitHub black
+  };
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -426,28 +474,56 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
             {/* Contact & Socials */}
             <View style={styles.sidebarSection}>
               <Text style={styles.sidebarSectionHeading}>Contact</Text>
-              {p.email && <Text style={styles.socialItem}>{p.email}</Text>}
-              {p.phone && (
-                <Text style={styles.socialItem}>
-                  {p.phone.startsWith('+') ? p.phone : `+92 ${p.phone.replace(/^0/, '')}`}
-                </Text>
-              )}
-              {p.city && <Text style={styles.socialItem}>{p.city}, Pakistan</Text>}
-              {p.linkedin && p.linkedin.trim() !== '' && (
-                <Text style={styles.socialItem}>
-                  ln: <Text style={styles.socialItemBold}>{p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
-                </Text>
-              )}
-              {p.portfolio && p.portfolio.trim() !== '' && (
-                <Text style={styles.socialItem}>
-                  wb: <Text style={styles.socialItemBold}>{p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
-                </Text>
-              )}
-              {p.github && p.github.trim() !== '' && (
-                <Text style={styles.socialItem}>
-                  gh: <Text style={styles.socialItemBold}>{p.github.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
-                </Text>
-              )}
+              
+              {p.email ? (
+                <View style={styles.contactRow}>
+                  <EmailIcon color={iconColors.email} size={9} />
+                  <Text style={styles.socialItem}>{p.email}</Text>
+                </View>
+              ) : null}
+
+              {p.phone ? (
+                <View style={styles.contactRow}>
+                  <PhoneIcon color={iconColors.phone} size={9} />
+                  <Text style={styles.socialItem}>
+                    {p.phone.startsWith('+') ? p.phone : `+92 ${p.phone.replace(/^0/, '')}`}
+                  </Text>
+                </View>
+              ) : null}
+
+              {p.city ? (
+                <View style={styles.contactRow}>
+                  <LocationIcon color={iconColors.location} size={9} />
+                  <Text style={styles.socialItem}>{p.city}, Pakistan</Text>
+                </View>
+              ) : null}
+
+              {p.linkedin && p.linkedin.trim() !== '' ? (
+                <View style={styles.contactRow}>
+                  <LinkedInIcon color={iconColors.linkedin} size={9} />
+                  <Text style={styles.socialItem}>
+                    <Text style={styles.socialItemBold}>{p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
+                  </Text>
+                </View>
+              ) : null}
+
+              {p.portfolio && p.portfolio.trim() !== '' ? (
+                <View style={styles.contactRow}>
+                  <GlobeIcon color={iconColors.portfolio} size={9} />
+                  <Text style={styles.socialItem}>
+                    <Text style={styles.socialItemBold}>{p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
+                  </Text>
+                </View>
+              ) : null}
+
+              {p.github && p.github.trim() !== '' ? (
+                <View style={styles.contactRow}>
+                  <GitHubIcon color={iconColors.github} size={9} />
+                  <Text style={styles.socialItem}>
+                    <Text style={styles.socialItemBold}>{p.github.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
+                  </Text>
+                </View>
+              ) : null}
             </View>
 
             {/* Technical Skills Badges */}
@@ -500,7 +576,7 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
               })}
             </View>
 
-            {/* Sidebar Certifications list if certifications exists and list is short */}
+            {/* Sidebar Certifications list if certifications exists and is short */}
             {skills.certifications && skills.certifications.length > 0 && skills.certifications.length <= 2 ? (
               <View style={styles.sidebarSection}>
                 <Text style={styles.sidebarSectionHeading}>Certs</Text>
@@ -574,11 +650,11 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
                   return (
                     <View key={idx} style={styles.experienceItem} wrap={false}>
                       <View style={styles.experienceHeader}>
-                        <Text style={[styles.experienceTitle, { color: '#3B82F6' }]}>
+                        <Text style={[styles.experienceTitle, { color: '#0B2545' }]}>
                           {proj.projectName || 'Project Title'}
                         </Text>
                         {proj.projUrl ? (
-                          <Text style={[styles.experienceDates, { color: '#3B82F6' }]}>
+                          <Text style={[styles.experienceDates, { color: '#0B2545' }]}>
                             🔗 {proj.projUrl.replace(/^(https?:\/\/)?(www\.)?/, '')}
                           </Text>
                         ) : null}
