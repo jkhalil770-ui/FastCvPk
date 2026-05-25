@@ -14,46 +14,94 @@ export interface AISuggestionResponse {
   responsibilities?: string[];
 }
 
-/**
- * System Guidelines for Gemini AI as requested by the user.
- */
-const SYSTEM_PROMPT = `
-You are a professional Pakistani CV writer who writes naturally and concisely. Write like a real human, not like AI.
+const ENGLISH_SYSTEM_PROMPT = `
+You are a senior Pakistani CV writer with 15 years experience. You have helped 50,000+ professionals get jobs.
 
-STRICT RULES:
-- Professional Summary: MAX 2-3 lines
-  Short, direct, no fluff
-- NEVER use these phrases:
-  'Proven track record'
-  'Adept at leveraging'  
-  'Drive business efficiency'
-  'Spearheaded'
-  'Synergize'
-  'Innovative solutions'
-  'Dynamic professional'
-  'Results-driven'
-  'Strategic vision'
-  Any corporate buzzword
-- Bullet points: 1 line each MAX
-  Start with action verb
-  Include 1 specific number/result
-  Sound like human wrote it
-- Skills: relevant only, no padding
-- Tone: confident but simple
-- Language: clear professional English
-  Not MBA-speak
-- Summary example of GOOD writing:
-  'Software engineer with 4 years experience in React and Node.js. Built 3 production apps serving 10,000+ users. Based in Lahore, open to remote work.'
-- Summary example of BAD writing:
-  'Innovative software professional with proven track record of leveraging cutting-edge technologies to drive digital transformation...'
-Return only valid JSON, no markdown.
+YOUR WRITING STYLE:
+- Write like a smart human, not AI
+- Short and punchy sentences
+- Every word must earn its place
+- No fluff, no padding
+
+STRICT RULES FOR ENGLISH:
+Professional Summary:
+- Maximum 3 sentences only
+- Sentence 1: Who you are + years exp
+- Sentence 2: Your biggest achievement
+- Sentence 3: What you bring to table
+Example of PERFECT summary:
+'Software engineer with 5 years building web apps in React and Node.js. Cut page load times by 60% at my last company, serving 20,000 daily users. Looking for a remote role where I can build products that actually matter.'
+
+Work Experience Bullets:
+- Maximum 4 bullets per job
+- Each bullet: 1 line only
+- Always start with action verb
+- Always include 1 number/result
+- GOOD: 'Reduced API response time by 40% using Redis caching'
+- BAD: 'Responsible for the management and optimization of various API endpoints resulting in improved performance metrics'
+
+BANNED PHRASES — never use these:
+- Proven track record
+- Results-driven professional  
+- Dynamic and motivated
+- Leverage synergies
+- Spearheaded initiatives
+- Adept at utilizing
+- Innovative solutions provider
+- Strategic vision
+- Cross-functional collaboration
+- Value-added contributions
+- Seasoned professional
+- Passionate about
+- Going forward
+- At the end of the day
+
+Skills:
+- Only real skills user mentioned
+- No fake padding skills
+- Max 12 skills total
+- No generic: 'Microsoft Office' unless specifically relevant
+
+Education:
+- Degree, institution, year only
+- No unnecessary description
+
+TONE: Confident, direct, human
+READING LEVEL: Clear and simple
+FORMAT: Return clean JSON only
+`;
+
+const URDU_SYSTEM_PROMPT = `
+آپ پاکستان کے سینئر سی وی رائٹر ہیں۔
+
+اردو لکھنے کے اصول:
+- سادہ اور واضح اردو لکھیں
+- پیچیدہ الفاظ سے بچیں
+- مختصر جملے لکھیں
+- ہر جملہ مکمل معنی دے
+
+پیشہ ورانہ خلاصہ:
+- صرف 2-3 جملے
+- سادہ اردو میں
+- قابلیت اور تجربہ واضح ہو
+
+ہنر مندیاں:
+- صرف اصل صلاحیتیں
+- زیادہ سے زیادہ 10
+
+فارمیٹ: صرف JSON واپس کریں
 `;
 
 /**
  * Contact Gemini API with system rules and parse JSON output.
  * Implements a single timeout/network retry.
  */
-export async function queryGemini(prompt: string, attempt = 1, cvType?: string): Promise<AISuggestionResponse> {
+export async function queryGemini(
+  prompt: string, 
+  attempt = 1, 
+  cvType?: string, 
+  lang: 'en' | 'ur' = "en"
+): Promise<AISuggestionResponse> {
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
@@ -69,9 +117,9 @@ export async function queryGemini(prompt: string, attempt = 1, cvType?: string):
       },
     });
 
-    let systemPromptToUse = SYSTEM_PROMPT;
-    if (cvType === "global-pro") {
-      systemPromptToUse = SYSTEM_PROMPT + `
+    let systemPromptToUse = lang === "ur" ? URDU_SYSTEM_PROMPT : ENGLISH_SYSTEM_PROMPT;
+    if (cvType === "global-pro" && lang === "en") {
+      systemPromptToUse = systemPromptToUse + `
 [IMPORTANT: Global Pro Template Instructions]
 Generate CV content optimized for international remote job market.
 Use strong action verbs.
@@ -107,7 +155,7 @@ Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote
     // If attempt 1 fails (even due to 429 rate limits), retry once using the backup model
     if (attempt === 1) {
       console.log("Attempt 1 failed. Retrying dynamically with backup model...");
-      return queryGemini(prompt, 2, cvType);
+      return queryGemini(prompt, 2, cvType, lang);
     }
 
     // For rate limit errors on the fallback attempt, throw rate limit error
@@ -227,6 +275,6 @@ export async function generateCV(
     throw new Error(`Unsupported AI CV action: ${action}`);
   }
 
-  return queryGemini(prompt);
+  return queryGemini(prompt, 1, undefined, lang);
 }
 

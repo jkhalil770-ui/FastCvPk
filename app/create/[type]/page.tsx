@@ -269,6 +269,8 @@ export default function CVBuilderPage() {
   const getFallbackSummary = (jobTitle: string, isStudent: boolean, lang: string): string => {
     const name = formData.personalInfo.fullName || "";
     const city = formData.personalInfo.city || "Pakistan";
+    const yearsExp = formData.personalInfo.yearsOfExp || "3";
+    const timezone = formData.personalInfo.timeZone || "PKT";
     const skills = [...formData.skills.techSkills, ...formData.skills.softSkills].slice(0, 5).join(", ");
 
     if (lang === "ur") {
@@ -278,14 +280,25 @@ export default function CVBuilderPage() {
       return `میں ایک تجربہ کار ${jobTitle || "پیشہ ور"} ہوں جو ${city} میں کام کر رہا ہوں۔ میری مہارتیں ${skills || "مختلف شعبوں"} میں ہیں اور میں اپنی ٹیم کو بہترین نتائج دینے کے لیے ہمیشہ تیار رہتا ہوں۔`;
     }
 
+    // Remote / International or Global Pro
     if (type === "global-pro") {
-      return `${jobTitle || "Software Engineer"} with ${formData.personalInfo.yearsOfExp || "4"} years of experience. Built scalable applications and supported remote team operations from ${city}. Expert in ${skills || "React and Node.js"}, open to global remote contracts in ${formData.personalInfo.timeZone || "PKT"} timezone.`;
+      return `${jobTitle || "Remote Specialist"} with ${yearsExp} years experience collaborating with international clients. Built remote workflow systems from ${city} and maintained 100% task delivery rates. Flexible across different time zones including ${timezone}, delivering high-impact business outcomes.`;
     }
 
+    // Fresh Graduate / Student
     if (isStudent) {
-      return `Computer science student at FAST NUCES Karachi. Focused on React, Node.js and building clean web systems. Based in ${city}, looking for an internship to build real-world experience.`;
+      return `Eager and driven student from ${city} with academic achievements including top-tier GPA and multiple web projects. Completed internship at top local tech hub and worked on full-stack application development. Keen to learn and contribute to a fast-growing team.`;
     }
-    return `${jobTitle || "Software engineer"} with ${formData.personalInfo.yearsOfExp || "3"} years experience in ${skills || "software development"}. Built 3 production web applications serving 10,000+ users. Based in ${city}, open to hybrid or remote work.`;
+
+    // Tech Roles
+    const lowerTitle = (jobTitle || "").toLowerCase();
+    const isTech = lowerTitle.includes("software") || lowerTitle.includes("engineer") || lowerTitle.includes("developer") || lowerTitle.includes("designer") || lowerTitle.includes("programmer") || lowerTitle.includes("coder") || lowerTitle.includes("ai") || lowerTitle.includes("tech") || lowerTitle.includes("data");
+    if (isTech) {
+      return `${jobTitle || "Software Engineer"} with ${yearsExp} years building high-performance web systems in ${skills || "React and Node.js"}. Cut application response times by 40% and served 20,000+ daily active users. Seeking a remote or hybrid role to build meaningful products.`;
+    }
+
+    // Business Roles (or fallback default)
+    return `${jobTitle || "Business Specialist"} with ${yearsExp} years leading operations and driving customer success. Managed 8-member project groups to increase annual conversion rates by 25%. Focused on building strong client relationships and optimizing team productivity.`;
   };
 
   // Main CV Generation Handler — works WITH or WITHOUT Gemini AI

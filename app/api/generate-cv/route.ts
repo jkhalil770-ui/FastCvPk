@@ -98,7 +98,7 @@ export async function POST(req: Request) {
       `;
     }
 
-    const response = await queryGemini(aiPrompt, 1, cvType);
+    const response = await queryGemini(aiPrompt, 1, cvType, safeLang);
     return NextResponse.json(response);
 
   } catch (error: any) {
