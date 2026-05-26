@@ -24,8 +24,7 @@ export function Navbar() {
   const [adminEmail, setAdminEmail] = useState("");
 
   useEffect(() => {
-    // Monitor environment Admin Email settings
-    setAdminEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "");
+    setAdminEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "jkhalil770@gmail.com");
 
     const unsubscribe = onAuthStateChanged(auth, (usr) => {
       setUser(usr);
