@@ -158,11 +158,11 @@ export default function TemplatesGalleryPage() {
                 <Link 
                   key={tpl.id}
                   href={`/create/${tpl.id}`}
-                  className="template-card glass-panel rounded-2xl border border-white/5 hover:border-blue-500/30 transition-all duration-300 flex flex-col justify-between group overflow-hidden bg-slate-900/20 backdrop-blur-md"
+                  className={`template-card${tpl.id === 'global-pro' ? ' global-pro-card' : ''} glass-panel rounded-2xl border border-white/5 flex flex-col justify-between group bg-slate-900/20 backdrop-blur-md overflow-hidden`}
                   style={{ transformOrigin: 'center' }}
                 >
                   {/* Visual Premium Miniature A4 Preview Thumbnail */}
-                  <div className="w-full h-[200px] bg-slate-950/60 border-b border-white/5 overflow-hidden relative flex items-center justify-center transition-all duration-300 shadow-inner select-none">
+                  <div className="preview-thumbnail w-full h-[200px] bg-slate-950/60 border-b border-white/5 overflow-hidden relative flex items-center justify-center shadow-inner select-none">
                     {/* Grid overlays */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
                     
@@ -365,82 +365,22 @@ export default function TemplatesGalleryPage() {
                       )}
 
                       {tpl.id === "global-pro" && (
-                        <div className="w-full h-full flex font-sans relative text-left">
-                          {/* Full-Height Left Accent Bar */}
-                          <div className="absolute top-[-20px] bottom-[-20px] left-[-20px] w-[5px] bg-[#0B2545]" />
-
-                          {/* Left column (30%) */}
-                          <div className="w-[30%] pr-2.5 flex flex-col pt-1 pl-1 border-r border-slate-100 mr-2.5 items-stretch text-[5.5px]">
-                            {/* Confident business avatar */}
-                            <div className="w-[60px] h-[60px] rounded-full border-2 border-[#0B2545] bg-[#EFF6FF] flex items-center justify-center overflow-hidden mb-3.5 mx-auto relative shadow-inner">
-                              <img src="/avatars/ar.png" className="w-full h-full object-cover" alt="Junaid Ahmad" />
-                            </div>
-                            
-                            {/* Contact icons row with brand colors */}
-                            <div className="space-y-2 text-slate-500 font-semibold mb-4 px-0.5">
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-2.5 h-2.5 rounded bg-emerald-500 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📧</span>
-                                <span className="truncate">junaid@email.com</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-2.5 h-2.5 rounded bg-green-600 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📱</span>
-                                <span className="truncate">+92 300 9876543</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-2.5 h-2.5 rounded bg-rose-500 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">📍</span>
-                                <span className="truncate">Lahore, PK</span>
-                              </div>
-                              <div className="flex items-center gap-1.5">
-                                <span className="w-2.5 h-2.5 rounded bg-blue-600 text-white flex items-center justify-center font-bold text-[5.5px] scale-90">💼</span>
-                                <span className="truncate">in/junaid-devops</span>
-                              </div>
-                            </div>
-
-                            {/* Skills Tags */}
-                            <div className="flex flex-col gap-1.5">
-                              <span className="font-extrabold text-[#0B2545] uppercase tracking-wider text-[5.5px]">Expertise</span>
-                              <div className="flex flex-wrap gap-1">
-                                {['React', 'Node.js', 'AWS'].map(skill => (
-                                  <span key={skill} className="px-1 py-0.5 bg-[#EFF6FF] text-[#0B2545] border border-[#DBEAFE] font-bold rounded-sm text-[5px]">{skill}</span>
-                                ))}
-                              </div>
-                            </div>
-                          </div>
-
-                          {/* Right column (70%) */}
-                          <div className="w-[70%] flex flex-col pt-1 pl-1">
-                            <div className="border-b border-slate-100 pb-1.5 mb-2">
-                              <span className="text-[20px] font-black text-slate-900 uppercase block leading-none">JUNAID AHMAD</span>
-                              <span className="text-[9px] font-bold text-[#0B2545] uppercase block mt-1 tracking-wider">Remote DevOps Specialist</span>
-                              <span className="inline-flex px-2 py-0.5 rounded bg-emerald-500 text-white font-extrabold text-[6px] mt-1.5 uppercase tracking-wider">
-                                🌍 US REMOTE | $5000/mo
-                              </span>
-                            </div>
-
-                            {/* Experience */}
-                            <div className="mb-3">
-                              <span className="block text-[9px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Professional Experience</span>
-                              <div className="space-y-2">
-                                <div>
-                                  <div className="flex justify-between items-baseline mb-0.5">
-                                    <span className="text-[8px] font-black text-slate-800">Lead DevOps — AlphaTech</span>
-                                    <span className="text-[6.5px] text-slate-400 font-extrabold">2022 — Present</span>
-                                  </div>
-                                  <span className="block text-[6.8px] text-slate-600 leading-normal">
-                                    • Spearheaded API architecture, reducing network routing latency by 35%.<br />
-                                    • Integrated high-security GitHub Actions CI/CD gates, securing codebase.
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-
-                            {/* Bottom Projects Section */}
-                            <div>
-                              <span className="block text-[9px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1 uppercase">Key Technical Projects</span>
-                            </div>
+                        <div className="w-full h-full flex items-center justify-center relative overflow-hidden">
+                          {/* Exact user-provided Global Pro CV preview image */}
+                          <img
+                            src="/images/globalavatar.png"
+                            alt="Global Pro CV Template — Ayesha Khan"
+                            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.06]"
+                          />
+                          {/* Premium overlay gradient at bottom */}
+                          <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-slate-950/75 to-transparent pointer-events-none" />
+                          {/* Global Pro badge overlay */}
+                          <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-purple-600/90 text-white text-[9px] font-black uppercase tracking-wider backdrop-blur-sm border border-purple-400/30 shadow-lg">
+                            🌍 Global Pro
                           </div>
                         </div>
                       )}
+
                     </div>
                   </div>
 
