@@ -182,12 +182,10 @@ export default function TemplatesGalleryPage() {
                         </div>
                       </>
                     ) : (
-                      /* Other templates: scaled mini A4 document */
-                      <div className={`w-[360px] h-[510px] bg-white rounded shadow-lg p-5 flex flex-col text-[10px] text-slate-800 leading-tight transition-transform duration-500 origin-center scale-[0.35] ${
-                        "group-hover:scale-[0.38]"
-                      }`}>
+                      /* Other templates: Full-bleed vector miniature CV previews that cover the entire area with original styling */
+                      <div className="absolute inset-0 w-full h-full transition-transform duration-500 origin-top group-hover:scale-[1.03] select-none text-slate-800 bg-white overflow-hidden">
                         {tpl.id === "ats" && (
-                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                          <div className="absolute inset-0 w-full h-full flex flex-col font-sans relative text-left bg-white p-5">
                             {/* Name & Title */}
                             <div className="text-center mb-3">
                               <span className="text-[20px] font-black text-slate-900 leading-tight">Ahmed Raza</span>
@@ -235,7 +233,7 @@ export default function TemplatesGalleryPage() {
                         )}
 
                         {tpl.id === "biodata" && (
-                          <div className="w-full h-full flex flex-col font-serif bg-[#FCFBF7] border-2 border-emerald-600 p-4 relative text-right">
+                          <div className="absolute inset-0 w-full h-full flex flex-col font-serif bg-[#FCFBF7] border-2 border-emerald-600 p-4 relative text-right">
                             {/* Bismillah */}
                             <span className="text-[7.5px] text-emerald-600 text-center font-bold mb-1 leading-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
                             
@@ -285,9 +283,9 @@ export default function TemplatesGalleryPage() {
                         )}
 
                         {tpl.id === "student" && (
-                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                          <div className="absolute inset-0 w-full h-full flex flex-col font-sans relative text-left bg-white p-5">
                             {/* Blue top line */}
-                            <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-blue-600" />
+                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-blue-600" />
                             
                             {/* Name and Degree */}
                             <div className="mb-3 mt-1">
@@ -333,9 +331,9 @@ export default function TemplatesGalleryPage() {
                         )}
 
                         {tpl.id === "freelancer" && (
-                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                          <div className="absolute inset-0 w-full h-full flex flex-col font-sans relative text-left bg-white p-5">
                             {/* Top banner stripe */}
-                            <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-[#0B2545]" />
+                            <div className="absolute top-0 left-0 right-0 h-[4px] bg-[#0B2545]" />
                             
                             {/* Left accented header */}
                             <div className="border-l-[3px] border-[#0B2545] pl-3 mb-3 mt-1">
@@ -377,6 +375,9 @@ export default function TemplatesGalleryPage() {
                             </div>
                           </div>
                         )}
+
+                        {/* Bottom gradient fade for vector templates to make it look premium and fade out at bottom */}
+                        <div className={`absolute bottom-0 left-0 right-0 h-10 bg-gradient-to-t ${tpl.id === 'biodata' ? 'from-[#FCFBF7]' : 'from-white'} to-transparent pointer-events-none z-10`} />
                       </div>
                     )}
                   </div>
