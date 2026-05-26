@@ -165,223 +165,220 @@ export default function TemplatesGalleryPage() {
                   <div className="preview-thumbnail w-full h-[200px] bg-slate-950/60 border-b border-white/5 overflow-hidden relative flex items-center justify-center shadow-inner select-none">
                     {/* Grid overlays */}
                     <div className="absolute inset-0 bg-[linear-gradient(to_right,#ffffff03_1px,transparent_1px),linear-gradient(to_bottom,#ffffff03_1px,transparent_1px)] bg-[size:10px_10px] pointer-events-none" />
-                    
-                    {/* Realistic mini-A4 sheet */}
-                    <div className={`w-[360px] h-[510px] bg-white rounded shadow-lg p-5 flex flex-col text-[10px] text-slate-800 leading-tight transition-transform duration-500 origin-center scale-[0.35] ${
-                      tpl.id === "global-pro" ? "!scale-[0.48] group-hover:!scale-[0.52] !origin-top mt-2" : "group-hover:scale-[0.38]"
-                    }`}>
-                      {tpl.id === "ats" && (
-                        <div className="w-full h-full flex flex-col font-sans relative text-left">
-                          {/* Name & Title */}
-                          <div className="text-center mb-3">
-                            <span className="text-[20px] font-black text-slate-900 leading-tight">Ahmed Raza</span>
-                            <span className="block text-[9px] font-bold text-blue-600 uppercase tracking-wider mt-1">Software Engineer</span>
-                            <span className="block text-[6.5px] text-slate-500 mt-1">ahmed.raza@email.com  |  +92 300 1234567  |  Lahore</span>
-                          </div>
-                          
-                          {/* Accent divider line */}
-                          <div className="h-[2px] bg-blue-600 w-full mb-3" />
 
-                          {/* Summary Section */}
-                          <div className="mb-3">
-                            <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Professional Summary</span>
-                            <span className="block text-[6.5px] text-slate-600 leading-normal">
-                              Software engineer with 5 years experience building highly scalable web systems in React and Node.js. 
-                              Cut application response times by 40% and served 20,000+ daily active users at Systems Ltd.
-                            </span>
-                          </div>
+                    {tpl.id === "global-pro" ? (
+                      /* Global Pro: Full-bleed real image preview — fills entire 200px area */
+                      <>
+                        <img
+                          src="/images/globalavatar.png"
+                          alt="Global Pro CV Template — Ayesha Khan"
+                          className="absolute inset-0 w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.06]"
+                        />
+                        {/* Bottom gradient fade */}
+                        <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-slate-950/80 to-transparent pointer-events-none z-10" />
+                        {/* Global Pro badge */}
+                        <div className="absolute top-2 right-2 z-20 px-2 py-0.5 rounded-full bg-purple-600/90 text-white text-[9px] font-black uppercase tracking-wider backdrop-blur-sm border border-purple-400/30 shadow-lg">
+                          🌍 Global Pro
+                        </div>
+                      </>
+                    ) : (
+                      /* Other templates: scaled mini A4 document */
+                      <div className={`w-[360px] h-[510px] bg-white rounded shadow-lg p-5 flex flex-col text-[10px] text-slate-800 leading-tight transition-transform duration-500 origin-center scale-[0.35] ${
+                        "group-hover:scale-[0.38]"
+                      }`}>
+                        {tpl.id === "ats" && (
+                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                            {/* Name & Title */}
+                            <div className="text-center mb-3">
+                              <span className="text-[20px] font-black text-slate-900 leading-tight">Ahmed Raza</span>
+                              <span className="block text-[9px] font-bold text-blue-600 uppercase tracking-wider mt-1">Software Engineer</span>
+                              <span className="block text-[6.5px] text-slate-500 mt-1">ahmed.raza@email.com  |  +92 300 1234567  |  Lahore</span>
+                            </div>
+                            
+                            {/* Accent divider line */}
+                            <div className="h-[2px] bg-blue-600 w-full mb-3" />
 
-                          {/* Experience Section */}
-                          <div className="mb-3">
-                            <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Work Experience</span>
-                            <div className="mb-1">
-                              <div className="flex justify-between items-baseline mb-0.5">
-                                <span className="text-[8px] font-bold text-slate-800">Software Engineer — Systems Limited</span>
-                                <span className="text-[7px] text-slate-500 font-bold">2021 - Present</span>
-                              </div>
+                            {/* Summary Section */}
+                            <div className="mb-3">
+                              <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Professional Summary</span>
                               <span className="block text-[6.5px] text-slate-600 leading-normal">
-                                • Led developer team to design high-performance responsive customer dashboard.<br />
-                                • Optimized database indexing, reducing search execution latency by 30%.
+                                Software engineer with 5 years experience building highly scalable web systems in React and Node.js. 
+                                Cut application response times by 40% and served 20,000+ daily active users at Systems Ltd.
                               </span>
                             </div>
-                          </div>
 
-                          {/* Skills Section */}
-                          <div>
-                            <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Key Skills</span>
-                            <div className="flex flex-wrap gap-1 mt-1">
-                              {['React', 'Next.js', 'Node.js', 'TypeScript', 'SQL'].map(sk => (
-                                <span key={sk} className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-700 text-[6px] font-bold rounded-md">{sk}</span>
-                              ))}
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {tpl.id === "biodata" && (
-                        <div className="w-full h-full flex flex-col font-serif bg-[#FCFBF7] border-2 border-emerald-600 p-4 relative text-right">
-                          {/* Bismillah */}
-                          <span className="text-[7.5px] text-emerald-600 text-center font-bold mb-1 leading-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
-                          
-                          {/* Header */}
-                          <div className="text-center mb-2">
-                            <span className="text-[18px] text-emerald-800 font-extrabold block leading-tight">محمد علی</span>
-                            <span className="text-[8px] text-slate-500 font-bold block mt-1">سوانح حیات (بائیو ڈیٹا)</span>
-                          </div>
-
-                          {/* Divider */}
-                          <div className="h-[1.5px] bg-emerald-600 w-2/3 mx-auto mb-3" />
-
-                          {/* Personal Details */}
-                          <div className="mb-3">
-                            <span className="block text-[10px] font-bold text-emerald-700 border-b border-emerald-100 pb-0.5 mb-2 text-right">ذاتی تفصیلات</span>
-                            <div className="space-y-1 text-[7px] text-slate-700">
-                              <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">محمد علی</span><span className="text-slate-500">:مکمل نام</span></div>
-                              <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">احمد علی</span><span className="text-slate-500">:والد کا نام</span></div>
-                              <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">15 جنوری 1998</span><span className="text-slate-500">:تاریخ پیدائش</span></div>
-                              <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">35201-1234567-9</span><span className="text-slate-500">:شناختی کارڈ</span></div>
-                              <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">اسلام</span><span className="text-slate-500">:مذہب</span></div>
-                            </div>
-                          </div>
-
-                          {/* Education Table */}
-                          <div className="mb-1">
-                            <span className="block text-[10px] font-bold text-emerald-700 border-b border-emerald-100 pb-0.5 mb-2 text-right">تعلیمی کوائف</span>
-                            <div className="border border-slate-200 rounded overflow-hidden text-[6px]">
-                              <div className="flex bg-emerald-50 border-b border-slate-200 text-emerald-800 font-bold py-1">
-                                <span className="w-1/4 text-center">سال</span>
-                                <span className="w-1/4 text-center">نمبر</span>
-                                <span className="w-1/2 text-center">بورڈ / یونیورسٹی</span>
-                              </div>
-                              <div className="flex border-b border-slate-100 py-1 bg-white">
-                                <span className="w-1/4 text-center">2020</span>
-                                <span className="w-1/4 text-center">3.6 CGPA</span>
-                                <span className="w-1/2 text-center">جامعہ پنجاب</span>
-                              </div>
-                              <div className="flex py-1 bg-white">
-                                <span className="w-1/4 text-center">2016</span>
-                                <span className="w-1/4 text-center">88%</span>
-                                <span className="w-1/2 text-center">لاہور بورڈ</span>
+                            {/* Experience Section */}
+                            <div className="mb-3">
+                              <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Work Experience</span>
+                              <div className="mb-1">
+                                <div className="flex justify-between items-baseline mb-0.5">
+                                  <span className="text-[8px] font-bold text-slate-800">Software Engineer — Systems Limited</span>
+                                  <span className="text-[7px] text-slate-500 font-bold">2021 - Present</span>
+                                </div>
+                                <span className="block text-[6.5px] text-slate-600 leading-normal">
+                                  • Led developer team to design high-performance responsive customer dashboard.<br />
+                                  • Optimized database indexing, reducing search execution latency by 30%.
+                                </span>
                               </div>
                             </div>
-                          </div>
-                        </div>
-                      )}
 
-                      {tpl.id === "student" && (
-                        <div className="w-full h-full flex flex-col font-sans relative text-left">
-                          {/* Blue top line */}
-                          <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-blue-600" />
-                          
-                          {/* Name and Degree */}
-                          <div className="mb-3 mt-1">
-                            <span className="text-[19px] font-black text-slate-900 leading-tight block">Ayesha Malik</span>
-                            <span className="text-[8.5px] font-bold text-blue-600 block mt-0.5">BS Computer Science @ FAST NUCES</span>
-                            <span className="text-[6.5px] text-slate-500 block mt-1">ayesha@email.com  |  +92 321 9876543  |  Islamabad</span>
-                          </div>
-
-                          <div className="h-[1px] bg-slate-200 w-full mb-3" />
-
-                          {/* Objective */}
-                          <div className="mb-3">
-                            <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Career Objective</span>
-                            <span className="block text-[6.5px] text-slate-600 leading-normal">
-                              Ambitious CS graduate from FAST NUCES eager to contribute skills in frontend development and modern API building.
-                            </span>
-                          </div>
-
-                          {/* Education */}
-                          <div className="mb-3">
-                            <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Education Profile</span>
-                            <div className="mb-1">
-                              <div className="flex justify-between items-baseline mb-0.5">
-                                <span className="text-[7.5px] font-bold text-slate-800">FAST NUCES, Islamabad</span>
-                                <span className="text-[6.5px] text-slate-400 font-bold">2020 - 2024</span>
-                              </div>
-                              <span className="block text-[6.8px] text-slate-600">BS Computer Science (GPA: 3.8 / 4.0)</span>
-                            </div>
-                          </div>
-
-                          {/* Projects */}
-                          <div className="mb-3">
-                            <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Academic Projects</span>
+                            {/* Skills Section */}
                             <div>
-                              <span className="block text-[7.5px] font-bold text-slate-800">E-Commerce Web Application</span>
-                              <span className="block text-[6.5px] text-slate-600 leading-normal">
-                                • Developed dynamic checkout system using React and Firebase.<br />
-                                • Implemented full security rules for customer dashboard.
-                              </span>
-                            </div>
-                          </div>
-                        </div>
-                      )}
-
-                      {tpl.id === "freelancer" && (
-                        <div className="w-full h-full flex flex-col font-sans relative text-left">
-                          {/* Top banner stripe */}
-                          <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-[#0B2545]" />
-                          
-                          {/* Left accented header */}
-                          <div className="border-l-[3px] border-[#0B2545] pl-3 mb-3 mt-1">
-                            <span className="text-[19px] font-black text-slate-900 leading-tight block">Usman Ali</span>
-                            <span className="text-[9px] font-bold text-[#0B2545] uppercase tracking-wider block mt-0.5">Full Stack Freelancer</span>
-                            <span className="text-[6.8px] text-slate-500 block mt-1">fiverr.com/usman_ali  |  github.com/usman-ali  |  Karachi</span>
-                          </div>
-
-                          {/* Profiles Grid */}
-                          <div className="flex justify-between gap-2 mb-3">
-                            {/* Services */}
-                            <div className="bg-slate-50 border border-slate-200/60 p-2 rounded w-1/2 flex flex-col">
-                              <span className="text-[7.5px] font-bold text-slate-800 mb-1 border-b border-slate-200 pb-0.5 uppercase">Services Offered</span>
-                              <span className="text-[6.2px] text-slate-600 leading-relaxed">
-                                • Custom Web Apps<br />
-                                • UI/UX Design Pro<br />
-                                • API Integration
-                              </span>
-                            </div>
-                            {/* Tech Stack */}
-                            <div className="bg-blue-50/40 border border-blue-100 p-2 rounded w-1/2 flex flex-col">
-                              <span className="text-[7.5px] font-bold text-slate-800 mb-1 border-b border-blue-200 pb-0.5 uppercase">Tech Stack & Tools</span>
-                              <div className="flex flex-wrap gap-0.5 mt-0.5">
-                                {['React', 'NextJS', 'Tailwind', 'NodeJS'].map(t => (
-                                  <span key={t} className="px-1 py-0.2 bg-white border border-blue-100 text-[#0B2545] text-[5.5px] font-bold rounded">{t}</span>
+                              <span className="block text-[9.5px] font-bold text-slate-900 border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Key Skills</span>
+                              <div className="flex flex-wrap gap-1 mt-1">
+                                {['React', 'Next.js', 'Node.js', 'TypeScript', 'SQL'].map(sk => (
+                                  <span key={sk} className="px-1.5 py-0.5 bg-slate-100 border border-slate-200 text-slate-700 text-[6px] font-bold rounded-md">{sk}</span>
                                 ))}
                               </div>
                             </div>
                           </div>
+                        )}
 
-                          {/* Projects */}
-                          <div>
-                            <span className="block text-[9px] font-bold text-[#0B2545] border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Notable Freelance Projects</span>
-                            <div>
-                              <div className="flex justify-between items-baseline mb-0.5">
-                                <span className="text-[7.5px] font-bold text-slate-800">SaaS Platform Design</span>
-                                <span className="text-[6px] text-blue-600 font-bold">Client (US)</span>
+                        {tpl.id === "biodata" && (
+                          <div className="w-full h-full flex flex-col font-serif bg-[#FCFBF7] border-2 border-emerald-600 p-4 relative text-right">
+                            {/* Bismillah */}
+                            <span className="text-[7.5px] text-emerald-600 text-center font-bold mb-1 leading-none">بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+                            
+                            {/* Header */}
+                            <div className="text-center mb-2">
+                              <span className="text-[18px] text-emerald-800 font-extrabold block leading-tight">محمد علی</span>
+                              <span className="text-[8px] text-slate-500 font-bold block mt-1">سوانح حیات (بائیو ڈیٹا)</span>
+                            </div>
+
+                            {/* Divider */}
+                            <div className="h-[1.5px] bg-emerald-600 w-2/3 mx-auto mb-3" />
+
+                            {/* Personal Details */}
+                            <div className="mb-3">
+                              <span className="block text-[10px] font-bold text-emerald-700 border-b border-emerald-100 pb-0.5 mb-2 text-right">ذاتی تفصیلات</span>
+                              <div className="space-y-1 text-[7px] text-slate-700">
+                                <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">محمد علی</span><span className="text-slate-500">:مکمل نام</span></div>
+                                <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">احمد علی</span><span className="text-slate-500">:والد کا نام</span></div>
+                                <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">15 جنوری 1998</span><span className="text-slate-500">:تاریخ پیدائش</span></div>
+                                <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">35201-1234567-9</span><span className="text-slate-500">:شناختی کارڈ</span></div>
+                                <div className="flex justify-end gap-1"><span className="font-bold text-slate-900">اسلام</span><span className="text-slate-500">:مذہب</span></div>
                               </div>
-                              <span className="block text-[6.5px] text-slate-600">Built responsive web page, yielding 30% conversion uplift.</span>
+                            </div>
+
+                            {/* Education Table */}
+                            <div className="mb-1">
+                              <span className="block text-[10px] font-bold text-emerald-700 border-b border-emerald-100 pb-0.5 mb-2 text-right">تعلیمی کوائف</span>
+                              <div className="border border-slate-200 rounded overflow-hidden text-[6px]">
+                                <div className="flex bg-emerald-50 border-b border-slate-200 text-emerald-800 font-bold py-1">
+                                  <span className="w-1/4 text-center">سال</span>
+                                  <span className="w-1/4 text-center">نمبر</span>
+                                  <span className="w-1/2 text-center">بورڈ / یونیورسٹی</span>
+                                </div>
+                                <div className="flex border-b border-slate-100 py-1 bg-white">
+                                  <span className="w-1/4 text-center">2020</span>
+                                  <span className="w-1/4 text-center">3.6 CGPA</span>
+                                  <span className="w-1/2 text-center">جامعہ پنجاب</span>
+                                </div>
+                                <div className="flex py-1 bg-white">
+                                  <span className="w-1/4 text-center">2016</span>
+                                  <span className="w-1/4 text-center">88%</span>
+                                  <span className="w-1/2 text-center">لاہور بورڈ</span>
+                                </div>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                      {tpl.id === "global-pro" && (
-                        <div className="w-full h-full flex items-center justify-center relative overflow-hidden">
-                          {/* Exact user-provided Global Pro CV preview image */}
-                          <img
-                            src="/images/globalavatar.png"
-                            alt="Global Pro CV Template — Ayesha Khan"
-                            className="w-full h-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.06]"
-                          />
-                          {/* Premium overlay gradient at bottom */}
-                          <div className="absolute bottom-0 left-0 right-0 h-14 bg-gradient-to-t from-slate-950/75 to-transparent pointer-events-none" />
-                          {/* Global Pro badge overlay */}
-                          <div className="absolute top-2 right-2 px-2 py-0.5 rounded-full bg-purple-600/90 text-white text-[9px] font-black uppercase tracking-wider backdrop-blur-sm border border-purple-400/30 shadow-lg">
-                            🌍 Global Pro
+                        {tpl.id === "student" && (
+                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                            {/* Blue top line */}
+                            <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-blue-600" />
+                            
+                            {/* Name and Degree */}
+                            <div className="mb-3 mt-1">
+                              <span className="text-[19px] font-black text-slate-900 leading-tight block">Ayesha Malik</span>
+                              <span className="text-[8.5px] font-bold text-blue-600 block mt-0.5">BS Computer Science @ FAST NUCES</span>
+                              <span className="text-[6.5px] text-slate-500 block mt-1">ayesha@email.com  |  +92 321 9876543  |  Islamabad</span>
+                            </div>
+
+                            <div className="h-[1px] bg-slate-200 w-full mb-3" />
+
+                            {/* Objective */}
+                            <div className="mb-3">
+                              <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Career Objective</span>
+                              <span className="block text-[6.5px] text-slate-600 leading-normal">
+                                Ambitious CS graduate from FAST NUCES eager to contribute skills in frontend development and modern API building.
+                              </span>
+                            </div>
+
+                            {/* Education */}
+                            <div className="mb-3">
+                              <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Education Profile</span>
+                              <div className="mb-1">
+                                <div className="flex justify-between items-baseline mb-0.5">
+                                  <span className="text-[7.5px] font-bold text-slate-800">FAST NUCES, Islamabad</span>
+                                  <span className="text-[6.5px] text-slate-400 font-bold">2020 - 2024</span>
+                                </div>
+                                <span className="block text-[6.8px] text-slate-600">BS Computer Science (GPA: 3.8 / 4.0)</span>
+                              </div>
+                            </div>
+
+                            {/* Projects */}
+                            <div className="mb-3">
+                              <span className="block text-[9.5px] font-bold text-blue-600 uppercase mb-1">Academic Projects</span>
+                              <div>
+                                <span className="block text-[7.5px] font-bold text-slate-800">E-Commerce Web Application</span>
+                                <span className="block text-[6.5px] text-slate-600 leading-normal">
+                                  • Developed dynamic checkout system using React and Firebase.<br />
+                                  • Implemented full security rules for customer dashboard.
+                                </span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      )}
+                        )}
 
-                    </div>
+                        {tpl.id === "freelancer" && (
+                          <div className="w-full h-full flex flex-col font-sans relative text-left">
+                            {/* Top banner stripe */}
+                            <div className="absolute top-[-20px] left-[-20px] right-[-20px] h-[4px] bg-[#0B2545]" />
+                            
+                            {/* Left accented header */}
+                            <div className="border-l-[3px] border-[#0B2545] pl-3 mb-3 mt-1">
+                              <span className="text-[19px] font-black text-slate-900 leading-tight block">Usman Ali</span>
+                              <span className="text-[9px] font-bold text-[#0B2545] uppercase tracking-wider block mt-0.5">Full Stack Freelancer</span>
+                              <span className="text-[6.8px] text-slate-500 block mt-1">fiverr.com/usman_ali  |  github.com/usman-ali  |  Karachi</span>
+                            </div>
+
+                            {/* Profiles Grid */}
+                            <div className="flex justify-between gap-2 mb-3">
+                              <div className="bg-slate-50 border border-slate-200/60 p-2 rounded w-1/2 flex flex-col">
+                                <span className="text-[7.5px] font-bold text-slate-800 mb-1 border-b border-slate-200 pb-0.5 uppercase">Services Offered</span>
+                                <span className="text-[6.2px] text-slate-600 leading-relaxed">
+                                  • Custom Web Apps<br />
+                                  • UI/UX Design Pro<br />
+                                  • API Integration
+                                </span>
+                              </div>
+                              <div className="bg-blue-50/40 border border-blue-100 p-2 rounded w-1/2 flex flex-col">
+                                <span className="text-[7.5px] font-bold text-slate-800 mb-1 border-b border-blue-200 pb-0.5 uppercase">Tech Stack & Tools</span>
+                                <div className="flex flex-wrap gap-0.5 mt-0.5">
+                                  {['React', 'NextJS', 'Tailwind', 'NodeJS'].map(t => (
+                                    <span key={t} className="px-1 py-0.2 bg-white border border-blue-100 text-[#0B2545] text-[5.5px] font-bold rounded">{t}</span>
+                                  ))}
+                                </div>
+                              </div>
+                            </div>
+
+                            {/* Projects */}
+                            <div>
+                              <span className="block text-[9px] font-bold text-[#0B2545] border-b border-slate-200 pb-0.5 mb-1.5 uppercase">Notable Freelance Projects</span>
+                              <div>
+                                <div className="flex justify-between items-baseline mb-0.5">
+                                  <span className="text-[7.5px] font-bold text-slate-800">SaaS Platform Design</span>
+                                  <span className="text-[6px] text-blue-600 font-bold">Client (US)</span>
+                                </div>
+                                <span className="block text-[6.5px] text-slate-600">Built responsive web page, yielding 30% conversion uplift.</span>
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
                   </div>
 
                   {/* Content (Padded) */}
