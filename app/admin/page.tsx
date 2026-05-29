@@ -70,6 +70,7 @@ export default function AdminDashboard() {
   const [feedbackList, setFeedbackList] = useState<any[]>([]);
   const [loadingFeedback, setLoadingFeedback] = useState(false);
 
+  const ADMIN_EMAILS = ["jkhalil770@gmail.com"];
   const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL || process.env.ADMIN_EMAIL || "jkhalil770@gmail.com";
 
   // Auth check
@@ -78,8 +79,9 @@ export default function AdminDashboard() {
       setUser(usr);
       setLoadingAuth(false);
       
-      const isApprovedAdmin = usr && usr.email && adminEmail && (
-        usr.email === adminEmail || 
+      const isApprovedAdmin = usr && usr.email && (
+        usr.email.toLowerCase() === adminEmail.toLowerCase() || 
+        ADMIN_EMAILS.includes(usr.email.toLowerCase()) ||
         adminEmail.split(",").map((e: string) => e.trim().toLowerCase()).includes(usr.email.toLowerCase())
       );
       setIsAdmin(!!isApprovedAdmin);

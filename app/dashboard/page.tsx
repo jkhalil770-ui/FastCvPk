@@ -15,7 +15,7 @@ import {
   doc, 
   orderBy 
 } from "firebase/firestore";
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup, sendEmailVerification } from "firebase/auth";
 import { useToast } from "@/components/ui/Toast";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
@@ -56,10 +56,12 @@ export default function UserDashboard() {
       setLoadingAuth(false);
       if (usr) {
         fetchUserCVs(usr.uid);
+      } else {
+        router.push("/login?returnUrl=/dashboard");
       }
     });
     return () => unsubscribe();
-  }, []);
+  }, [router]);
 
   const fetchUserCVs = async (uid: string) => {
     setFetchingCvs(true);
@@ -120,16 +122,14 @@ export default function UserDashboard() {
     }
   };
 
-  const handleGoogleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      await signInWithPopup(auth, provider);
-      toast(
-        language === "ur" ? "لاگ ان کامیاب!" : "Login Successful!",
-        "success"
-      );
-    } catch (err: any) {
-      toast("Login failed", "error", err.message);
+  const handleResendVerification = async () => {
+    if (user) {
+      try {
+        await sendEmailVerification(user);
+        toast("Email Sent", "success", "Verification email has been resent.");
+      } catch (err: any) {
+        toast("Error", "error", err.message);
+      }
     }
   };
 
@@ -170,32 +170,44 @@ export default function UserDashboard() {
     );
   }
 
-  // RENDER LOGIN SCREEN IF NOT AUTHENTICATED
   if (!user) {
     return (
+      <div className="flex-grow w-full bg-[#0F172A] flex flex-col justify-center items-center p-8">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500" />
+      </div>
+    );
+  }
+
+  // UNVERIFIED EMAIL PROTECTION
+  if (!user.emailVerified && user.providerData && user.providerData.some((p: any) => p.providerId === 'password')) {
+    return (
       <div className="flex-grow w-full bg-[#0F172A] relative flex flex-col justify-center items-center py-16 px-4">
-        {/* Glowing backdrop elements */}
         <div className="absolute top-[20%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
         
-        <Card className="w-full max-w-md p-8 border-white/10 text-center relative z-10">
-          <div className="mx-auto w-12 h-12 rounded-full bg-blue-500/10 border border-blue-500/20 flex items-center justify-center text-blue-400 mb-6">
-            <ShieldAlert size={22} />
+        <Card className="w-full max-w-md p-8 border-white/10 text-center relative z-10 animate-in zoom-in duration-500">
+          <div className="mx-auto w-16 h-16 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mb-6">
+            <ShieldAlert size={32} />
           </div>
           
-          <h2 className="text-xl font-bold text-white mb-2">
-            {language === "ur" ? "لاگ ان کرنا ضروری ہے" : "Authentication Required"}
+          <h2 className="text-2xl font-bold text-white mb-2">
+            Please verify your email first.
           </h2>
-          <p className="text-xs text-textSecondary leading-relaxed mb-6">
-            Please log in with Google to access your FastCV PK dashboard, where you can save and edit your resumes online.
+          <p className="text-orange-400 font-urdu text-[16px] mb-6">
+            پہلے اپنی ای میل تصدیق کریں۔
+          </p>
+          <p className="text-sm text-textSecondary leading-relaxed mb-8">
+            You need to verify your email address before accessing the dashboard and your saved CVs. Please check your inbox for the verification link.
           </p>
 
           <Button 
-            onClick={handleGoogleLogin} 
+            onClick={handleResendVerification} 
             className="w-full gap-2 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold"
           >
-            <User size={16} />
-            Log In with Google
+            Resend Verification Email
           </Button>
+          <div className="mt-4 text-xs text-slate-500">
+            If you just verified, please refresh the page.
+          </div>
         </Card>
       </div>
     );

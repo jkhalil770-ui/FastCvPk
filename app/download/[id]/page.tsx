@@ -155,13 +155,10 @@ export default function CVDownloadPage() {
   const handleDownload = () => {
     if (!auth.currentUser) {
       toast(
-        language === "ur" ? "لاگ ان لازمی ہے!" : "Login Required!",
-        "warning",
-        language === "ur" 
-          ? "سی وی ڈاؤن لوڈ کرنے کے لیے پہلے اوپر دائیں کونے سے لاگ ان کریں۔" 
-          : "Please log in using the button in the top right to download your CV."
+        language === "ur" ? "ڈاؤن لوڈ کیلئے لاگ ان کریں" : "Login required to download",
+        "warning"
       );
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      router.push(`/login?returnUrl=${encodeURIComponent('/download/' + id)}`);
       return;
     }
   };

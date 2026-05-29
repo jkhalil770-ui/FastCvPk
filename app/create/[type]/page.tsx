@@ -140,6 +140,13 @@ export default function CVBuilderPage() {
     document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
   }, []);
 
+  // Scroll to top on EVERY step change (Next / Previous)
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    document.documentElement.scrollTo({ top: 0, behavior: 'smooth' });
+    document.body.scrollTop = 0;
+  }, [step]);
+
   // Date and duration comparison helpers for step validation
   const parseMonthYearToDateValue = (monthYearStr: string) => {
     if (!monthYearStr) return 0;

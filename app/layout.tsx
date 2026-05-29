@@ -8,8 +8,8 @@ import PWAInstaller from "@/components/pwa/PWAInstaller";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FastCV PK — Pakistan's #1 Free CV & Biodata Maker 2026",
-  description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free. Clean layouts, high-definition PDF download.",
+  title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
+  description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free with FastCV PK. Clean layouts, high-definition PDF download.",
   manifest: "/manifest.json",
   metadataBase: new URL("https://fastcvpk.online"),
   alternates: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "FastCV PK — Pakistan's #1 Free CV & Biodata Maker 2026",
+    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
     description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free.",
     url: "https://fastcvpk.online",
     siteName: "FastCV PK",
@@ -42,11 +42,25 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FastCV PK — Pakistan's #1 Free CV & Biodata Maker",
+    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
     description: "Create professional ATS-friendly CVs and beautiful Urdu Nastaliq Biodatas for free.",
     images: ["/logo.png"],
   },
-  keywords: ["cv banana free", "biodata banana", "resume maker pakistan", "free cv maker urdu", "ats cv pakistan"],
+  keywords: [
+    "fastcv",
+    "fastcvpk",
+    "fastcvpk.online",
+    "cv banana",
+    "cv banana free",
+    "biodata banana",
+    "resume maker pakistan",
+    "free cv maker urdu",
+    "ats cv pakistan",
+    "ats friendly cv maker",
+    "pakistan resume builder",
+    "cv maker online",
+    "job cv maker"
+  ],
   other: {
     "geo.region": "PK",
     "geo.placename": "Pakistan",
@@ -61,12 +75,56 @@ export default function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // JSON-LD Structured Data Schema for Search Engine crawlers
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": "https://fastcvpk.online/#organization",
+        "name": "FastCV PK",
+        "url": "https://fastcvpk.online",
+        "logo": "https://fastcvpk.online/logo.png",
+        "description": "Pakistan's #1 Free Online CV & Biodata Maker.",
+        "sameAs": []
+      },
+      {
+        "@type": "WebSite",
+        "@id": "https://fastcvpk.online/#website",
+        "url": "https://fastcvpk.online",
+        "name": "FastCV PK",
+        "description": "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free.",
+        "publisher": {
+          "@id": "https://fastcvpk.online/#organization"
+        }
+      },
+      {
+        "@type": "WebApplication",
+        "@id": "https://fastcvpk.online/#webapp",
+        "url": "https://fastcvpk.online",
+        "name": "FastCV PK",
+        "applicationCategory": "BusinessApplication",
+        "operatingSystem": "All",
+        "browserRequirements": "Requires HTML5",
+        "offers": {
+          "@type": "Offer",
+          "price": "0.00",
+          "priceCurrency": "PKR"
+        }
+      }
+    ]
+  };
+
   return (
     <html lang="en" className="dark">
       <head>
         <link rel="dns-prefetch" href="https://generativelanguage.googleapis.com" />
         <link rel="dns-prefetch" href="https://firestore.googleapis.com" />
         <link rel="preload" href="/logo.png" as="image" />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        />
       </head>
       <body className="antialiased min-h-screen flex flex-col bg-background">
         <ToastProvider>
@@ -81,7 +139,7 @@ export default function RootLayout({
             
             {/* Navigation Footer */}
             <Footer />
-
+ 
             {/* PWA Mobile App Installer Banner */}
             <PWAInstaller />
           </LanguageProvider>

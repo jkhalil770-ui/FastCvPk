@@ -3,8 +3,6 @@
 import React, { useState } from "react";
 import { Star, MessageSquare } from "lucide-react";
 import { useToast } from "@/components/ui/Toast";
-import { db } from "@/lib/firebase";
-import { collection, addDoc, serverTimestamp } from "firebase/firestore";
 import Button from "@/components/ui/Button";
 
 export default function FeedbackSection() {
@@ -54,16 +52,22 @@ export default function FeedbackSection() {
 
     setIsSubmitting(true);
     try {
-      await addDoc(collection(db, "feedback"), {
-        name: name.trim(),
-        email: email.trim(),
-        cvType,
-        rating,
-        message: message.trim(),
-        createdAt: serverTimestamp(),
-        userAgent: typeof window !== "undefined" ? navigator.userAgent : "SSR",
-        page: "homepage"
+      const response = await fetch("/api/save-feedback", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          name: name.trim(),
+          email: email.trim(),
+          cvType,
+          rating,
+          message: message.trim()
+        })
       });
+
+      if (!response.ok) {
+        const data = await response.json().catch(() => ({}));
+        throw new Error(data.error || "Server error");
+      }
 
       toast(
         "Thank you! Your feedback has been received. ✓",
@@ -72,15 +76,9 @@ export default function FeedbackSection() {
         3000
       );
 
-      // Clear the form
-      setName("");
-      setEmail("");
-      setCvType("ATS CV");
-      setRating(0);
-      setHoverRating(0);
-      setMessage("");
-    } catch (error) {
-      console.error("Error saving feedback to Firebase:", error);
+      setName(""); setEmail(""); setCvType("ATS CV"); setRating(0); setHoverRating(0); setMessage("");
+    } catch (error: any) {
+      console.error("Error saving feedback:", error);
       toast(
         "Something went wrong. Please try again.",
         "error",

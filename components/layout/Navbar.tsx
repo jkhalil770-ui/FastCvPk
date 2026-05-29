@@ -7,9 +7,9 @@ import { useLanguage } from "@/lib/LanguageContext";
 import { getTranslation } from "@/lib/translations";
 import { auth } from "@/lib/firebase";
 import LanguageToggle from "@/components/layout/LanguageToggle";
-import { onAuthStateChanged, signOut, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import { useToast } from "@/components/ui/Toast";
-import { Menu, X, User, LogOut, LayoutDashboard, Shield } from "lucide-react";
+import { Menu, X, LogOut, LayoutDashboard, Shield } from "lucide-react";
 
 /**
  * Sticky Glassmorphic responsive navigation header.
@@ -21,35 +21,14 @@ export function Navbar() {
   
   const [user, setUser] = useState<any>(null);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [adminEmail, setAdminEmail] = useState("");
+  const ADMIN_EMAILS = ["jkhalil770@gmail.com"];
 
   useEffect(() => {
-    setAdminEmail(process.env.NEXT_PUBLIC_ADMIN_EMAIL || "jkhalil770@gmail.com");
-
     const unsubscribe = onAuthStateChanged(auth, (usr) => {
       setUser(usr);
     });
     return () => unsubscribe();
   }, []);
-
-  const handleLogin = async () => {
-    try {
-      const provider = new GoogleAuthProvider();
-      const res = await signInWithPopup(auth, provider);
-      toast(
-        language === "ur" ? "لاگ ان کامیاب!" : "Logged in successfully!",
-        "success",
-        language === "ur" ? `خوش آمدید، ${res.user.displayName}` : `Welcome back, ${res.user.displayName}`
-      );
-    } catch (error: any) {
-      console.error(error);
-      toast(
-        language === "ur" ? "لاگ ان ناکام!" : "Authentication Failed!",
-        "error",
-        error.message
-      );
-    }
-  };
 
   const handleLogout = async () => {
     try {
@@ -63,10 +42,7 @@ export function Navbar() {
     }
   };
 
-  const isAdmin = user && user.email && adminEmail && (
-    user.email === adminEmail || 
-    adminEmail.split(",").map((e: string) => e.trim().toLowerCase()).includes(user.email.toLowerCase())
-  );
+  const isAdmin = user && user.email && ADMIN_EMAILS.includes(user.email.toLowerCase());
 
   // Navigation Links array
   const navLinks = [
@@ -82,6 +58,15 @@ export function Navbar() {
           0% { background-position: -200% center; }
           100% { background-position: 200% center; }
         }
+        @keyframes verify-slide-in {
+          from { opacity: 0; transform: scale(0.92) translateY(-16px); }
+          to   { opacity: 1; transform: scale(1) translateY(0); }
+        }
+        @keyframes shake {
+          0%,100% { transform: translateX(0); }
+          20%,60% { transform: translateX(-6px); }
+          40%,80% { transform: translateX(6px); }
+        }
         .login-btn-glow {
           background: linear-gradient(135deg, #3B82F6 0%, #6366F1 50%, #8B5CF6 100%);
           background-size: 200% auto;
@@ -93,26 +78,43 @@ export function Navbar() {
           box-shadow: 0 0 30px rgba(99,102,241,0.6), 0 0 60px rgba(99,102,241,0.2);
           transform: translateY(-1px) scale(1.02);
         }
-        .login-btn-glow:active {
-          transform: translateY(0) scale(0.98);
-        }
+        .login-btn-glow:active { transform: translateY(0) scale(0.98); }
         .user-pill {
           background: linear-gradient(135deg, rgba(59,130,246,0.1) 0%, rgba(99,102,241,0.1) 100%);
           border: 1px solid rgba(99,102,241,0.25);
           backdrop-filter: blur(12px);
         }
+        /* Premium logout button — slide reveal */
         .logout-btn {
-          background: linear-gradient(135deg, rgba(239,68,68,0.08) 0%, rgba(220,38,38,0.12) 100%);
-          border: 1px solid rgba(239,68,68,0.2);
-          transition: all 0.25s ease;
+          position: relative;
+          overflow: hidden;
+          background: rgba(15,20,40,0.6);
+          border: 1px solid rgba(239,68,68,0.25);
+          backdrop-filter: blur(10px);
+          transition: all 0.3s cubic-bezier(0.4,0,0.2,1);
+          color: rgba(252,165,165,0.85);
         }
+        .logout-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(135deg, rgba(239,68,68,0.15) 0%, rgba(220,38,38,0.25) 100%);
+          transform: translateX(-101%);
+          transition: transform 0.35s cubic-bezier(0.4,0,0.2,1);
+        }
+        .logout-btn:hover::before { transform: translateX(0); }
         .logout-btn:hover {
-          background: linear-gradient(135deg, rgba(239,68,68,0.18) 0%, rgba(220,38,38,0.22) 100%);
-          border-color: rgba(239,68,68,0.4);
-          box-shadow: 0 0 15px rgba(239,68,68,0.15);
+          border-color: rgba(239,68,68,0.55);
+          box-shadow: 0 0 18px rgba(239,68,68,0.25), inset 0 0 12px rgba(239,68,68,0.08);
+          color: #fca5a5;
           transform: translateY(-1px);
         }
+        .logout-btn:active { transform: scale(0.97); }
+        .logout-btn span, .logout-btn svg { position: relative; z-index: 1; }
       `}} />
+
+      {/* ===== AUTH MODAL REMOVED - USING DEDICATED PAGE ===== */}
+
       <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
           {/* Brand Logo on the left */}
@@ -200,8 +202,8 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={handleLogin}
+              <Link
+                href="/login"
                 className="login-btn-glow flex items-center gap-2 rounded-full text-white text-xs font-bold px-5 py-2"
               >
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -211,7 +213,7 @@ export function Navbar() {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#fff" fillOpacity="0.9"/>
                 </svg>
                 {getTranslation("login", language)}
-              </button>
+              </Link>
             )}
           </div>
 
@@ -290,11 +292,9 @@ export function Navbar() {
                 </button>
               </div>
             ) : (
-              <button
-                onClick={() => {
-                  handleLogin();
-                  setMobileMenuOpen(false);
-                }}
+              <Link
+                href="/login"
+                onClick={() => setMobileMenuOpen(false)}
                 className="login-btn-glow flex items-center justify-center gap-2 w-full rounded-full text-white font-bold py-3 text-sm"
               >
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -304,7 +304,7 @@ export function Navbar() {
                   <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#fff" fillOpacity="0.9"/>
                 </svg>
                 {getTranslation("login", language)}
-              </button>
+              </Link>
             )}
           </div>
         </div>
