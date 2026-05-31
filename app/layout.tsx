@@ -12,9 +12,6 @@ export const metadata: Metadata = {
   description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free with FastCV PK. Clean layouts, high-definition PDF download.",
   manifest: "/manifest.json",
   metadataBase: new URL("https://fastcvpk.online"),
-  alternates: {
-    canonical: "/",
-  },
   icons: {
     icon: [
       { url: "/favicon.ico", sizes: "any" },

@@ -122,23 +122,35 @@ export default function BlogPostReaderPage() {
         </div>
 
         {/* Hero Section of Article */}
-        <div className="space-y-4">
-          <Badge variant="accent">{post.category}</Badge>
-          
-          <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
-            {language === "ur" ? post.titleUr : post.title}
-          </h1>
+        <div className="space-y-6">
+          <div className="space-y-4">
+            <Badge variant="accent">{post.category}</Badge>
+            
+            <h1 className="text-2xl sm:text-4xl font-extrabold text-white leading-tight tracking-tight">
+              {language === "ur" ? post.titleUr : post.title}
+            </h1>
 
-          <div className="flex items-center gap-4 text-xs text-textSecondary font-mono border-y border-white/5 py-3">
-            <span className="flex items-center gap-1">
-              <Calendar size={13} />
-              {post.date}
-            </span>
-            <span>•</span>
-            <span className="flex items-center gap-1">
-              <Clock size={13} />
-              {post.readTime}
-            </span>
+            <div className="flex items-center gap-4 text-xs text-textSecondary font-mono border-y border-white/5 py-3">
+              <span className="flex items-center gap-1">
+                <Calendar size={13} />
+                {post.date}
+              </span>
+              <span>•</span>
+              <span className="flex items-center gap-1">
+                <Clock size={13} />
+                {post.readTime}
+              </span>
+            </div>
+          </div>
+          
+          <div className="w-full aspect-[21/9] sm:aspect-[2.3/1] relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl">
+            <img 
+              src={post.image} 
+              alt={post.title} 
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover"
+            />
+            <div className="absolute inset-0 bg-slate-900/10 pointer-events-none mix-blend-overlay" />
           </div>
         </div>
 

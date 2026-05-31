@@ -55,6 +55,18 @@ export async function GET() {
     <lastmod>2026-05-25</lastmod>
     <priority>0.6</priority>
   </url>
+  <url>
+    <loc>https://fastcvpk.online/privacy</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://fastcvpk.online/terms</loc>
+    <lastmod>2026-05-25</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
 </urlset>`;
 
   return new Response(sitemapXml, {
