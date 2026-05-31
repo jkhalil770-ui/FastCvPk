@@ -2,7 +2,7 @@ const { Jimp } = require('jimp');
 const fs = require('fs');
 const path = require('path');
 
-const src = 'C:\\Users\\Qadri Laptop\\.gemini\\antigravity\\brain\\1446d50a-468a-4fe5-8f77-fbd8d837e5ba\\fastcv_premium_favicon_1779991999776.png';
+const src = 'C:\\Users\\Qadri Laptop\\.gemini\\antigravity\\brain\\bf3afd2e-32eb-49a3-8e09-01801fd6fcc4\\fastcv_premium_favicon_1780260591319.png';
 const baseDir = 'c:\\Users\\Qadri Laptop\\Downloads\\fastcvpk';
 
 // ICO Generation Helper Function (generates a valid multi-resolution Windows ICO file containing PNGs)
