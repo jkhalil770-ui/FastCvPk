@@ -22,11 +22,7 @@ import StudentPdf from "@/lib/pdf-templates/StudentPdf";
 import FreelancerPdf from "@/lib/pdf-templates/FreelancerPdf";
 import GlobalProPdf from "@/lib/pdf-templates/GlobalProPdf";
 
-// Dynamically import PDFDownloadLink to prevent Next.js SSR build errors
-const PDFDownloadLink = dynamic(
-  () => import("@react-pdf/renderer").then((mod) => mod.PDFDownloadLink),
-  { ssr: false }
-);
+// PDFDownloadLink has been replaced by custom dynamic form POST trigger
 
 // Import HTML preview templates
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
@@ -156,7 +152,9 @@ export default function CVDownloadPage() {
     }
   };
 
-  const handleDownload = () => {
+  const [downloading, setDownloading] = useState(false);
+
+  const triggerPDFDownload = async () => {
     if (!auth.currentUser) {
       toast(
         language === "ur" ? "ڈاؤن لوڈ کیلئے لاگ ان کریں" : "Login required to download",
@@ -164,6 +162,58 @@ export default function CVDownloadPage() {
       );
       router.push(`/login?returnUrl=${encodeURIComponent('/download/' + id)}`);
       return;
+    }
+
+    if (downloading) return;
+    setDownloading(true);
+
+    try {
+      const filename = cv.formData?.fullName 
+        ? `${cv.formData.fullName.replace(/\s+/g, "_")}_CV.pdf` 
+        : "MyCV.pdf";
+
+      // 1. Dynamically import @react-pdf/renderer on the client side
+      const { pdf } = await import("@react-pdf/renderer");
+
+      // 2. Generate PDF document as a blob
+      const docElement = getPdfDocument();
+      if (!docElement) throw new Error("Failed to generate PDF document");
+      const blob = await pdf(docElement).toBlob();
+
+      // 3. Convert blob to base64
+      const reader = new FileReader();
+      reader.readAsDataURL(blob);
+      reader.onloadend = () => {
+        const base64data = reader.result as string;
+        const base64Content = base64data.split(",")[1];
+
+        // 4. Create a form and post it to trigger a native download prompt
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "/api/download-pdf";
+        form.style.display = "none";
+
+        const base64Input = document.createElement("input");
+        base64Input.type = "hidden";
+        base64Input.name = "pdfBase64";
+        base64Input.value = base64Content;
+        form.appendChild(base64Input);
+
+        const filenameInput = document.createElement("input");
+        filenameInput.type = "hidden";
+        filenameInput.name = "filename";
+        filenameInput.value = filename;
+        form.appendChild(filenameInput);
+
+        document.body.appendChild(form);
+        form.submit();
+        document.body.removeChild(form);
+      };
+    } catch (err: any) {
+      console.error("PDF download failed:", err);
+      toast("Download failed", "error", err.message);
+    } finally {
+      setDownloading(false);
     }
   };
 
@@ -344,69 +394,32 @@ export default function CVDownloadPage() {
               </p>
 
               {(() => {
-                const filename = cv.formData?.fullName ? `${cv.formData.fullName.replace(/\s+/g, "_")}_CV.pdf` : "MyCV.pdf";
-                
                 return isTypeA ? (
-                  isClient && auth.currentUser ? (
-                    <PDFDownloadLink
-                      document={getPdfDocument()}
-                      fileName={filename}
-                      style={{ textDecoration: 'none', width: '100%', display: 'block' }}
-                    >
-                      {({ loading }) => (
-                        <Button
-                          isLoading={loading}
-                          className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
-                        >
-                          <Download size={16} />
-                          {loading 
-                            ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
-                            : getTranslation("downloadFreePDF", language)
-                          }
-                        </Button>
-                      )}
-                    </PDFDownloadLink>
-                  ) : (
-                    <Button
-                      onClick={handleDownload}
-                      className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
-                    >
-                      <Download size={16} />
-                      {getTranslation("downloadFreePDF", language)}
-                    </Button>
-                  )
+                  <Button
+                    isLoading={downloading}
+                    onClick={triggerPDFDownload}
+                    className="w-full gap-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold"
+                  >
+                    <Download size={16} />
+                    {downloading 
+                      ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
+                      : getTranslation("downloadFreePDF", language)
+                    }
+                  </Button>
                 ) : (
                   <div className="space-y-3">
-                    {isClient && auth.currentUser ? (
-                      <PDFDownloadLink
-                        document={getPdfDocument()}
-                        fileName={filename}
-                        style={{ textDecoration: 'none', width: '100%', display: 'block' }}
-                      >
-                        {({ loading }) => (
-                          <Button
-                            isLoading={loading}
-                            variant="secondary"
-                            className="w-full gap-2 text-textSecondary hover:text-white"
-                          >
-                            <Download size={16} />
-                            {loading 
-                              ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
-                              : getTranslation("downloadFreeWithWatermark", language)
-                            }
-                          </Button>
-                        )}
-                      </PDFDownloadLink>
-                    ) : (
-                      <Button
-                        onClick={handleDownload}
-                        variant="secondary"
-                        className="w-full gap-2 text-textSecondary hover:text-white"
-                      >
-                        <Download size={16} />
-                        {getTranslation("downloadFreeWithWatermark", language)}
-                      </Button>
-                    )}
+                    <Button
+                      isLoading={downloading}
+                      onClick={triggerPDFDownload}
+                      variant="secondary"
+                      className="w-full gap-2 text-textSecondary hover:text-white"
+                    >
+                      <Download size={16} />
+                      {downloading 
+                        ? (language === "ur" ? "پی ڈی ایف تیار ہو رہا ہے..." : "Generating PDF...") 
+                        : getTranslation("downloadFreeWithWatermark", language)
+                      }
+                    </Button>
                     
                     {cv.hasWatermark && (
                       <>
