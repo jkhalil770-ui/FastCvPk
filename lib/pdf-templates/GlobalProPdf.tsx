@@ -1,59 +1,77 @@
 import React from 'react';
-import { Document, Page, Text, View, StyleSheet, Font, Image, Svg, Path, Circle, Rect } from '@react-pdf/renderer';
+import { Document, Page, Text, View, StyleSheet, Font, Image, Svg, Path, Circle, Rect, G } from '@react-pdf/renderer';
 
-// Register fonts
+// Register fonts via high-speed global CDN to prevent WebView silent load failures on mobile devices
 Font.register({
   family: 'Inter',
-  src: '/fonts/Inter-Regular.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf'
 });
 Font.register({
   family: 'Inter-Bold',
-  src: '/fonts/Inter-Bold.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf'
 });
 Font.register({
   family: 'NotoNastaliq',
-  src: '/fonts/NotoNastaliqUrdu-Regular.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/noto-nastaliq-urdu@latest/arabic-400-normal.ttf'
 });
 
-// Premium SVG Icons
-const PhoneIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+// Premium SVG Icons (iOS/Apple-style squircle backgrounds with crisp white vector glyphs)
+const PhoneIcon = ({ bg = '#22C55E', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </G>
   </Svg>
 );
 
-const EmailIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-    <Path d="m22 6-10 7L2 6" />
+const EmailIcon = ({ bg = '#3B82F6', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <Path d="m22 6-10 7L2 6" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </G>
   </Svg>
 );
 
-const LocationIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" />
-    <Circle cx="12" cy="10" r="3" />
+const LocationIcon = ({ bg = '#EF4444', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <Circle cx="12" cy="10" r="3" fill="none" stroke="#FFFFFF" strokeWidth="2.2" />
+    </G>
   </Svg>
 );
 
-const LinkedInIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" />
-    <Rect x="2" y="9" width="4" height="12" />
-    <Circle cx="4" cy="4" r="2" />
+const LinkedInIcon = ({ bg = '#0077B5', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+      <Rect x="2" y="9" width="4" height="12" fill="#FFFFFF" />
+      <Circle cx="4" cy="4" r="2.2" fill="#FFFFFF" />
+    </G>
   </Svg>
 );
 
-const GitHubIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+const GitHubIcon = ({ bg = '#1F2937', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" fill="none" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+    </G>
   </Svg>
 );
 
-const GlobeIcon = ({ color = '#1E3A8A', size = 9 }) => (
-  <Svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke={color} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}>
-    <Circle cx="12" cy="12" r="10" />
-    <Path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+const GlobeIcon = ({ bg = '#6366F1', size = 11 }) => (
+  <Svg width={size} height={size} viewBox="0 0 32 32" style={{ flexShrink: 0 }}>
+    <Rect x={0} y={0} width={32} height={32} rx={7} ry={7} fill={bg} />
+    <G transform="translate(4, 4)">
+      <Circle cx="12" cy="12" r="10" fill="none" stroke="#FFFFFF" strokeWidth="2.2" />
+      <Path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" fill="none" stroke="#FFFFFF" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" />
+    </G>
   </Svg>
 );
 
@@ -70,21 +88,49 @@ const styles = StyleSheet.create({
     top: 0,
     width: 6,
     height: '100%',
-    backgroundColor: '#0B2545', // Premium deep corporate navy blue
+    backgroundColor: '#B45309', // Premium deep corporate gold
   },
   headerContainer: {
-    borderBottomWidth: 1,
+    borderBottomWidth: 1.5,
     borderBottomColor: '#E2E8F0',
-    paddingBottom: 10,
+    paddingBottom: 12,
     marginBottom: 15,
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 12,
+    paddingLeft: 5,
+  },
+  headerPhoto: {
+    width: 70,
+    height: 70,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#B45309',
+  },
+  headerPhotoPlaceholder: {
+    width: 70,
+    height: 70,
+    borderRadius: 12,
+    backgroundColor: '#F1F5F9',
+    borderWidth: 2,
+    borderColor: '#B45309',
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  headerPhotoPlaceholderText: {
+    fontSize: 7,
+    fontFamily: 'Inter-Bold',
+    color: '#94A3B8',
+    textTransform: 'uppercase',
+  },
+  headerMain: {
+    flex: 1,
+    flexDirection: 'column',
+  },
+  headerTopRow: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'flex-start',
-    paddingLeft: 5,
-  },
-  headerLeft: {
-    flex: 1,
-    paddingRight: 10,
   },
   name: {
     fontSize: 22,
@@ -97,7 +143,7 @@ const styles = StyleSheet.create({
     fontSize: 10,
     fontFamily: 'Inter-Bold',
     textTransform: 'uppercase',
-    color: '#0B2545', // Premium deep corporate navy blue
+    color: '#B45309', // Premium deep corporate gold
     letterSpacing: 1,
     marginBottom: 6,
   },
@@ -116,16 +162,16 @@ const styles = StyleSheet.create({
     color: '#475569',
   },
   badgeGreen: {
-    backgroundColor: '#ECFDF5',
+    backgroundColor: '#FEF3C7',
     borderRadius: 3,
     paddingVertical: 1.5,
     paddingHorizontal: 5,
     fontSize: 7.5,
     fontFamily: 'Inter-Bold',
-    color: '#065F46',
+    color: '#B45309',
   },
   headerRight: {
-    width: 140,
+    width: 130,
     textAlign: 'right',
   },
   statusLabel: {
@@ -155,34 +201,6 @@ const styles = StyleSheet.create({
     width: '66%',
     flexDirection: 'column',
   },
-  // Sidebar elements
-  photoContainer: {
-    alignItems: 'center',
-    marginBottom: 15,
-  },
-  profilePhoto: {
-    width: 75,
-    height: 75,
-    borderRadius: 37.5,
-    borderWidth: 2,
-    borderColor: '#0B2545',
-  },
-  photoPlaceholder: {
-    width: 75,
-    height: 75,
-    borderRadius: 37.5,
-    backgroundColor: '#F1F5F9',
-    borderWidth: 2,
-    borderColor: '#0B2545',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  photoPlaceholderText: {
-    fontSize: 8,
-    fontFamily: 'Inter-Bold',
-    color: '#94A3B8',
-    textTransform: 'uppercase',
-  },
   sidebarSection: {
     marginBottom: 15,
   },
@@ -211,7 +229,7 @@ const styles = StyleSheet.create({
   },
   socialItemBold: {
     fontFamily: 'Inter-Bold',
-    color: '#0B2545',
+    color: '#B45309',
   },
   badgesWrap: {
     flexDirection: 'row',
@@ -249,7 +267,7 @@ const styles = StyleSheet.create({
   },
   languageValue: {
     fontFamily: 'Inter-Bold',
-    color: '#0B2545',
+    color: '#B45309',
   },
   languageValueSecondary: {
     fontFamily: 'Inter-Bold',
@@ -409,12 +427,12 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
   const skills = data.skills || {};
 
   const iconColors = {
-    phone: '#16A34A',      // Apple-style green
-    email: '#EA4335',      // Google/Gmail red
-    location: '#E11D48',   // Premium crimson map pin red
-    linkedin: '#0A66C2',   // Official LinkedIn blue
-    portfolio: '#0EA5E9',  // Beautiful cyan/teal globe
-    github: '#181717'      // Official GitHub black
+    phone: '#22C55E',      // Apple-style green
+    email: '#3B82F6',      // Apple-style warm blue
+    location: '#EF4444',   // Premium map pin red
+    linkedin: '#0077B5',   // Official LinkedIn blue
+    portfolio: '#6366F1',  // Premium indigo globe
+    github: '#1F2937'      // Premium dark gray/black
   };
 
   return (
@@ -425,9 +443,33 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
 
         {/* Main Header Container */}
         <View style={styles.headerContainer}>
-          <View style={styles.headerLeft}>
-            <Text style={styles.name}>{p.fullName || 'Your Full Name'}</Text>
-            <Text style={styles.title}>{p.profTitle || 'Remote Operations Specialist'}</Text>
+          {/* Header Left: Profile Photo */}
+          <View>
+            {p.photo ? (
+              <Image src={p.photo} style={styles.headerPhoto} />
+            ) : (
+              <View style={styles.headerPhotoPlaceholder}>
+                <Text style={styles.headerPhotoPlaceholderText}>Photo</Text>
+              </View>
+            )}
+          </View>
+
+          {/* Header Main details */}
+          <View style={styles.headerMain}>
+            <View style={styles.headerTopRow}>
+              <View style={{ flex: 1, paddingRight: 10 }}>
+                <Text style={styles.name}>{p.fullName || 'Your Full Name'}</Text>
+                <Text style={styles.title}>{p.profTitle || 'Remote Operations Specialist'}</Text>
+              </View>
+
+              {/* Work Status */}
+              <View style={styles.headerRight}>
+                <Text style={styles.statusLabel}>Work Status</Text>
+                <Text style={styles.statusValue}>
+                  {p.workAuth || 'Eligible to work remotely for international companies'}
+                </Text>
+              </View>
+            </View>
             
             {/* Top Quick Badges */}
             <View style={styles.badgeRow}>
@@ -444,14 +486,6 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
               ) : null}
             </View>
           </View>
-
-          {/* Work Status */}
-          <View style={styles.headerRight}>
-            <Text style={styles.statusLabel}>Work Status</Text>
-            <Text style={styles.statusValue}>
-              {p.workAuth || 'Eligible to work remotely for international companies'}
-            </Text>
-          </View>
         </View>
 
         {/* Two-Column Body Grid */}
@@ -459,17 +493,6 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
           
           {/* ================= LEFT SIDEBAR (30%) ================= */}
           <View style={styles.leftColumn}>
-            
-            {/* Profile Photo */}
-            <View style={styles.photoContainer}>
-              {p.photo ? (
-                <Image src={p.photo} style={styles.profilePhoto} />
-              ) : (
-                <View style={styles.photoPlaceholder}>
-                  <Text style={styles.photoPlaceholderText}>Photo</Text>
-                </View>
-              )}
-            </View>
 
             {/* Contact & Socials */}
             <View style={styles.sidebarSection}>
@@ -477,14 +500,14 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
               
               {p.email ? (
                 <View style={styles.contactRow}>
-                  <EmailIcon color={iconColors.email} size={9} />
+                  <EmailIcon bg={iconColors.email} size={11} />
                   <Text style={styles.socialItem}>{p.email}</Text>
                 </View>
               ) : null}
 
               {p.phone ? (
                 <View style={styles.contactRow}>
-                  <PhoneIcon color={iconColors.phone} size={9} />
+                  <PhoneIcon bg={iconColors.phone} size={11} />
                   <Text style={styles.socialItem}>
                     {p.phone.startsWith('+') ? p.phone : `+92 ${p.phone.replace(/^0/, '')}`}
                   </Text>
@@ -493,14 +516,14 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
 
               {p.city ? (
                 <View style={styles.contactRow}>
-                  <LocationIcon color={iconColors.location} size={9} />
+                  <LocationIcon bg={iconColors.location} size={11} />
                   <Text style={styles.socialItem}>{p.city}, Pakistan</Text>
                 </View>
               ) : null}
 
               {p.linkedin && p.linkedin.trim() !== '' ? (
                 <View style={styles.contactRow}>
-                  <LinkedInIcon color={iconColors.linkedin} size={9} />
+                  <LinkedInIcon bg={iconColors.linkedin} size={11} />
                   <Text style={styles.socialItem}>
                     <Text style={styles.socialItemBold}>{p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
                   </Text>
@@ -509,7 +532,7 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
 
               {p.portfolio && p.portfolio.trim() !== '' ? (
                 <View style={styles.contactRow}>
-                  <GlobeIcon color={iconColors.portfolio} size={9} />
+                  <GlobeIcon bg={iconColors.portfolio} size={11} />
                   <Text style={styles.socialItem}>
                     <Text style={styles.socialItemBold}>{p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
                   </Text>
@@ -518,7 +541,7 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
 
               {p.github && p.github.trim() !== '' ? (
                 <View style={styles.contactRow}>
-                  <GitHubIcon color={iconColors.github} size={9} />
+                  <GitHubIcon bg={iconColors.github} size={11} />
                   <Text style={styles.socialItem}>
                     <Text style={styles.socialItemBold}>{p.github.replace(/^(https?:\/\/)?(www\.)?/, '')}</Text>
                   </Text>
@@ -650,11 +673,11 @@ export default function GlobalProPdf({ data, hasWatermark = false }: GlobalProPd
                   return (
                     <View key={idx} style={styles.experienceItem} wrap={false}>
                       <View style={styles.experienceHeader}>
-                        <Text style={[styles.experienceTitle, { color: '#0B2545' }]}>
+                        <Text style={[styles.experienceTitle, { color: '#B45309' }]}>
                           {proj.projectName || 'Project Title'}
                         </Text>
                         {proj.projUrl ? (
-                          <Text style={[styles.experienceDates, { color: '#0B2545' }]}>
+                          <Text style={[styles.experienceDates, { color: '#B45309' }]}>
                             🔗 {proj.projUrl.replace(/^(https?:\/\/)?(www\.)?/, '')}
                           </Text>
                         ) : null}

@@ -50,6 +50,10 @@ export const translations: TranslationDict = {
   atsCvTag: { en: "Job Applications", ur: "جاب ایپلی کیشنز" },
   atsCvDesc: { en: "Perfect for corporate, international, and government job applications.", ur: "کارپوریٹ، انٹرنیشنل اور سرکاری نوکریوں کے لیے موزوں۔" },
   
+  atsClassicCvName: { en: "ATS Classic CV", ur: "اے ٹی ایس کلاسک سی وی" },
+  atsClassicCvTag: { en: "Amazon / Google Standard", ur: "ایمیزون / گوگل معیار" },
+  atsClassicCvDesc: { en: "Minimalist single-column Times New Roman format tailored for big-tech and global ATS scanners.", ur: "سنگل کالم کلاسک فارمیٹ، جو ایمیزون اور گوگل جیسی بڑی کمپنیوں کی نوکریوں کے لیے اے ٹی ایس اسکینر کے عین مطابق ہے۔" },
+  
   biodataName: { en: "Simple Biodata", ur: "سادہ بائیو ڈیٹا" },
   biodataTag: { en: "General Use", ur: "عام استعمال / رشتہ" },
   biodataDesc: { en: "Professional Urdu Nastaliq biodata for general use and matrimonial purposes.", ur: "عام استعمال اور رشتے کے لیے خوبصورت اردو نستعلیق بائیو ڈیٹا۔" },
@@ -123,6 +127,8 @@ export const translations: TranslationDict = {
   phone: { en: "Phone Number", ur: "فون نمبر" },
   email: { en: "Email Address", ur: "ای میل" },
   profTitle: { en: "Professional Title (e.g., Software Engineer)", ur: "پیشہ ورانہ عنوان" },
+  targetCompanyLabel: { en: "Target Company (e.g. Amazon, Google - optional)", ur: "ٹارگٹ کمپنی (جیسے ایمیزون، گوگل - اختیاری)" },
+  targetCompanyPlaceholder: { en: "e.g. Amazon, Google, Systems Ltd", ur: "جیسے Amazon, Google, Systems Ltd" },
   linkedin: { en: "LinkedIn URL (optional)", ur: "لنکڈ ان یو آر ایل" },
   portfolio: { en: "Portfolio/Website URL (optional)", ur: "پورٹ فولیو / ویب سائٹ" },
   github: { en: "GitHub URL (optional)", ur: "گٹ ہب یو آر ایل" },

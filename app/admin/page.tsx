@@ -19,6 +19,7 @@ import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 // Import PDF templates for @react-pdf/renderer
 import ATSPdf from "@/lib/pdf-templates/ATSPdf";
+import AtsClassicPdf from "@/lib/pdf-templates/AtsClassicPdf";
 import BiodataPdf from "@/lib/pdf-templates/BiodataPdf";
 import StudentPdf from "@/lib/pdf-templates/StudentPdf";
 import FreelancerPdf from "@/lib/pdf-templates/FreelancerPdf";
@@ -26,6 +27,7 @@ import GlobalProPdf from "@/lib/pdf-templates/GlobalProPdf";
 
 // Import templates for hidden clean rendering
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
+import AtsClassicTemplate from "@/components/cv-templates/AtsClassicTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
@@ -199,6 +201,9 @@ export default function AdminDashboard() {
       switch (cvData.cvType) {
         case "ats":
           pdfElement = <ATSPdf data={templateData} hasWatermark={false} />;
+          break;
+        case "ats-classic":
+          pdfElement = <AtsClassicPdf data={templateData} hasWatermark={false} />;
           break;
         case "global-pro":
           pdfElement = <GlobalProPdf data={templateData} hasWatermark={false} />;

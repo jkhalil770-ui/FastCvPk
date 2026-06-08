@@ -26,45 +26,66 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
       style={{ minHeight: "297mm", boxSizing: "border-box" }}
       dir="ltr"
     >
-      {/* Left Full-Height Accent Bar (Electric Blue) */}
-      <div className="absolute left-0 top-0 w-1.5 h-full bg-[#3B82F6] pointer-events-none" />
+      {/* Left Full-Height Accent Bar (Luxury Gold) */}
+      <div className="absolute left-0 top-0 w-1.5 h-full bg-[#B45309] pointer-events-none" />
 
-      {/* Main Header Container */}
-      <div className="border-b border-slate-200 pb-5 mb-6 flex justify-between items-start pl-2">
-        <div className="space-y-1.5">
-          <h1 className="text-3xl font-black tracking-tight text-[#0F172A] uppercase">
-            {p.fullName || "Your Full Name"}
-          </h1>
-          <p className="text-xs font-extrabold uppercase tracking-widest text-[#3B82F6]">
-            {p.profTitle || "Remote Operations Specialist"}
-          </p>
+      {/* Main Header Container (Premium Executive Layout) */}
+      <div className="border-b-2 border-slate-200 pb-5 mb-6 flex items-center gap-6 pl-2 text-left">
+        {/* Left Side: Photo inside Header */}
+        <div className="flex-shrink-0 select-none">
+          {p.photo ? (
+            <img 
+              src={p.photo} 
+              alt={p.fullName || "Profile"} 
+              className="w-[95px] h-[95px] rounded-2xl object-cover object-[center_top] border-2 border-[#B45309] shadow-md"
+            />
+          ) : (
+            <div className="w-[95px] h-[95px] rounded-2xl bg-slate-100 border-2 border-[#B45309] flex flex-col items-center justify-center text-slate-400 text-[10px] font-black uppercase shadow-inner">
+              <span>Photo</span>
+              <span className="text-[7px] text-slate-400 font-bold lowercase tracking-normal mt-0.5">optional</span>
+            </div>
+          )}
+        </div>
+
+        {/* Right Side: Name, Title & Quick details */}
+        <div className="flex-grow space-y-1.5">
+          <div className="flex justify-between items-start">
+            <div>
+              <h1 className="text-3xl font-black tracking-tight text-[#0F172A] uppercase">
+                {p.fullName || "Your Full Name"}
+              </h1>
+              <p className="text-xs font-black uppercase tracking-widest text-[#B45309] mt-0.5">
+                {p.profTitle || "Remote Operations Specialist"}
+              </p>
+            </div>
+            
+            {/* Work Authorization Status (Luxury Gold styling) */}
+            <div className="text-right max-w-[220px]">
+              <span className="text-[8px] font-black uppercase text-slate-400 block tracking-wider">Work Status</span>
+              <span className="text-[10px] font-extrabold text-slate-700 block mt-0.5 leading-tight">
+                {p.workAuth || "Eligible to work remotely for international companies"}
+              </span>
+            </div>
+          </div>
           
           {/* Top Quick Badges */}
-          <div className="flex flex-wrap gap-2 mt-2 text-[9px] font-bold text-slate-500 uppercase tracking-wider">
+          <div className="flex flex-wrap gap-2 mt-2 text-[9px] font-bold uppercase tracking-wider">
             {p.availability && (
-              <span className="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              <span className="bg-slate-50 border border-slate-200 text-slate-600 px-2 py-0.5 rounded">
                 ⚡ {p.availability.replace(/[\[\]]/g, "")}
               </span>
             )}
             {p.timeZone && (
-              <span className="bg-slate-100 px-2 py-0.5 rounded border border-slate-200">
+              <span className="bg-slate-50 border border-slate-200 text-slate-600 px-2 py-0.5 rounded">
                 🌐 {p.timeZone}
               </span>
             )}
             {p.expectedSalary && (
-              <span className="bg-emerald-50 text-emerald-700 border border-emerald-100 px-2 py-0.5 rounded">
+              <span className="bg-amber-50 text-[#B45309] border border-amber-200 px-2 py-0.5 rounded font-black">
                 💰 {p.expectedSalary}
               </span>
             )}
           </div>
-        </div>
-
-        {/* Work Authorization Notice */}
-        <div className="text-right max-w-[200px]">
-          <span className="text-[9px] font-black uppercase text-slate-400 block tracking-wider">Work Status</span>
-          <span className="text-[10px] font-bold text-slate-600 block mt-0.5 leading-tight">
-            {p.workAuth || "Eligible to work remotely for international companies"}
-          </span>
         </div>
       </div>
 
@@ -73,24 +94,6 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
         
         {/* ================= LEFT SIDEBAR (35%) ================= */}
         <div className="w-[32%] space-y-5 flex-shrink-0">
-          
-          {/* Profile Photo Placeholder - Fix A */}
-          <div className="flex flex-col items-center text-center">
-            {p.photo ? (
-              <img 
-                src={p.photo} 
-                alt={p.fullName || "Profile"} 
-                className="w-[90px] h-[90px] rounded-full object-cover object-[center_top] border-2 border-[#3B82F6] shadow-sm"
-              />
-            ) : (
-              <div className="w-[90px] h-[90px] rounded-full bg-slate-200 border-2 border-[#3B82F6] flex items-center justify-center text-slate-400 text-xs font-black uppercase shadow-inner">
-                Photo
-              </div>
-            )}
-            <span className="text-[10px] text-slate-400 mt-1.5 block leading-tight font-semibold">
-              Photo optional
-            </span>
-          </div>
 
           {/* Contact Information - Fix D (hides rows dynamically if empty) */}
           <div className="space-y-3">
@@ -99,39 +102,51 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
             </h3>
             <div className="space-y-2 text-[10.5px] text-slate-600 leading-relaxed font-medium">
               {p.email && (
-                <div className="truncate flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                  {p.email}
+                <div className="truncate flex items-center gap-2.5">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#2563EB] to-[#60A5FA] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                  </div>
+                  <span>{p.email}</span>
                 </div>
               )}
               {p.phone && (
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                  {p.phone.startsWith("+") ? p.phone : `+92 ${p.phone.replace(/^0/, "")}`}
+                <div className="flex items-center gap-2.5">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#22C55E] to-[#4ADE80] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                  </div>
+                  <span>{p.phone.startsWith("+") ? p.phone : `+92 ${p.phone.replace(/^0/, "")}`}</span>
                 </div>
               )}
               {p.city && (
-                <div className="flex items-center gap-1.5">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                  {p.city}, Pakistan
+                <div className="flex items-center gap-2.5">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#EF4444] to-[#F87171] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                  </div>
+                  <span>{p.city}, Pakistan</span>
                 </div>
               )}
               {p.linkedin && p.linkedin.trim() !== "" && (
-                <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                  {p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, "")}
+                <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-blue-600">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#0077B5] to-[#0A66C2] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                  </div>
+                  <span>{p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
                 </div>
               )}
               {p.portfolio && p.portfolio.trim() !== "" && (
-                <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-                  {p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, "")}
+                <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-[#B45309]">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#4F46E5] to-[#818CF8] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                  </div>
+                  <span>{p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
                 </div>
               )}
               {p.github && p.github.trim() !== "" && (
-                <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                  <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.436 22 12.017 22 6.484 17.522 2 12 2z" /></svg>
-                  {p.github.replace(/^(https?:\/\/)?(www\.)?/, "")}
+                <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-black">
+                  <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#1F2937] to-[#4B5563] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                    <svg className="w-3 h-3 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.436 22 12.017 22 6.484 17.522 2 12 2z" /></svg>
+                  </div>
+                  <span>{p.github.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
                 </div>
               )}
             </div>
@@ -181,7 +196,7 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
               </div>
               <div className="flex justify-between">
                 <span>English</span>
-                <span className="text-[#3B82F6] font-bold">Professional</span>
+                <span className="text-[#B45309] font-bold">Professional</span>
               </div>
               {skills.languages && skills.languages.map((lang: string, idx: number) => {
                 if (lang.toLowerCase().includes("urdu") || lang.toLowerCase().includes("english")) return null;
@@ -279,9 +294,9 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
                 return (
                   <div key={idx} className="space-y-1">
                     <div className="flex justify-between items-baseline text-[11.5px] font-bold text-slate-800">
-                      <span className="text-[#3B82F6]">{proj.projectName || "Project Title"}</span>
+                      <span className="text-[#B45309]">{proj.projectName || "Project Title"}</span>
                       {proj.projUrl && (
-                        <span className="text-[10px] font-mono text-[#3B82F6] font-semibold hover:underline">
+                        <span className="text-[10px] font-mono text-[#B45309] font-semibold hover:underline">
                           🔗 {proj.projUrl.replace(/^(https?:\/\/)?(www\.)?/, "")}
                         </span>
                       )}
@@ -391,10 +406,10 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
             <img 
               src={p.photo} 
               alt={p.fullName || "Profile"} 
-              className="w-[80px] h-[80px] rounded-full object-cover object-[center_top] border-2 border-[#3B82F6] shadow-sm"
+              className="w-[80px] h-[80px] rounded-full object-cover object-[center_top] border-2 border-[#B45309] shadow-sm"
             />
           ) : (
-            <div className="w-[80px] h-[80px] rounded-full bg-slate-200 border-2 border-[#3B82F6] flex items-center justify-center text-slate-400 text-xs font-black uppercase shadow-inner">
+            <div className="w-[80px] h-[80px] rounded-full bg-slate-200 border-2 border-[#B45309] flex items-center justify-center text-slate-400 text-xs font-black uppercase shadow-inner">
               Photo
             </div>
           )}
@@ -405,41 +420,53 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
           <h3 className="text-[10px] font-bold uppercase tracking-widest text-[#0F172A] border-b border-slate-200 pb-1 text-left">
             Contact & Socials
           </h3>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[10.5px] text-slate-600 font-medium text-left leading-relaxed">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-[10.5px] text-slate-600 font-medium text-left leading-relaxed">
             {p.email && (
-              <div className="truncate flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
-                {p.email}
+              <div className="truncate flex items-center gap-2.5">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#2563EB] to-[#60A5FA] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>
+                </div>
+                <span>{p.email}</span>
               </div>
             )}
             {p.phone && (
-              <div className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z" /></svg>
-                {p.phone.startsWith("+") ? p.phone : `+92 ${p.phone.replace(/^0/, "")}`}
+              <div className="flex items-center gap-2.5">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#22C55E] to-[#4ADE80] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.94.725l.548 2.2a1 1 0 01-.321.988l-1.305.98a10.582 10.582 0 004.872 4.872l.98-1.305a1 1 0 01.988-.321l2.2.548a1 1 0 01.725.94V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                </div>
+                <span>{p.phone.startsWith("+") ? p.phone : `+92 ${p.phone.replace(/^0/, "")}`}</span>
               </div>
             )}
             {p.city && (
-              <div className="flex items-center gap-1.5">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
-                {p.city}, Pakistan
+              <div className="flex items-center gap-2.5">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#EF4444] to-[#F87171] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
+                </div>
+                <span>{p.city}, Pakistan</span>
               </div>
             )}
             {p.linkedin && p.linkedin.trim() !== "" && (
-              <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
-                {p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, "")}
+              <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-blue-600">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#0077B5] to-[#0A66C2] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.779-1.75-1.75s.784-1.75 1.75-1.75 1.75.779 1.75 1.75-.784 1.75-1.75 1.75zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                </div>
+                <span>{p.linkedin.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
               </div>
             )}
             {p.portfolio && p.portfolio.trim() !== "" && (
-              <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
-                {p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, "")}
+              <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-[#B45309]">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#4F46E5] to-[#818CF8] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}><path strokeLinecap="round" strokeLinejoin="round" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" /></svg>
+                </div>
+                <span>{p.portfolio.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
               </div>
             )}
             {p.github && p.github.trim() !== "" && (
-              <div className="truncate flex items-center gap-1.5 text-slate-700 hover:text-blue-600">
-                <svg className="w-3.5 h-3.5 text-[#3B82F6] flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.436 22 12.017 22 6.484 17.522 2 12 2z" /></svg>
-                {p.github.replace(/^(https?:\/\/)?(www\.)?/, "")}
+              <div className="truncate flex items-center gap-2.5 text-slate-700 hover:text-black">
+                <div className="w-[18px] h-[18px] rounded-[5px] bg-gradient-to-tr from-[#1F2937] to-[#4B5563] flex items-center justify-center flex-shrink-0 shadow-sm border border-black/5">
+                  <svg className="w-3 h-3 text-white flex-shrink-0" fill="currentColor" viewBox="0 0 24 24"><path fillRule="evenodd" clipRule="evenodd" d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482C19.138 20.193 22 16.436 22 12.017 22 6.484 17.522 2 12 2z" /></svg>
+                </div>
+                <span>{p.github.replace(/^(https?:\/\/)?(www\.)?/, "")}</span>
               </div>
             )}
           </div>
@@ -507,9 +534,9 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
               return (
                 <div key={idx} className="space-y-1">
                   <div className="flex justify-between items-baseline text-[11px] font-bold text-slate-800">
-                    <span className="text-[#3B82F6]">{proj.projectName || "Project Title"}</span>
+                    <span className="text-[#B45309]">{proj.projectName || "Project Title"}</span>
                     {proj.projUrl && (
-                      <span className="text-[9.5px] font-mono text-[#3B82F6] font-semibold hover:underline">
+                      <span className="text-[9.5px] font-mono text-[#B45309] font-semibold hover:underline">
                         🔗 {proj.projUrl.replace(/^(https?:\/\/)?(www\.)?/, "")}
                       </span>
                     )}
@@ -600,7 +627,7 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
               </div>
               <div className="flex justify-between">
                 <span>English</span>
-                <span className="text-[#3B82F6] font-bold">Professional</span>
+                <span className="text-[#B45309] font-bold">Professional</span>
               </div>
             </div>
           </div>

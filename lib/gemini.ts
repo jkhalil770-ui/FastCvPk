@@ -22,6 +22,7 @@ YOUR WRITING STYLE:
 - Short and punchy sentences
 - Every word must earn its place
 - No fluff, no padding
+- ATS COMPLIANCE RULE: If writing for ATS, ATS Classic, or Premium formats, you MUST automatically analyze the role title (e.g. Software Engineer, Customer Support Agent) and inject highly targeted, realistic industry technical keywords and realistic quantified achievements (e.g., percentages, rates, or dollar numbers) to ensure maximum parsing results, even if the user provided minimum inputs.
 
 STRICT RULES FOR ENGLISH:
 Professional Summary:
@@ -106,8 +107,8 @@ export async function queryGemini(
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
 
-  // Use gemini-flash-latest by default on attempt 1 (highest quota availability), fall back to gemini-2.0-flash on attempt 2
-  const modelToUse = attempt === 1 ? "gemini-flash-latest" : "models/gemini-2.0-flash";
+  // Use gemini-2.0-flash by default to ensure stability and high performance.
+  const modelToUse = "gemini-2.0-flash";
 
   try {
     const model = genAI.getGenerativeModel({
@@ -152,9 +153,9 @@ Make it ATS-friendly for international job portals like LinkedIn, Indeed, Remote
   } catch (error: any) {
     console.error(`Gemini query error using ${modelToUse} on attempt ${attempt}:`, error);
 
-    // If attempt 1 fails (even due to 429 rate limits), retry once using the backup model
+    // If attempt 1 fails, retry once dynamically
     if (attempt === 1) {
-      console.log("Attempt 1 failed. Retrying dynamically with backup model...");
+      console.log("Attempt 1 failed. Retrying dynamically...");
       return queryGemini(prompt, 2, cvType, lang);
     }
 
@@ -189,13 +190,62 @@ export function buildResponsibilitiesPrompt(jobTitle: string, company: string, b
 /**
  * Builds professional summary or objective prompt.
  */
-export function buildSummaryPrompt(role: string, yearsOfExp: string, skills: string[], lang: 'en' | 'ur', isStudent = false): string {
+export function buildSummaryPrompt(
+  role: string, 
+  yearsOfExp: string, 
+  skills: string[], 
+  lang: 'en' | 'ur', 
+  isStudent = false,
+  targetCompany = "",
+  cvType = ""
+): string {
   const segment = isStudent ? "careerObjective" : "professionalSummary";
+  let targetCompanyInstruction = "";
+  
+  if (targetCompany && targetCompany.trim() !== "") {
+    const compLower = targetCompany.toLowerCase();
+    let specificCompanyContext = "";
+    
+    // Call center / ibex / BPO mapping
+    if (compLower.includes("ibex") || compLower.includes("call center") || compLower.includes("customer support") || compLower.includes("bpo") || compLower.includes("telecom") || compLower.includes("customer care")) {
+      specificCompanyContext = `
+For '${targetCompany}' (which is a BPO/Call Center environment like ibex Pakistan), you MUST aggressively weave in high-priority customer operation terms:
+- CSAT (Customer Satisfaction) improvement (e.g. "boosted CSAT scores by 15%")
+- Average Handle Time (AHT) optimization (e.g. "reduced average handle time by 20% while maintaining resolution quality")
+- First Call Resolution (FCR) rates
+- Quality Assurance (QA) compliance scores (e.g. "maintained a 95%+ QA compliance rating")
+- Empathy, active listening, CRM navigation, customer escalation handling, ticket resolution, and upselling or customer retention.
+- Ensure the tone is extremely customer-centric, high-energy, and highly capable of handling fast-paced customer queues.`;
+    } 
+    // Tech firms / Systems Limited / NetSol / Wipro / TCS / Infosys mapping
+    else if (compLower.includes("systems") || compLower.includes("software house") || compLower.includes("dev") || compLower.includes("tech") || compLower.includes("contour") || compLower.includes("netsol") || compLower.includes("wipro") || compLower.includes("tcs") || compLower.includes("infosys") || compLower.includes("hcl") || compLower.includes("tech")) {
+      specificCompanyContext = `
+For '${targetCompany}' (which is a major technology solutions firm like Systems Limited, NetSol, Wipro, TCS, or Infosys), you MUST aggressively weave in hard technical terms, software architecture principles, and delivery metrics:
+- Rebuilding or refactoring complex systems to reduce latency (e.g. "reduced API execution time by 30%")
+- Agile methodologies, Scrum rituals, sprint delivery, Git collaboration
+- Scalability, database indexing, RESTful APIs, cloud deployment, and system security
+- Technical leadership, clean code principles, code reviews, and high-performance throughput.`;
+    }
+    
+    targetCompanyInstruction = `\nTarget Company Focus: The candidate is applying to '${targetCompany}'. Optimize this generated summary by naturally weaving in highly relevant corporate keywords, key metrics, or standard principles aligned with '${targetCompany}' (e.g. if Amazon, align with Leadership Principles like Ownership, Bias for Action, Customer Obsession; if a general tech firm, use standard modern high-impact ATS keywords). Make sure it parses perfectly for '${targetCompany}' recruitment screeners.${specificCompanyContext}`;
+  }
+
+  let atsInstruction = "";
+  if (cvType === "ats" || cvType === "ats-classic" || cvType === "global-pro" || cvType === "freelancer") {
+    atsInstruction = `
+\n[ATS COMPLIANCE MODE: ACTIVE (MAX OPTIMIZATION)]
+Because this is an ATS-optimized CV, you MUST aggressively optimize this summary to pass automated parsing engines:
+1. Analyze the Role "${role}" and weave in at least 5 to 7 high-impact industry technical keywords, standard methodologies, and specific toolsets suitable for this profession (e.g., if Tech: include specific tech stacks; if Call Center/Customer Support: include CSAT, ticketing tools, escalations, CRM tools).
+2. Inject a realistic, high-impact quantified business achievement metric (e.g., percentages, dollar amounts, or time reductions like "cutting response times by 35%" or "managing a portfolio of $20K+") even if not explicitly provided in the input details. Make it look 100% natural and highly professional.
+3. Ensure every sentence starts with or utilizes active corporate verbs.
+4. Eliminate generic sentences. Ensure every word contributes to a premium, executive-level technical score.`;
+  }
+
   return `
     Type: ${segment}_generation
     Language: ${lang}
     Target Role / Class: ${role}
-    Details: ${yearsOfExp} years of work experience, skills: ${skills.join(", ")}
+    Details: ${yearsOfExp} years of work experience, skills: ${skills.join(", ")}${targetCompanyInstruction}${atsInstruction}
     
     Goal: Generate a captivating, highly-professional 3-line ${segment} highlighting skills and drive.
     Return JSON format: { "${segment}": "Professional text goes here..." }
@@ -240,6 +290,7 @@ export async function generateCV(
     skills?: string[];
     isStudent?: boolean;
     role?: string;
+    targetCompany?: string;
   },
   lang: 'en' | 'ur' = "en"
 ): Promise<AISuggestionResponse> {
@@ -251,7 +302,8 @@ export async function generateCV(
       params.details || "",
       params.skills || [],
       lang,
-      params.isStudent || false
+      params.isStudent || false,
+      params.targetCompany || ""
     );
   } else if (action === "responsibilities") {
     prompt = buildResponsibilitiesPrompt(

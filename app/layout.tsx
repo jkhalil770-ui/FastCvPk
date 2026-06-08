@@ -8,8 +8,8 @@ import PWAInstaller from "@/components/pwa/PWAInstaller";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-  description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free with FastCV PK. Clean layouts, high-definition PDF download.",
+  title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+  description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered description writer. No watermark. Start building now!",
   manifest: "/manifest.json",
   metadataBase: new URL("https://fastcvpk.online"),
   icons: {
@@ -22,8 +22,8 @@ export const metadata: Metadata = {
     ],
   },
   openGraph: {
-    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-    description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free.",
+    title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+    description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered writer. No watermark.",
     url: "https://fastcvpk.online",
     siteName: "FastCV PK",
     images: [
@@ -39,8 +39,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-    description: "Create professional ATS-friendly CVs and beautiful Urdu Nastaliq Biodatas for free.",
+    title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+    description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered writer.",
     images: ["/logo.png"],
   },
   keywords: [

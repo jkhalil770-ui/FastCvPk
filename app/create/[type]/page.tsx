@@ -20,6 +20,7 @@ import GlobalProForm from "@/components/cv-forms/GlobalProForm";
 
 // Import templates
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
+import AtsClassicTemplate from "@/components/cv-templates/AtsClassicTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
@@ -44,8 +45,8 @@ export default function CVBuilderPage() {
   const [aiStatusMessage, setAiStatusMessage] = useState("");
 
   // Determine standard watermarking rule
-  // TYPE A (biodata, student) has NO watermark. TYPE B (ats, freelancer) has watermark by default.
-  const isTypeA = type === "biodata" || type === "student";
+  // TYPE A (biodata, student, ats) has NO watermark. TYPE B (ats-classic, freelancer, global-pro) has watermark by default.
+  const isTypeA = type === "biodata" || type === "student" || type === "ats";
   const defaultWatermark = !isTypeA;
 
   // Initialize unified data record
@@ -198,7 +199,7 @@ export default function CVBuilderPage() {
 
     if (step === 2) {
       // 1. Work Experience dates validation for ATS, Global Pro, and Freelancer
-      if (type === "ats" || type === "global-pro" || type === "freelancer") {
+      if (type === "ats" || type === "ats-classic" || type === "global-pro" || type === "freelancer") {
         const experience = formData.experience || [];
         for (let i = 0; i < experience.length; i++) {
           const exp = experience[i];
@@ -359,11 +360,16 @@ export default function CVBuilderPage() {
         body: JSON.stringify({
           action: "summary",
           title,
-          details: type === "global-pro" ? "Optimized for international and remote job markets." : "Experienced professional in Pakistani job market.",
+          details: type === "global-pro" 
+            ? "Optimized for international and remote job markets." 
+            : type === "ats-classic" 
+            ? "Highly tailored minimalist layout compliant with applicant tracking systems."
+            : "Experienced professional in Pakistani job market.",
           skills: skillsArray,
           isStudent,
           lang: cvLang,
           cvType: type,
+          targetCompany: formData.personalInfo.targetCompany || "",
         }),
       });
       clearTimeout(timeoutId);
@@ -537,6 +543,7 @@ export default function CVBuilderPage() {
       }
 
       switch (type) {
+        case "ats-classic":
         case "ats":
           return <ATSForm formData={formData} setFormData={setFormData} step={step} />;
         case "biodata":
@@ -580,6 +587,8 @@ export default function CVBuilderPage() {
       switch (type) {
         case "ats":
           return <ATSTemplate data={templateData} hasWatermark={defaultWatermark} />;
+        case "ats-classic":
+          return <AtsClassicTemplate data={templateData} hasWatermark={defaultWatermark} />;
         case "biodata":
           return <BiodataTemplate data={templateData} hasWatermark={false} />;
         case "student":

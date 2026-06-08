@@ -68,7 +68,8 @@ export async function POST(req: Request) {
         ? body.skills.map((s: unknown) => sanitize(s)).slice(0, 20)
         : [];
       const isStudent = Boolean(body.isStudent);
-      aiPrompt = buildSummaryPrompt(title, details, skills, safeLang, isStudent);
+      const targetCompany = sanitize(body.targetCompany);
+      aiPrompt = buildSummaryPrompt(title, details, skills, safeLang, isStudent, targetCompany, cvType);
 
     } else if (action === "responsibilities") {
       const jobTitle = sanitize(body.jobTitle);

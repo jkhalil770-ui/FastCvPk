@@ -1,18 +1,18 @@
 import React from 'react';
 import { Document, Page, Text, View, StyleSheet, Font, Svg, Path, Circle, Rect } from '@react-pdf/renderer';
 
-// Register fonts
+// Register fonts via high-speed global CDN to prevent WebView silent load failures on mobile devices
 Font.register({
   family: 'Inter',
-  src: '/fonts/Inter-Regular.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-400-normal.ttf'
 });
 Font.register({
   family: 'Inter-Bold',
-  src: '/fonts/Inter-Bold.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/inter@latest/latin-700-normal.ttf'
 });
 Font.register({
   family: 'NotoNastaliq',
-  src: '/fonts/NotoNastaliqUrdu-Regular.ttf'
+  src: 'https://cdn.jsdelivr.net/fontsource/fonts/noto-nastaliq-urdu@latest/arabic-400-normal.ttf'
 });
 
 // Premium SVG Icons

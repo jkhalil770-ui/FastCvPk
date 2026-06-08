@@ -58,8 +58,8 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
 
   const handleSmartAIFill = async () => {
     const jobTitle = formData.personalInfo.profTitle;
-    if (!jobTitle) {
-      toast("Professional Title is required!", "warning", "Please type your profession first (e.g. Software Engineer) before calling AI.");
+    if (!jobTitle || jobTitle.trim().length < 3) {
+      toast("Professional Title bohot chota hai!", "warning", "Please type a valid profession name (minimum 3 characters, e.g. Software Engineer) before calling AI.");
       return;
     }
 
@@ -266,6 +266,12 @@ export default function ATSForm({ formData, setFormData, step }: ATSFormProps) {
             onChange={(e) => updatePersonalInfo("linkedin", e.target.value)}
           />
         </div>
+        <Input
+          label="Target Company (e.g. Amazon, Google - optional)"
+          value={formData.personalInfo.targetCompany || ""}
+          onChange={(e) => updatePersonalInfo("targetCompany", e.target.value)}
+          placeholder="e.g. Amazon, Google, Systems Ltd"
+        />
       </div>
     );
   }

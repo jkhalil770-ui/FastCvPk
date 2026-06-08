@@ -14,15 +14,28 @@ export default function CVSelectionPage() {
 
   const selectionCards = [
     {
+      id: "ats-classic",
+      nameKey: "atsClassicCvName",
+      tagKey: "atsClassicCvTag",
+      badgeKey: "watermarkBadge",
+      descKey: "atsClassicCvDesc",
+      icon: Briefcase,
+      badgeVariant: "warning" as const,
+      langRules: "English Only (Classic Premium ATS)",
+      langRulesUr: "صرف انگریزی (کلاسک پریمیم اے ٹی ایس)",
+      color: "from-indigo-600/30 to-indigo-500/10",
+      border: "border-indigo-500/20"
+    },
+    {
       id: "ats",
       nameKey: "atsCvName",
       tagKey: "atsCvTag",
-      badgeKey: "watermarkBadge",
+      badgeKey: "freeBadge",
       descKey: "atsCvDesc",
       icon: Briefcase,
-      badgeVariant: "warning" as const,
-      langRules: "English Only (ATS Compliant)",
-      langRulesUr: "صرف انگریزی (اے ٹی ایس تعمیل)",
+      badgeVariant: "success" as const,
+      langRules: "English Only (100% Free ATS)",
+      langRulesUr: "صرف انگریزی (100٪ مفت اے ٹی ایس)",
       color: "from-blue-600/30 to-blue-500/10",
       border: "border-blue-500/20"
     },

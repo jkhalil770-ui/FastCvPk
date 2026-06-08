@@ -35,6 +35,15 @@ export default function TemplatesGalleryPage() {
 
   const templatesList = [
     {
+      id: "ats-classic",
+      name: "Classic Big-Tech ATS",
+      category: "ATS",
+      badgeType: "premium",
+      langRule: "English Only",
+      icon: Briefcase,
+      features: ["Strict Times single-column", "Optimized margin parsing", "AI target company keywords"]
+    },
+    {
       id: "ats",
       name: "Standard Corporate ATS",
       category: "ATS",
@@ -184,6 +193,50 @@ export default function TemplatesGalleryPage() {
                     ) : (
                       /* Other templates: Full-bleed vector miniature CV previews that cover the entire area with original styling */
                       <div className="absolute inset-0 w-full h-full transition-transform duration-500 origin-top group-hover:scale-[1.03] select-none text-slate-800 bg-white overflow-hidden">
+                        {tpl.id === "ats-classic" && (
+                          <div className="absolute inset-0 w-full h-full flex flex-col font-serif relative text-left bg-white p-5 select-none" style={{ fontFamily: "Georgia, 'Times New Roman', serif" }}>
+                            {/* Centered Header */}
+                            <div className="text-center mb-2">
+                              <span className="text-[17px] font-bold text-black uppercase block leading-tight">Ahmed Raza</span>
+                              <span className="block text-[7.5px] italic font-semibold text-neutral-700 mt-0.5">Software Engineer</span>
+                              <span className="block text-[6.2px] text-neutral-500 mt-1">ahmed.raza@email.com  •  +92 300 1234567  •  Lahore  •  LinkedIn: ahmed-raza</span>
+                            </div>
+
+                            {/* Summary */}
+                            <div className="mb-2">
+                              <span className="block text-[8px] font-bold text-black border-b border-black pb-0.5 mb-1 uppercase tracking-wider">Professional Summary</span>
+                              <span className="block text-[6.2px] text-neutral-700 leading-relaxed font-serif">
+                                Software Engineer with 5 years experience building highly scalable web systems. Proven success optimizing
+                                database queries at Amazon and Tailwind, cutting API latencies by 30% and boosting system reliability.
+                              </span>
+                            </div>
+
+                            {/* Experience */}
+                            <div className="mb-2">
+                              <span className="block text-[8px] font-bold text-black border-b border-black pb-0.5 mb-1 uppercase tracking-wider">Professional Experience</span>
+                              <div className="mb-0.5">
+                                <div className="flex justify-between items-baseline mb-0.5">
+                                  <span className="text-[7.2px] font-bold text-black">Software Engineer <span className="font-normal text-neutral-600">at</span> Amazon Inc.</span>
+                                  <span className="text-[6.2px] font-bold text-neutral-600">2023 - Present</span>
+                                </div>
+                                <span className="block text-[6.2px] text-neutral-700 leading-normal pl-2 font-serif">
+                                  • Spearheaded customer checkout workflow overhaul using React and microservices.<br />
+                                  • Tailored distributed systems, boosting database write throughput metrics by 25%.
+                                </span>
+                              </div>
+                            </div>
+
+                            {/* Skills */}
+                            <div>
+                              <span className="block text-[8px] font-bold text-black border-b border-black pb-0.5 mb-1 uppercase tracking-wider">Skills & Expertise</span>
+                              <p className="text-[6.2px] text-neutral-700 leading-normal font-serif">
+                                <strong>Technical Skills:</strong> React, Next.js, Node.js, TypeScript, PostgreSQL, Distributed Systems<br />
+                                <strong>Soft Competencies:</strong> Customer Obsession, Ownership, Technical Leadership, Arabic
+                              </p>
+                            </div>
+                          </div>
+                        )}
+
                         {tpl.id === "ats" && (
                           <div className="absolute inset-0 w-full h-full flex flex-col font-sans relative text-left bg-white p-5">
                             {/* Name & Title */}

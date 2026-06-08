@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import LandingPage from "./page-client";
 
 export const metadata: Metadata = {
-  title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-  description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free with FastCV PK. Expand details using Gemini AI and download high-definition print-ready PDFs.",
+  title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+  description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered description writer. No watermark. Start building now!",
   alternates: {
     canonical: "https://fastcvpk.online/",
   },
@@ -29,8 +29,8 @@ export const metadata: Metadata = {
     "Biodata banana"
   ],
   openGraph: {
-    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-    description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free. AI-powered and instantly downloadable in PDF.",
+    title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+    description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered writer. No watermark.",
     url: "https://fastcvpk.online",
     siteName: "FastCV PK",
     images: [
@@ -46,8 +46,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "FastCV PK — Pakistan's #1 Free Online CV & Biodata Maker",
-    description: "Create professional ATS-friendly CVs, Student Resumes, and beautiful Urdu Nastaliq Biodatas for free.",
+    title: "FastCV PK | Free ATS Resume Builder & Urdu Nastaliq Biodata Maker",
+    description: "Build a 100% ATS-compliant CV or stunning Urdu Nastaliq Biodata for free. Instant HD PDF download. AI-powered writer. No watermark.",
     images: ["/logo.png"],
   },
 };

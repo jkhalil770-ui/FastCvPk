@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import CVSelectionPage from "./create-client";
 
 export const metadata: Metadata = {
-  title: "Create Your CV & Resume Online — FastCV PK",
-  description: "Create your professional CV or matrimonial Biodata instantly. Choose an ATS-friendly, student, freelancer, or wedding Biodata template, and auto-fill details using Gemini AI.",
+  title: "Build Your ATS CV & Urdu Biodata Online | FastCV PK",
+  description: "Create a professional job-winning CV or beautiful Urdu Nastaliq Biodata in minutes. Use Gemini AI to auto-fill description text. Start for free now!",
   alternates: {
     canonical: "https://fastcvpk.online/create",
   },
@@ -18,8 +18,8 @@ export const metadata: Metadata = {
     "Gemini AI Resume Builder"
   ],
   openGraph: {
-    title: "Create Your CV & Resume Online — FastCV PK",
-    description: "Create your professional CV or matrimonial Biodata instantly. Choose an ATS-friendly, student, freelancer, or wedding Biodata template, and auto-fill details using Gemini AI.",
+    title: "Build Your ATS CV & Urdu Biodata Online | FastCV PK",
+    description: "Create a professional job-winning CV or beautiful Urdu Nastaliq Biodata in minutes. Use Gemini AI to auto-fill description text. Start for free now!",
     url: "https://fastcvpk.online/create",
     siteName: "FastCV PK",
     images: [
@@ -35,8 +35,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Create Your CV & Resume Online — FastCV PK",
-    description: "Create your professional CV or matrimonial Biodata instantly. Choose an ATS-friendly, student, freelancer, or wedding Biodata template.",
+    title: "Build Your ATS CV & Urdu Biodata Online | FastCV PK",
+    description: "Create a professional job-winning CV or beautiful Urdu Nastaliq Biodata in minutes. Use Gemini AI to auto-fill description text. Start for free now!",
     images: ["/logo.png"],
   },
 };

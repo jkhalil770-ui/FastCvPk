@@ -2,8 +2,8 @@ import type { Metadata } from "next";
 import TemplatesGalleryPage from "./templates-client";
 
 export const metadata: Metadata = {
-  title: "Professional Resume Templates & CV Designs — FastCV PK",
-  description: "Browse our expert selection of free and premium templates for Pakistan and India's job markets. Choose from ATS-friendly CVs, matrimonial Biodatas, and remote freelancer layouts.",
+  title: "Free ATS CV Templates & Urdu Biodata Designs | FastCV PK",
+  description: "Choose from our premium library of 100% free ATS-friendly CV templates and Urdu Nastaliq Biodata designs. Download instantly in HD PDF. No watermarks.",
   alternates: {
     canonical: "https://fastcvpk.online/templates",
   },
@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     "ATS Friendly Templates"
   ],
   openGraph: {
-    title: "Professional Resume Templates & CV Designs — FastCV PK",
-    description: "Browse our expert selection of free and premium templates. Choose from ATS-friendly CVs, matrimonial Biodatas, and remote freelancer layouts.",
+    title: "Free ATS CV Templates & Urdu Biodata Designs | FastCV PK",
+    description: "Choose from our premium library of 100% free ATS-friendly CV templates and Urdu Nastaliq Biodata designs. Download instantly in HD PDF.",
     url: "https://fastcvpk.online/templates",
     siteName: "FastCV PK",
     images: [
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Professional Resume Templates & CV Designs — FastCV PK",
-    description: "Choose from ATS-friendly, student CVs, matrimonial Biodatas, and remote freelancer layouts.",
+    title: "Free ATS CV Templates & Urdu Biodata Designs | FastCV PK",
+    description: "Choose from our premium library of 100% free ATS-friendly CV templates and Urdu Nastaliq Biodata designs.",
     images: ["/images/global-pro-preview.png"],
   },
 };

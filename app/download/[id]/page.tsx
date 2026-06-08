@@ -16,6 +16,7 @@ import dynamic from "next/dynamic";
 
 // Import PDF templates for @react-pdf/renderer
 import ATSPdf from "@/lib/pdf-templates/ATSPdf";
+import AtsClassicPdf from "@/lib/pdf-templates/AtsClassicPdf";
 import BiodataPdf from "@/lib/pdf-templates/BiodataPdf";
 import StudentPdf from "@/lib/pdf-templates/StudentPdf";
 import FreelancerPdf from "@/lib/pdf-templates/FreelancerPdf";
@@ -29,6 +30,7 @@ const PDFDownloadLink = dynamic(
 
 // Import HTML preview templates
 import ATSTemplate from "@/components/cv-templates/ATSTemplate";
+import AtsClassicTemplate from "@/components/cv-templates/AtsClassicTemplate";
 import BiodataTemplate from "@/components/cv-templates/BiodataTemplate";
 import StudentTemplate from "@/components/cv-templates/StudentTemplate";
 import FreelancerTemplate from "@/components/cv-templates/FreelancerTemplate";
@@ -139,6 +141,8 @@ export default function CVDownloadPage() {
     switch (cv.cvType) {
       case "ats":
         return <ATSPdf data={templateData} hasWatermark={cv.hasWatermark} />;
+      case "ats-classic":
+        return <AtsClassicPdf data={templateData} hasWatermark={cv.hasWatermark} />;
       case "global-pro":
         return <GlobalProPdf data={templateData} hasWatermark={cv.hasWatermark} />;
       case "biodata":
@@ -257,6 +261,8 @@ export default function CVDownloadPage() {
     switch (cv.cvType) {
       case "ats":
         return <ATSTemplate data={templateData} hasWatermark={cv.hasWatermark} />;
+      case "ats-classic":
+        return <AtsClassicTemplate data={templateData} hasWatermark={cv.hasWatermark} />;
       case "global-pro":
         return <GlobalProTemplate data={templateData} hasWatermark={cv.hasWatermark} />;
       case "biodata":
@@ -271,7 +277,7 @@ export default function CVDownloadPage() {
   };
 
   // Determine standard categories
-  const isTypeA = cv.cvType === "biodata" || cv.cvType === "student";
+  const isTypeA = cv.cvType === "biodata" || cv.cvType === "student" || cv.cvType === "ats";
 
   return (
     <div className="flex-1 w-full bg-[#0F172A] relative py-12 px-4 sm:px-6 lg:px-8">
@@ -302,6 +308,28 @@ export default function CVDownloadPage() {
           {/* RIGHT: Export & Upgrade panels */}
           <div className="w-full lg:w-2/5 space-y-6">
             
+            {/* HD Quality Guide Banner */}
+            <div className="glass-panel p-4 rounded-2xl border-blue-500/20 bg-blue-500/5 space-y-2 select-none">
+              <h3 className="text-xs font-black text-blue-400 uppercase tracking-widest flex items-center gap-1.5 font-inter">
+                <span>📢</span> {language === "ur" ? "فل ایچ ڈی گائیڈ" : "Full HD PDF Guide"}
+              </h3>
+              <p className="text-[10.5px] text-textSecondary leading-normal">
+                {language === "ur" ? (
+                  <>
+                    <strong className="text-white block mb-1">100% Crisp Vector Quality:</strong>
+                    Aap ki CV fully vector format mein hai. Screenshots mat lein! Neeche diye gaye <span className="text-blue-400 font-bold">Download</span> button par click kar ke real PDF download karein.
+                    <span className="block mt-2"><strong>WhatsApp Share Tip:</strong> WhatsApp par share karte waqt file ko humesha <span className="text-emerald-400 font-bold">Document</span> ke taur par send karein takay compression se quality louse na ho!</span>
+                  </>
+                ) : (
+                  <>
+                    <strong className="text-white block mb-1">100% Crisp Vector Quality:</strong>
+                    Do not take screenshots! Click the <span className="text-blue-400 font-bold">Download</span> button below to export the high-definition vector PDF file.
+                    <span className="block mt-2"><strong>WhatsApp Share Tip:</strong> Always share the PDF as a <span className="text-emerald-400 font-bold">Document</span> (not an image) on WhatsApp to bypass mobile compression!</span>
+                  </>
+                )}
+              </p>
+            </div>
+
             {/* Primary Action Card */}
             <div className="glass-panel p-6 rounded-2xl border-white/10 space-y-4">
               <h2 className="text-lg font-bold text-white flex items-center gap-2">
