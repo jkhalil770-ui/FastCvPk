@@ -1,7 +1,7 @@
 import { Resend } from "resend";
 
 // Standard Resend initialization using Server-Side Secret Key
-const resendApiKey = process.env.RESEND_API_KEY || "";
+const resendApiKey = process.env.RESEND_API_KEY || "re_dummy_key_for_build";
 export const resend = new Resend(resendApiKey);
 
 export interface SendEmailParams {
