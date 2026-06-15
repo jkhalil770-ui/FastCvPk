@@ -191,6 +191,7 @@ export default function CVDownloadPage() {
         const form = document.createElement("form");
         form.method = "POST";
         form.action = "/api/download-pdf";
+        form.target = "_blank"; // Direct download request to new tab context to protect connection integrity
         form.style.display = "none";
 
         const base64Input = document.createElement("input");
