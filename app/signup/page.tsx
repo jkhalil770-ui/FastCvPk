@@ -182,12 +182,16 @@ function SignupContent() {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       await syncUserToDatabase(res.user.uid, res.user.email || "", name);
       
-      // Send verification email
-      await sendEmailVerification(res.user);
+      // Attempt to send verification email silently
+      try {
+        await sendEmailVerification(res.user);
+      } catch (emailErr) {
+        console.error("Firebase verification email send failed:", emailErr);
+      }
       
-      setResendTimer(60);
       setLoading(false);
-      setStep(2); // Move to Verify step
+      setStep(3); // Move directly to Success step instead of blocking verification step
+      setTimeout(() => router.push(returnUrl), 2000);
     } catch (error: any) {
       console.error(error);
       triggerShake();

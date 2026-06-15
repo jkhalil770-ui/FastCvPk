@@ -178,41 +178,6 @@ export default function UserDashboard() {
     );
   }
 
-  // UNVERIFIED EMAIL PROTECTION
-  if (!user.emailVerified && user.providerData && user.providerData.some((p: any) => p.providerId === 'password')) {
-    return (
-      <div className="flex-grow w-full bg-[#0F172A] relative flex flex-col justify-center items-center py-16 px-4">
-        <div className="absolute top-[20%] left-[-10%] w-[35vw] h-[35vw] rounded-full bg-blue-500/5 blur-[120px] pointer-events-none" />
-        
-        <Card className="w-full max-w-md p-8 border-white/10 text-center relative z-10 animate-in zoom-in duration-500">
-          <div className="mx-auto w-16 h-16 rounded-full bg-orange-500/10 border border-orange-500/20 flex items-center justify-center text-orange-400 mb-6">
-            <ShieldAlert size={32} />
-          </div>
-          
-          <h2 className="text-2xl font-bold text-white mb-2">
-            Please verify your email first.
-          </h2>
-          <p className="text-orange-400 font-urdu text-[16px] mb-6">
-            پہلے اپنی ای میل تصدیق کریں۔
-          </p>
-          <p className="text-sm text-textSecondary leading-relaxed mb-8">
-            You need to verify your email address before accessing the dashboard and your saved CVs. Please check your inbox for the verification link.
-          </p>
-
-          <Button 
-            onClick={handleResendVerification} 
-            className="w-full gap-2 py-3 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-bold"
-          >
-            Resend Verification Email
-          </Button>
-          <div className="mt-4 text-xs text-slate-500">
-            If you just verified, please refresh the page.
-          </div>
-        </Card>
-      </div>
-    );
-  }
-
   return (
     <div className="flex-grow w-full bg-[#0F172A] relative py-12 px-4 sm:px-6 lg:px-8">
       <title>{language === "ur" ? "ڈیش بورڈ — FastCV PK" : "Candidate Dashboard — FastCV PK"}</title>
@@ -250,6 +215,28 @@ export default function UserDashboard() {
             <span className="text-xs text-textSecondary mt-1">{getTranslation("totalDownloads", language)}</span>
           </div>
         </div>
+ 
+        {/* Unverified Email Warning Banner */}
+        {!user.emailVerified && user.providerData && user.providerData.some((p: any) => p.providerId === 'password') && (
+          <div className="glass-panel p-4 rounded-xl border-orange-500/20 bg-orange-500/5 flex flex-col sm:flex-row items-center justify-between gap-4 text-left">
+            <div className="flex items-center gap-3">
+              <div className="p-2 bg-orange-500/10 border border-orange-500/20 rounded-lg text-orange-400">
+                <ShieldAlert size={18} />
+              </div>
+              <div>
+                <p className="text-sm font-bold text-white">Please verify your email address</p>
+                <p className="text-xs text-slate-400 font-urdu mt-0.5">براہ کرم اپنی ای میل کی تصدیق کریں۔</p>
+              </div>
+            </div>
+            <Button 
+              onClick={handleResendVerification} 
+              variant="secondary" 
+              className="text-xs py-1.5 px-4 text-orange-400 border-orange-500/20 hover:bg-orange-500/10"
+            >
+              Resend Link / دوبارہ بھیجیں
+            </Button>
+          </div>
+        )}
 
         {/* CV Grid list */}
         {fetchingCvs ? (
