@@ -8,8 +8,10 @@ import { doc, setDoc } from "firebase/firestore";
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   signInWithEmailAndPassword,
   sendPasswordResetEmail,
+  getRedirectResult,
 } from "firebase/auth";
 import { useToast } from "@/components/ui/Toast";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -49,8 +51,38 @@ function LoginContent() {
     const interval = setInterval(() => {
       setActiveCard(prev => (prev + 1) % 3);
     }, 3500);
+
+    // Handle Firebase redirect result
+    const checkRedirect = async () => {
+      try {
+        const res = await getRedirectResult(auth);
+        if (res) {
+          setLoading(true);
+          await syncUserToDatabase(
+            res.user.uid,
+            res.user.email || "",
+            res.user.displayName || ""
+          );
+          showSuccessAndRedirect(res.user.displayName || "");
+        }
+      } catch (error: any) {
+        console.error("Redirect auth error:", error);
+        setLoading(false);
+        if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+          return;
+        }
+        triggerShake();
+        toast(
+          language === "ur" ? "لاگ ان ناکام" : "Login Failed", 
+          "error", 
+          error.message
+        );
+      }
+    };
+    checkRedirect();
+
     return () => clearInterval(interval);
-  }, []);
+  }, [language]);
 
   const triggerShake = () => {
     setShake(true);
@@ -92,15 +124,21 @@ function LoginContent() {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
-      const res = await signInWithPopup(auth, provider);
-      
-      await syncUserToDatabase(
-        res.user.uid,
-        res.user.email || "",
-        res.user.displayName || ""
-      );
 
-      showSuccessAndRedirect(res.user.displayName || "");
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        await signInWithRedirect(auth, provider);
+      } else {
+        const res = await signInWithPopup(auth, provider);
+        await syncUserToDatabase(
+          res.user.uid,
+          res.user.email || "",
+          res.user.displayName || ""
+        );
+        showSuccessAndRedirect(res.user.displayName || "");
+      }
     } catch (error: any) {
       console.error(error);
       setLoading(false);

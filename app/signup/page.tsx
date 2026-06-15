@@ -8,8 +8,10 @@ import { doc, setDoc } from "firebase/firestore";
 import {
   GoogleAuthProvider,
   signInWithPopup,
+  signInWithRedirect,
   createUserWithEmailAndPassword,
   sendEmailVerification,
+  getRedirectResult,
 } from "firebase/auth";
 import { useToast } from "@/components/ui/Toast";
 import { useLanguage } from "@/lib/LanguageContext";
@@ -56,6 +58,32 @@ function SignupContent() {
 
   useEffect(() => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // Handle Firebase redirect result
+    const checkRedirect = async () => {
+      try {
+        const res = await getRedirectResult(auth);
+        if (res) {
+          setLoading(true);
+          await syncUserToDatabase(
+            res.user.uid,
+            res.user.email || "",
+            res.user.displayName || ""
+          );
+          setStep(3);
+          setTimeout(() => router.push(returnUrl), 2000);
+        }
+      } catch (error: any) {
+        console.error("Redirect signup error:", error);
+        setLoading(false);
+        if (error.code === 'auth/popup-closed-by-user' || error.code === 'auth/cancelled-popup-request') {
+          return;
+        }
+        triggerShake();
+        toast("Signup Failed", "error", error.message);
+      }
+    };
+    checkRedirect();
   }, []);
 
   useEffect(() => {
@@ -98,17 +126,24 @@ function SignupContent() {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
-      const res = await signInWithPopup(auth, provider);
-      
-      await syncUserToDatabase(
-        res.user.uid,
-        res.user.email || "",
-        res.user.displayName || ""
-      );
 
-      // Google accounts are auto-verified
-      setStep(3);
-      setTimeout(() => router.push(returnUrl), 2000);
+      // Detect mobile device
+      const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
+      if (isMobile) {
+        await signInWithRedirect(auth, provider);
+      } else {
+        const res = await signInWithPopup(auth, provider);
+        await syncUserToDatabase(
+          res.user.uid,
+          res.user.email || "",
+          res.user.displayName || ""
+        );
+
+        // Google accounts are auto-verified
+        setStep(3);
+        setTimeout(() => router.push(returnUrl), 2000);
+      }
     } catch (error: any) {
       console.error(error);
       setLoading(false);
