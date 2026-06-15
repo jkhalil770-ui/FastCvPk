@@ -107,8 +107,8 @@ export async function queryGemini(
     throw new Error("GEMINI_API_KEY is not configured on the server.");
   }
 
-  // Use gemini-2.0-flash by default to ensure stability and high performance.
-  const modelToUse = "gemini-2.0-flash";
+  // Use gemini-flash-latest by default (Gemini 1.5 Flash production alias) to ensure free tier quota availability.
+  const modelToUse = "gemini-flash-latest";
 
   try {
     const model = genAI.getGenerativeModel({
