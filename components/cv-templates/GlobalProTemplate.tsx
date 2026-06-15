@@ -400,20 +400,7 @@ export default function GlobalProTemplate({ data, hasWatermark = false }: Global
         
         {/* 1. Name & Title already rendered in top Header */}
         
-        {/* 2. Photo (centered, 80x80px) - Fix B */}
-        <div className="flex justify-center my-1 select-none">
-          {p.photo ? (
-            <img 
-              src={p.photo} 
-              alt={p.fullName || "Profile"} 
-              className="w-[80px] h-[80px] rounded-full object-cover object-[center_top] border-2 border-[#B45309] shadow-sm"
-            />
-          ) : (
-            <div className="w-[80px] h-[80px] rounded-full bg-slate-200 border-2 border-[#B45309] flex items-center justify-center text-slate-400 text-xs font-black uppercase shadow-inner">
-              Photo
-            </div>
-          )}
-        </div>
+
 
         {/* 3. Contact & Socials - Fix B & Fix D (Hides row if field is empty) */}
         <div className="space-y-2">
