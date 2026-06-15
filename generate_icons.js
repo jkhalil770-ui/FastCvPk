@@ -66,8 +66,8 @@ async function run() {
     const destPath = path.join(baseDir, target.name);
     console.log(`Generating ${target.name} (${target.size}x${target.size})...`);
     
-    // Resize the image to target size
-    const resized = image.clone().resize({ w: target.size, h: target.size });
+    // Resize the image to target size using hermiteInterpolation for sharp resizing
+    const resized = image.clone().resize({ w: target.size, h: target.size, mode: 'hermiteInterpolation' });
     
     // Get PNG buffer and write to destination
     const pngBuffer = await resized.getBuffer('image/png');
@@ -82,7 +82,7 @@ async function run() {
 
   for (const size of icoSizes) {
     console.log(`Resizing for ICO: ${size}x${size}...`);
-    const resized = image.clone().resize({ w: size, h: size });
+    const resized = image.clone().resize({ w: size, h: size, mode: 'hermiteInterpolation' });
     const buf = await resized.getBuffer('image/png');
     pngBuffers.push(buf);
   }
