@@ -324,7 +324,7 @@ export default function BiodataPdf({ data, hasWatermark = false }: BiodataPdfPro
                 ) : null}
 
                 {edu.masters?.university ? (
-                  <View style={styles.tableRow} style={{ flexDirection: 'row-reverse', paddingVertical: 6 }}>
+                  <View style={styles.tableRow}>
                     <Text style={styles.tdBold}>ماسٹرز</Text>
                     <Text style={styles.td}>{edu.masters.university}</Text>
                     <Text style={styles.td}>{edu.masters.year}</Text>
